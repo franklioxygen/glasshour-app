@@ -228,41 +228,26 @@ h3{font-size:22px;line-height:1.25;letter-spacing:-.015em;margin:0 0 8px;font-we
 .vis{position:relative;flex:1;display:grid;place-items:center;min-height:300px;border-radius:24px;background:var(--card2);overflow:hidden}
 .more{margin-top:10px!important;font-size:15px}
 
-/* 锁屏 */
-.lock{width:min(100%,300px);height:330px;border-radius:38px;position:relative;overflow:hidden;color:#fff;
-  background:radial-gradient(120% 80% at 80% 110%,rgba(242,174,69,.55),transparent 55%),radial-gradient(90% 70% at 0% 0%,rgba(23,162,183,.7),transparent 60%),linear-gradient(170deg,#0F3F48,#05181C);
-  box-shadow:0 30px 60px -25px rgba(5,24,28,.8)}
-.lock .isl{position:absolute;top:12px;left:50%;transform:translateX(-50%);height:28px;width:92px;border-radius:20px;background:#000}
-.dyn{position:absolute;z-index:2;top:22px;right:22px;height:40px;width:138px;border-radius:22px;background:#000;display:flex;justify-content:space-between;align-items:center;padding:0 16px 0 13px;
-  box-shadow:0 14px 30px -10px rgba(0,0,0,.6),0 0 0 4px color-mix(in srgb,var(--card2) 80%,transparent);animation:dyn 4s ease-in-out infinite}
-.dyn .ic{color:var(--gold);font-size:19px}
-.dyn span{color:#F4B54C;font-size:16px;font-weight:650}
-@keyframes dyn{0%,100%{width:138px}50%{width:150px}}
-@media (max-width:640px){.dyn{top:14px;right:14px;transform:scale(.85);transform-origin:top right}}
-.lock .date{position:absolute;top:58px;width:100%;text-align:center;font-size:14px;font-weight:600;opacity:.85}
-.lock .time{position:absolute;top:72px;width:100%;text-align:center;font-size:78px;font-weight:700;letter-spacing:-.03em;line-height:1.1;
-  background:linear-gradient(180deg,#fff,rgba(255,255,255,.75));-webkit-background-clip:text;background-clip:text;color:transparent}
-.la{position:absolute;left:12px;right:12px;bottom:14px;border-radius:24px;padding:14px 16px;background:rgba(0,0,0,.42);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  display:grid;grid-template-columns:auto 1fr;gap:4px 12px;align-items:center}
-.la .gi{grid-row:span 2;width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:rgba(242,174,69,.18);color:var(--gold);font-size:24px}
-.la small{font-size:12px;opacity:.7}
-.la b{font-size:30px;line-height:1;color:#F4B54C;font-weight:650}
-.la .pbar{grid-column:1/-1;height:6px;border-radius:3px;background:rgba(255,255,255,.14);margin-top:10px;overflow:hidden}
-.la .pbar i{display:block;height:100%;border-radius:3px;background:linear-gradient(90deg,#F4B54C,#FFD58C);transition:width 1s linear}
-
-/* 警报 */
-.alarm{width:min(100%,280px);min-height:350px;border-radius:38px;background:#0b0f10;color:#fff;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;padding:26px 20px 20px;text-align:center;
-  box-shadow:0 30px 60px -25px rgba(0,0,0,.8);animation:shake 3.2s ease-in-out infinite}
+/* 锁屏、灵动岛、警报：模拟器里拍的真实画面（assets/pro/<语言>-lock / -island / -alarm.webp） */
+.vis.pv{padding:28px 20px}
+.mini{position:relative;width:min(228px,62vw);padding:7px;border-radius:40px;
+  background:linear-gradient(150deg,#3a4548,#0c1113 40%,#20292c);
+  box-shadow:0 34px 60px -28px rgba(5,24,28,.75),0 0 0 1px rgba(255,255,255,.07) inset,0 0 0 2px #0b0f10}
+.mini .ms{position:relative;border-radius:33px;overflow:hidden;background:#000;aspect-ratio:600/1305}
+.mini img{display:block;width:100%;height:100%;color:transparent}
+.mini .isl{position:absolute;top:1.3%;left:50%;width:31%;height:4.2%;transform:translateX(-50%);border-radius:999px;background:#000}
+.lockvis{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:24px;width:100%;max-width:560px}
+.isle{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+.isle img{display:block;width:100%;height:auto;color:transparent;filter:drop-shadow(0 18px 24px rgba(0,0,0,.35));animation:breathe 4.5s ease-in-out infinite;transform-origin:50% 0}
+@keyframes breathe{0%,100%{scale:1}50%{scale:1.035}}
+.tag{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--card);color:var(--muted);box-shadow:var(--shadow)}
+.tag .ic{color:var(--gold)}
+.mini.ring{animation:shake 3.2s ease-in-out infinite}
 @keyframes shake{0%,70%,100%{rotate:0deg}74%{rotate:-3deg}78%{rotate:3deg}82%{rotate:-2deg}86%{rotate:2deg}90%{rotate:0deg}}
-.silent{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:650;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.8)}
-.rings{position:relative;width:100px;height:100px;margin:18px 0 12px;display:grid;place-items:center}
-.rings i{position:absolute;inset:0;border-radius:50%;border:2px solid var(--over);animation:ripple 2.4s ease-out infinite;opacity:0}
-.rings i:nth-child(2){animation-delay:.8s}.rings i:nth-child(3){animation-delay:1.6s}
-@keyframes ripple{0%{transform:scale(.55);opacity:.9}100%{transform:scale(1.35);opacity:0}}
-.rings b{width:70px;height:70px;border-radius:50%;display:grid;place-items:center;font-size:34px;background:radial-gradient(circle at 35% 30%,#ff5a72,var(--over));box-shadow:0 0 34px rgba(226,35,66,.65)}
-.alarm h4{margin:0;font-size:18px;line-height:1.25}
-.alarm p{margin:6px 0 18px;font-size:12.5px;color:rgba(255,255,255,.65)!important;line-height:1.35}
-.alarm .ok{margin-top:auto;display:flex;align-items:center;gap:8px;justify-content:center;width:100%;padding:12px;border-radius:999px;background:var(--over);font-weight:700;font-size:16px}
+@media (max-width:640px){
+  .lockvis{grid-template-columns:1fr;justify-items:center;gap:20px}
+  .isle{order:-1;width:100%;align-items:center}
+}
 
 /* 日历 */
 .cal{width:min(100%,330px);padding:20px;border-radius:24px;background:var(--card);box-shadow:var(--shadow)}
@@ -275,7 +260,12 @@ h3{font-size:22px;line-height:1.25;letter-spacing:-.015em;margin:0 0 8px;font-we
 .js .in .cal .d{transform:none}
 .legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:14px;font-size:12.5px;color:var(--muted)}
 .legend span{display:flex;align-items:center;gap:6px}
-.legend i{width:10px;height:10px;border-radius:50%}
+.legend i{width:12px;height:12px;border-radius:50%;position:relative}
+.cal .d.c,.cal .d.x{position:relative}
+.cal .d.c::after,.cal .d.x::after,.legend i.c::after,.legend i.x::after{content:"!";position:absolute;right:-8%;bottom:-8%;width:44%;height:44%;border-radius:50%;display:grid;place-items:center;
+  font-size:8px;font-weight:900;line-height:1;background:inherit;color:var(--ink-on);box-shadow:0 0 0 1.5px var(--card)}
+.cal .d.x::after,.legend i.x::after{content:"✕";color:#fff;font-size:7px}
+.legend i.c::after,.legend i.x::after{width:62%;height:62%;right:-20%;bottom:-20%;font-size:6px}
 
 /* 牙套 */
 .tray{width:min(100%,400px);padding:24px;border-radius:24px;background:var(--card);box-shadow:var(--shadow)}
@@ -416,8 +406,6 @@ footer p{margin:6px 0;max-width:62em}
   <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
   <symbol id="i-x" viewBox="0 0 24 24"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></symbol>
   <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
-  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 21h4"/></symbol>
-  <symbol id="i-bellx" viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 0 1 9.5-4.9M18 11v5l1.5 2h-15"/><path d="M10 21h4M3 3l18 18"/></symbol>
   <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 2.5c1.2 3.2 5.5 5.3 5.5 10.5a5.5 5.5 0 0 1-11 0c0-2.7 1.6-4.3 2.7-5.3.3 2 1.3 2.8 2.1 3.2.4-3.2-.4-5.8.7-8.4z"/></symbol>
   <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2L4.5 13.5h6.5L10 22l8.5-11.5H12z"/></symbol>
   <symbol id="i-crown" viewBox="0 0 24 24"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"/></symbol>
@@ -558,32 +546,18 @@ footer p{margin:6px 0;max-width:62em}
     <div class="bento">
       <article class="card c7 reveal">
         <div class="txt"><h3><span data-i18n="lock.t">Countdown on your Lock Screen</span><span class="pro">PRO</span></h3><p data-i18n="lock.d">A Live Activity keeps the countdown on your Lock Screen and in the Dynamic Island, so a glance is all it takes.</p></div>
-        <div class="vis" aria-hidden="true">
-          <div class="dyn"><svg class="ic"><use href="#i-hg"/></svg><span class="num" id="lkIsl">38:12</span></div>
-          <div class="lock">
-            <div class="isl"></div>
-            <div class="date" id="lkDate">Tuesday, November 24</div>
-            <div class="time num" id="lkTime">9:41</div>
-            <div class="la">
-              <div class="gi"><svg class="ic"><use href="#i-hg"/></svg></div>
-              <small data-i18n="ph.outLeft">Out Time Left Today</small>
-              <b class="num" id="lkT">0:38:12</b>
-              <div class="pbar"><i id="lkBar" style="width:32%"></i></div>
-            </div>
+        <div class="vis pv" aria-hidden="true">
+          <div class="lockvis">
+            <div class="mini"><div class="ms"><img id="proLock" src="assets/pro/en-lock.webp" alt="" width="600" height="1305" loading="lazy" decoding="async"><i class="isl"></i></div></div>
+            <div class="isle"><span class="tag"><svg class="ic"><use href="#i-hg"/></svg><span data-i18n="lock.isl">Dynamic Island</span></span><img id="proIsland" src="assets/pro/en-island.webp" alt="" width="640" height="199" loading="lazy" decoding="async"></div>
           </div>
         </div>
       </article>
 
       <article class="card c5 reveal" style="transition-delay:.08s">
         <div class="txt"><h3><span data-i18n="alarm.t">An alarm that rings, even on Silent</span><span class="pro">PRO</span></h3><p data-i18n="alarm.d">When today’s out time runs out, Glasshour rings like an alarm—even in Silent mode or a Focus. Tap ✓ once they’re in, or it rings again in 10 minutes.</p></div>
-        <div class="vis" aria-hidden="true">
-          <div class="alarm">
-            <span class="silent"><svg class="ic"><use href="#i-bellx"/></svg><span data-i18n="alarm.silent">Silent</span></span>
-            <div class="rings"><i></i><i></i><i></i><b><svg class="ic"><use href="#i-bell"/></svg></b></div>
-            <h4 data-i18n="alarm.title">Time to put your aligners back</h4>
-            <p data-i18n="alarm.sub">Tap ✓ when they’re in, or it rings again in 10 min</p>
-            <div class="ok"><svg class="ic"><use href="#i-tick"/></svg><span data-i18n="alarm.done">Put Back</span></div>
-          </div>
+        <div class="vis pv" aria-hidden="true">
+          <div class="mini ring"><div class="ms"><img id="proAlarm" src="assets/pro/en-alarm.webp" alt="" width="600" height="1305" loading="lazy" decoding="async"><i class="isl"></i></div></div>
         </div>
         <p class="more" data-i18n="alarm.more">Gentle reminders too: time running low, “Still eating?”, a bedtime check and tray change reminders.</p>
       </article>
@@ -596,8 +570,8 @@ footer p{margin:6px 0;max-width:62em}
             <div class="grid" id="calGrid"></div>
             <div class="legend">
               <span><i style="background:var(--worn)"></i><em data-i18n="cal.met" style="font-style:normal">Goal Met</em></span>
-              <span><i style="background:var(--gold)"></i><em data-i18n="cal.close" style="font-style:normal">Close</em></span>
-              <span><i style="background:var(--over)"></i><em data-i18n="cal.missed" style="font-style:normal">Missed</em></span>
+              <span><i class="c" style="background:var(--gold)"></i><em data-i18n="cal.close" style="font-style:normal">Close</em></span>
+              <span><i class="x" style="background:var(--over)"></i><em data-i18n="cal.missed" style="font-style:normal">Missed</em></span>
               <span><i style="background:color-mix(in srgb,var(--faint) 35%,transparent)"></i><em data-i18n="cal.paused" style="font-style:normal">Paused</em></span>
             </div>
           </div>
@@ -618,7 +592,7 @@ footer p{margin:6px 0;max-width:62em}
       </article>
 
       <article class="card c12 reveal">
-        <div class="txt"><h3 data-i18n="ach.t">Achievements worth collecting</h3><p data-i18n="ach.d">34 achievements in six tiers, from Bronze to a Legendary rainbow medal—for streaks, on-time put-backs, tray milestones and a few hidden surprises. Free for everyone.</p></div>
+        <div class="txt"><h3 data-i18n="ach.t">Awards worth collecting</h3><p data-i18n="ach.d">34 awards in six tiers, from Bronze to a Legendary rainbow medal—for streaks, on-time put-backs, tray milestones and a few hidden surprises. Free for everyone.</p></div>
         <div class="vis" style="min-height:0" aria-hidden="true">
           <div class="medals">
             <div class="medal"><div class="md t1"><i class="face" style="--dl:0s"><svg class="ic"><use href="#i-flame"/></svg></i></div><b data-i18n="m1">Hat Trick</b><small data-i18n="tier1">Bronze</small></div>
@@ -702,7 +676,7 @@ footer p{margin:6px 0;max-width:62em}
           <li><svg class="ic"><use href="#i-tick"/></svg><span data-i18n="free.i2">Editing and undo</span></li>
           <li><svg class="ic"><use href="#i-tick"/></svg><span data-i18n="free.i3">Calendar and 7-day stats</span></li>
           <li><svg class="ic"><use href="#i-tick"/></svg><span data-i18n="free.i4">Basic reminders</span></li>
-          <li><svg class="ic"><use href="#i-tick"/></svg><span data-i18n="free.i5">Achievements</span></li>
+          <li><svg class="ic"><use href="#i-tick"/></svg><span data-i18n="free.i5">Awards</span></li>
           <li><svg class="ic"><use href="#i-tick"/></svg><span data-i18n="free.i6">Home Screen progress widget</span></li>
         </ul>
       </div>
@@ -764,22 +738,21 @@ en:{
  "hero.eyebrow":"Clear aligner timer for iPhone",
  "hero.title":"Know exactly how much <em>out time</em> is left",
  "hero.soon":"Coming soon to the App Store","hero.req":"iPhone · iOS 26 or later","hero.more":"See how it works","hero.hint":"Try it — tap the button",
- "ph.outLeft":"Out Time Left Today",
+ 
  "ph.take":"Take Out","ph.put":"Put Back",
  "how.kicker":"How it works","how.title":"One tap out. One tap back.",
  "how.s1t":"Tap when they come out","how.s1d":"The hourglass flips and today’s remaining out time starts counting down.",
  "how.s2t":"Keep an eye on the sand","how.s2d":"Check the countdown in the app, in the Dynamic Island or on your Lock Screen.",
  "how.s3t":"Tap when they’re back in","how.s3d":"Worn time and your progress ring update instantly—with a burst of sparkles when you’re on time.",
  "feat.kicker":"Features","feat.title":"Everything you need to hit your goal",
- "lock.t":"Countdown on your Lock Screen","lock.d":"A Live Activity keeps the countdown on your Lock Screen and in the Dynamic Island, so a glance is all it takes.",
+ "lock.t":"Countdown on your Lock Screen","lock.d":"A Live Activity keeps the countdown on your Lock Screen and in the Dynamic Island, so a glance is all it takes.","lock.isl":"Dynamic Island",
  "alarm.t":"An alarm that rings, even on Silent","alarm.d":"When today’s out time runs out, Glasshour rings like an alarm—even in Silent mode or a Focus. Tap ✓ once they’re in, or it rings again in 10 minutes.",
  "alarm.more":"Gentle reminders too: time running low, “Still eating?”, a bedtime check and tray change reminders.",
- "alarm.title":"Time to put your aligners back","alarm.sub":"Tap ✓ when they’re in, or it rings again in 10 min","alarm.done":"Put Back","alarm.silent":"Silent",
  "cal.t":"Every day at a glance","cal.d":"The calendar colors each day by whether you met your goal. Feeling sick? Mark the day as paused.",
  "cal.met":"Goal Met","cal.close":"Close","cal.missed":"Missed","cal.paused":"Paused",
  "tray.t":"Your treatment, tray by tray","tray.d":"Change days, expected finish date and checkups in one schedule. Postpone a change, switch early, go back a tray or start refinements.",
  "tray.n":"Tray {n}","tray.total":"of 30","tray.next":"Next change in 5 days","tray.finish":"Expected finish","tray.checkup":"Checkup","tray.refine":"Refinement",
- "ach.t":"Achievements worth collecting","ach.d":"34 achievements in six tiers, from Bronze to a Legendary rainbow medal—for streaks, on-time put-backs, tray milestones and a few hidden surprises. Free for everyone.",
+ "ach.t":"Awards worth collecting","ach.d":"34 awards in six tiers, from Bronze to a Legendary rainbow medal—for streaks, on-time put-backs, tray milestones and a few hidden surprises. Free for everyone.",
  "m1":"Hat Trick","m2":"Perfect Week","m3":"Fully Charged","m4":"Monthly Master","m5":"Iron Will","m6":"100-Day Legend",
  "tier1":"Bronze","tier2":"Silver","tier3":"Gold","tier4":"Crystal","tier5":"Nebula","tier6":"Legendary",
  "surf.k":"Shortcuts","surf.t":"Works wherever you are","surf.d":"Take out and put back from wherever is quickest.",
@@ -792,7 +765,7 @@ en:{
  "priv.k":"Privacy","priv.t":"Private by design","priv.d":"Your data stays on your iPhone and, if you choose, in your own iCloud.",
  "priv.p1":"No account","priv.p2":"No ads","priv.p3":"No tracking","priv.link":"Read the privacy policy",
  "plan.k":"Pricing","plan.t":"Free to start","plan.d":"Everyday tracking is free. Go Pro when you want the countdown everywhere.",
- "free.t":"Free","free.i1":"One-tap timing","free.i2":"Editing and undo","free.i3":"Calendar and 7-day stats","free.i4":"Basic reminders","free.i5":"Achievements","free.i6":"Home Screen progress widget",
+ "free.t":"Free","free.i1":"One-tap timing","free.i2":"Editing and undo","free.i3":"Calendar and 7-day stats","free.i4":"Basic reminders","free.i5":"Awards","free.i6":"Home Screen progress widget",
  "pro.i1":"Dynamic Island and Lock Screen countdown","pro.i2":"Overtime alarm that rings on Silent","pro.i3":"Tap-to-log widgets, Lock Screen widgets and controls","pro.i4":"Custom sounds","pro.i5":"30-day and per-tray stats","pro.i6":"Apple Watch app",
  "pro.note":"The yearly plan includes a 7-day free trial for eligible new subscribers. Monthly and a one-time Lifetime purchase are also available, all with Family Sharing.",
  "cta.t":"Your 22 hours, made easy","cta.d":"Glasshour is coming soon to the App Store. Ideas or bugs? We’d love to hear them on GitHub.","cta.btn":"Send feedback",
@@ -808,17 +781,16 @@ en:{
  "hero.eyebrow":"iPhone 上的隐形牙套计时器",
  "hero.title":"还能摘多久，<em>一眼就知道</em>",
  "hero.soon":"即将登陆 App Store","hero.req":"iPhone · iOS 26 或更高版本","hero.more":"看看怎么用","hero.hint":"试试看：点一下按钮",
- "ph.outLeft":"今日剩余摘套时间",
+ 
  "ph.take":"摘下","ph.put":"戴回",
  "how.kicker":"怎么用","how.title":"摘下点一下，戴回点一下",
  "how.s1t":"摘下时点一下","how.s1d":"沙漏翻转，今天剩余的摘套时间开始倒计时。",
  "how.s2t":"看着沙子流","how.s2d":"App 里、灵动岛、锁屏上，随时看倒计时。",
  "how.s3t":"戴回时再点一下","how.s3d":"今日已戴时长和进度环立即更新；按时戴回，还有星星为你庆祝。",
  "feat.kicker":"功能","feat.title":"戴够时长，需要的都在这里",
- "lock.t":"锁屏和灵动岛随时看","lock.d":"实时活动把倒计时放在锁屏和灵动岛上，瞄一眼就知道还剩多久。",
+ "lock.t":"锁屏和灵动岛随时看","lock.d":"实时活动把倒计时放在锁屏和灵动岛上，瞄一眼就知道还剩多久。","lock.isl":"灵动岛",
  "alarm.t":"静音也叫得醒的超时警报","alarm.d":"今天的摘套时间用完时，像闹钟一样响铃，手机静音或开着专注模式也能听到。戴回了点 ✓；还没戴回，10 分钟后再响。",
  "alarm.more":"也有温和的提醒：时间快用完、“还在吃吗？”、睡前检查和换套提醒。",
- "alarm.title":"牙套该戴回了","alarm.sub":"戴回点 ✓，否则 10 分钟后再响","alarm.done":"已戴回","alarm.silent":"静音",
  "cal.t":"每一天都看得清清楚楚","cal.d":"日历按达标、差一点、未达标给每天着色。生病了？可以把那天标为暂停。",
  "cal.met":"达标","cal.close":"差一点","cal.missed":"未达标","cal.paused":"暂停",
  "tray.t":"疗程进度，一副一副看","tray.d":"换套日、预计完成日期和复诊都在一张排期里。可以推迟换套、提前换套、退回上一副，或者进入精调。",
@@ -852,17 +824,16 @@ en:{
  "hero.eyebrow":"iPhone 上的隱形牙套計時器",
  "hero.title":"還能摘多久，<em>一眼就知道</em>",
  "hero.soon":"即將登上 App Store","hero.req":"iPhone · iOS 26 或以上版本","hero.more":"看看怎麼用","hero.hint":"試試看：點一下按鈕",
- "ph.outLeft":"今日剩餘摘下時間",
+ 
  "ph.take":"摘下","ph.put":"戴回",
  "how.kicker":"怎麼用","how.title":"摘下點一下，戴回點一下",
  "how.s1t":"摘下時點一下","how.s1d":"沙漏翻轉，今天剩餘的摘下時間開始倒數。",
  "how.s2t":"看著沙子流","how.s2d":"App 裡、動態島、鎖定畫面上，隨時看倒數。",
  "how.s3t":"戴回時再點一下","how.s3d":"今日已戴時長和進度環立即更新；準時戴回，還有星星為你慶祝。",
  "feat.kicker":"功能","feat.title":"戴滿時長，需要的都在這裡",
- "lock.t":"鎖定畫面和動態島隨時看","lock.d":"即時動態把倒數放在鎖定畫面和動態島上，瞄一眼就知道還剩多久。",
+ "lock.t":"鎖定畫面和動態島隨時看","lock.d":"即時動態把倒數放在鎖定畫面和動態島上，瞄一眼就知道還剩多久。","lock.isl":"動態島",
  "alarm.t":"靜音也叫得醒的超時警報","alarm.d":"今天的摘下時間用完時，像鬧鐘一樣響鈴，即使手機靜音或開著專注模式也聽得到。戴回了點 ✓；還沒戴回，10 分鐘後再響。",
  "alarm.more":"也有溫和的提醒：時間快用完、「還在吃嗎？」、睡前檢查和換套提醒。",
- "alarm.title":"牙套該戴回了","alarm.sub":"戴回請點 ✓，否則 10 分鐘後再響","alarm.done":"已戴回","alarm.silent":"靜音",
  "cal.t":"每一天都看得清清楚楚","cal.d":"日曆按達標、差一點、未達標替每天上色。生病了？可以把那天標為暫停。",
  "cal.met":"達標","cal.close":"差一點","cal.missed":"未達標","cal.paused":"暫停",
  "tray.t":"療程進度，一副一副看","tray.d":"換套日、預計完成日期和回診都在同一張排程裡。可以延後換套、提前換套、退回上一副，或進入精調。",
@@ -896,17 +867,16 @@ ja:{
  "hero.eyebrow":"iPhone用マウスピース矯正タイマー",
  "hero.title":"外せる残り時間が<em>ひと目でわかる</em>",
  "hero.soon":"App Storeで近日公開","hero.req":"iPhone · iOS 26以降","hero.more":"使い方を見る","hero.hint":"ボタンをタップしてみて",
- "ph.outLeft":"今日の外せる残り時間",
+ 
  "ph.take":"外す","ph.put":"着ける",
  "how.kicker":"使い方","how.title":"外すときにタップ、着けるときにタップ",
  "how.s1t":"外したらタップ","how.s1d":"砂時計がひっくり返り、今日の残り時間のカウントダウンが始まります。",
  "how.s2t":"砂の流れをチェック","how.s2d":"アプリ、ダイナミックアイランド、ロック画面でいつでも残り時間を確認できます。",
  "how.s3t":"着けたらもう一度タップ","how.s3d":"装着時間と進捗リングがすぐに更新。時間内に着けたら、キラキラでお祝いします。",
  "feat.kicker":"機能","feat.title":"毎日の目標達成に必要なものがすべて",
- "lock.t":"ロック画面でもカウントダウン","lock.d":"ライブアクティビティがロック画面とダイナミックアイランドにカウントダウンを表示。ちらっと見るだけでOK。",
+ "lock.t":"ロック画面でもカウントダウン","lock.d":"ライブアクティビティがロック画面とダイナミックアイランドにカウントダウンを表示。ちらっと見るだけでOK。","lock.isl":"ダイナミックアイランド",
  "alarm.t":"消音中でも鳴る超過アラーム","alarm.d":"今日の外せる時間がなくなると、消音モードや集中モード中でもアラームのように鳴ります。着けたら ✓、まだなら10分後にもう一度鳴ります。",
  "alarm.more":"残りわずか、「まだ食事中？」、就寝前チェック、交換リマインダーなどのやさしい通知も。",
- "alarm.title":"マウスピースを着ける時間です","alarm.sub":"着けたら ✓、そうでなければ10分後にまた鳴ります","alarm.done":"着けました","alarm.silent":"消音",
  "cal.t":"毎日の記録をひと目で","cal.d":"目標を達成できたかどうかで、カレンダーの毎日を色分け。体調が悪い日は休止にできます。",
  "cal.met":"達成","cal.close":"あと少し","cal.missed":"未達成","cal.paused":"休止",
  "tray.t":"治療をマウスピースごとに","tray.d":"交換日、完了予定日、通院予定をひとつのスケジュールに。交換の延期、早めの交換、前のマウスピースに戻す、リファインメントの開始もできます。",
@@ -940,17 +910,16 @@ ko:{
  "hero.eyebrow":"iPhone용 투명 교정 타이머",
  "hero.title":"남은 시간을 <em>한눈에</em>",
  "hero.soon":"App Store 출시 예정","hero.req":"iPhone · iOS 26 이상","hero.more":"사용 방법 보기","hero.hint":"버튼을 눌러 보세요",
- "ph.outLeft":"오늘 남은 뺄 수 있는 시간",
+ 
  "ph.take":"빼기","ph.put":"끼우기",
  "how.kicker":"사용 방법","how.title":"뺄 때 한 번, 끼울 때 한 번",
  "how.s1t":"뺄 때 탭","how.s1d":"모래시계가 뒤집히고 오늘 남은 시간이 줄어들기 시작해요.",
  "how.s2t":"모래를 지켜보세요","how.s2d":"앱, Dynamic Island, 잠금 화면에서 언제든 카운트다운을 확인해요.",
  "how.s3t":"끼울 때 다시 탭","how.s3d":"착용 시간과 진행 링이 바로 업데이트돼요. 제때 끼우면 반짝이는 축하도 있어요.",
  "feat.kicker":"기능","feat.title":"매일 목표 달성에 필요한 모든 것",
- "lock.t":"잠금 화면에서도 카운트다운","lock.d":"실시간 현황이 잠금 화면과 Dynamic Island에 카운트다운을 보여 줘요. 슬쩍 보기만 하면 돼요.",
+ "lock.t":"잠금 화면에서도 카운트다운","lock.d":"실시간 현황이 잠금 화면과 Dynamic Island에 카운트다운을 보여 줘요. 슬쩍 보기만 하면 돼요.","lock.isl":"Dynamic Island",
  "alarm.t":"무음에서도 울리는 초과 알람","alarm.d":"오늘 뺄 수 있는 시간이 다 되면 무음 모드나 집중 모드에서도 알람처럼 울려요. 다시 꼈으면 ✓, 아직이면 10분 후 다시 울려요.",
  "alarm.more":"시간 임박, “아직 식사 중?”, 취침 전 확인, 교체 알림 같은 부드러운 알림도 있어요.",
- "alarm.title":"교정 장치를 다시 낄 시간이에요","alarm.sub":"꼈으면 ✓, 아니면 10분 후 다시 울려요","alarm.done":"착용 완료","alarm.silent":"무음",
  "cal.t":"매일의 기록을 한눈에","cal.d":"목표 달성 여부에 따라 캘린더의 하루하루를 색으로 보여 줘요. 아픈 날은 일시중지로 표시할 수 있어요.",
  "cal.met":"달성","cal.close":"아깝게 미달","cal.missed":"미달성","cal.paused":"일시중지",
  "tray.t":"장치별로 보는 치료 진행","tray.d":"교체일, 완료 예정일, 내원 일정을 한 일정표에. 교체 미루기, 미리 교체, 이전 장치로 되돌리기, 리파인먼트 시작도 할 수 있어요.",
@@ -984,17 +953,16 @@ es:{
  "hero.eyebrow":"Temporizador de alineadores para iPhone",
  "hero.title":"Sabes cuánto <em>tiempo te queda</em>",
  "hero.soon":"Próximamente en el App Store","hero.req":"iPhone · iOS 26 o posterior","hero.more":"Mira cómo funciona","hero.hint":"Pruébalo: toca el botón",
- "ph.outLeft":"Tiempo restante hoy",
+ 
  "ph.take":"Quitar","ph.put":"Poner",
  "how.kicker":"Cómo funciona","how.title":"Un toque al quitar. Otro al poner.",
  "how.s1t":"Toca al quitártelos","how.s1d":"El reloj de arena se da la vuelta y empieza la cuenta atrás del tiempo que te queda hoy.",
  "how.s2t":"Vigila la arena","how.s2d":"Mira la cuenta atrás en la app, en la Dynamic Island o en la pantalla bloqueada.",
  "how.s3t":"Toca al ponértelos","how.s3d":"El tiempo de uso y el anillo de progreso se actualizan al instante, con destellos si llegas a tiempo.",
  "feat.kicker":"Funciones","feat.title":"Todo lo que necesitas para cumplir tu meta",
- "lock.t":"Cuenta atrás en la pantalla bloqueada","lock.d":"Una Actividad en Vivo muestra la cuenta atrás en la pantalla bloqueada y en la Dynamic Island: basta un vistazo.",
+ "lock.t":"Cuenta atrás en la pantalla bloqueada","lock.d":"Una Actividad en Vivo muestra la cuenta atrás en la pantalla bloqueada y en la Dynamic Island: basta un vistazo.","lock.isl":"Dynamic Island",
  "alarm.t":"Una alarma que suena incluso en silencio","alarm.d":"Cuando se acaba tu tiempo sin alineadores, Glasshour suena como una alarma, incluso en silencio o con un modo de concentración. Toca ✓ cuando te los pongas o volverá a sonar en 10 minutos.",
  "alarm.more":"También avisos suaves: poco tiempo restante, «¿Sigues comiendo?», revisión antes de dormir y recordatorios de cambio.",
- "alarm.title":"Hora de ponerte los alineadores","alarm.sub":"Toca ✓ al ponerlos o sonará de nuevo en 10 min","alarm.done":"Ya puestos","alarm.silent":"Silencio",
  "cal.t":"Cada día de un vistazo","cal.d":"El calendario colorea cada día según si cumpliste tu meta. ¿Te encuentras mal? Marca el día como pausa.",
  "cal.met":"Meta cumplida","cal.close":"Casi","cal.missed":"No cumplida","cal.paused":"En pausa",
  "tray.t":"Tu tratamiento, alineador a alineador","tray.d":"Días de cambio, fecha de fin prevista y citas en una sola programación. Pospón un cambio, cambia antes, vuelve al anterior o empieza el refinamiento.",
@@ -1028,17 +996,16 @@ fr:{
  "hero.eyebrow":"Minuteur de gouttières pour iPhone",
  "hero.title":"Le temps restant, <em>d’un coup d’œil</em>",
  "hero.soon":"Bientôt sur l’App Store","hero.req":"iPhone · iOS 26 ou version ultérieure","hero.more":"Voir comment ça marche","hero.hint":"Essayez : touchez le bouton",
- "ph.outLeft":"Temps restant aujourd’hui",
+ 
  "ph.take":"Retirer","ph.put":"Remettre",
  "how.kicker":"Comment ça marche","how.title":"Un geste pour retirer. Un geste pour remettre.",
  "how.s1t":"Touchez en les retirant","how.s1d":"Le sablier se retourne et le temps restant du jour commence à défiler.",
  "how.s2t":"Surveillez le sable","how.s2d":"Suivez le compte à rebours dans l’app, la Dynamic Island ou sur l’écran verrouillé.",
  "how.s3t":"Touchez en les remettant","how.s3d":"Le temps de port et l’anneau de progression se mettent à jour aussitôt, avec des étincelles si vous êtes à l’heure.",
  "feat.kicker":"Fonctions","feat.title":"Tout pour atteindre votre objectif",
- "lock.t":"Compte à rebours sur l’écran verrouillé","lock.d":"Une activité en direct affiche le compte à rebours sur l’écran verrouillé et dans la Dynamic Island : un coup d’œil suffit.",
+ "lock.t":"Compte à rebours sur l’écran verrouillé","lock.d":"Une activité en direct affiche le compte à rebours sur l’écran verrouillé et dans la Dynamic Island : un coup d’œil suffit.","lock.isl":"Dynamic Island",
  "alarm.t":"Une alarme qui sonne même en silencieux","alarm.d":"Quand votre temps sans gouttières est écoulé, Glasshour sonne comme un réveil, même en mode silencieux ou avec un mode de concentration. Touchez ✓ une fois remises, sinon l’alarme sonne de nouveau dans 10 minutes.",
  "alarm.more":"Des rappels plus doux aussi : temps presque écoulé, « Toujours à table ? », vérification du coucher et rappels de changement.",
- "alarm.title":"Il est temps de remettre vos gouttières","alarm.sub":"Touchez ✓ une fois remises, sinon l’alarme sonne à nouveau dans 10 min","alarm.done":"Remises","alarm.silent":"Silencieux",
  "cal.t":"Chaque jour en un coup d’œil","cal.d":"Le calendrier colore chaque jour selon que vous avez atteint votre objectif. Malade ? Marquez la journée en pause.",
  "cal.met":"Objectif atteint","cal.close":"Presque","cal.missed":"Non atteint","cal.paused":"En pause",
  "tray.t":"Votre traitement, gouttière par gouttière","tray.d":"Jours de changement, date de fin prévue et rendez-vous dans un seul planning. Reportez un changement, changez plus tôt, revenez à la précédente ou commencez l’affinement.",
@@ -1072,17 +1039,16 @@ de:{
  "hero.eyebrow":"Aligner-Timer fürs iPhone",
  "hero.title":"Restzeit <em>auf einen Blick</em>",
  "hero.soon":"Bald im App Store","hero.req":"iPhone · iOS 26 oder neuer","hero.more":"So funktioniert’s","hero.hint":"Probier’s aus: Tippe auf den Button",
- "ph.outLeft":"Heute verbleibende Pausenzeit",
+ 
  "ph.take":"Herausnehmen","ph.put":"Einsetzen",
  "how.kicker":"So funktioniert’s","how.title":"Ein Tipp raus. Ein Tipp rein.",
  "how.s1t":"Tippen beim Herausnehmen","how.s1d":"Die Sanduhr dreht sich um und deine verbleibende Pausenzeit zählt herunter.",
  "how.s2t":"Den Sand im Blick","how.s2d":"Den Countdown siehst du in der App, in der Dynamic Island und auf dem Sperrbildschirm.",
  "how.s3t":"Tippen beim Einsetzen","how.s3d":"Tragezeit und Fortschrittsring aktualisieren sich sofort – mit Funkeln, wenn du pünktlich bist.",
  "feat.kicker":"Funktionen","feat.title":"Alles, was du für dein Tagesziel brauchst",
- "lock.t":"Countdown auf dem Sperrbildschirm","lock.d":"Eine Live-Aktivität zeigt den Countdown auf dem Sperrbildschirm und in der Dynamic Island – ein kurzer Blick genügt.",
+ "lock.t":"Countdown auf dem Sperrbildschirm","lock.d":"Eine Live-Aktivität zeigt den Countdown auf dem Sperrbildschirm und in der Dynamic Island – ein kurzer Blick genügt.","lock.isl":"Dynamic Island",
  "alarm.t":"Ein Alarm, der auch lautlos klingelt","alarm.d":"Ist deine Pausenzeit für heute aufgebraucht, klingelt Glasshour wie ein Wecker – auch im Stummmodus oder mit Fokus. Tippe auf ✓, wenn sie wieder drin sind, sonst klingelt es in 10 Minuten erneut.",
  "alarm.more":"Dazu sanfte Erinnerungen: knappe Restzeit, „Isst du noch?“, Check vor dem Schlafen und Wechsel-Erinnerungen.",
- "alarm.title":"Zeit, die Aligner einzusetzen","alarm.sub":"Tippe auf ✓, sonst klingelt es in 10 Min. erneut","alarm.done":"Wieder drin","alarm.silent":"Stumm",
  "cal.t":"Jeder Tag auf einen Blick","cal.d":"Der Kalender färbt jeden Tag danach, ob du dein Ziel erreicht hast. Krank? Markiere den Tag als Pause.",
  "cal.met":"Ziel erreicht","cal.close":"Knapp verfehlt","cal.missed":"Verfehlt","cal.paused":"Pausiert",
  "tray.t":"Deine Behandlung, Aligner für Aligner","tray.d":"Wechseltage, voraussichtliches Ende und Termine in einem Zeitplan. Wechsel verschieben, früher wechseln, zurück zum vorherigen Aligner oder Refinement starten.",
@@ -1140,7 +1106,7 @@ function applyLang(l){
   document.querySelectorAll('[data-href]').forEach(e => e.href = e.dataset.href + '.html#' + ANCHOR[l]);
   $('#lang').value = l;
   $('#trayN').textContent = t('tray.n', {n: 12});
-  buildCalendar(); buildLock(); buildShots(); buildDemo();
+  buildCalendar(); buildPro(); buildShots(); buildDemo();
 }
 /* 换图：先在后台下载解码好再换上，切换语言时不会闪出空白；下载失败自动重试一次 */
 function swapImg(img, url, alt){
@@ -1178,10 +1144,6 @@ lb.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, {passive:
 lb.addEventListener('touchend', e => { if (sx === null) return; const dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 40) showShot(cur + (dx < 0 ? 1 : -1)); sx = null; });
 
 /* ================= 手机演示：真实截图，点按钮在“摘下中”和“戴着”之间切换 ================= */
-const BUDGET = 2 * 3600;
-const clock = s => { const neg = s < 0; s = Math.abs(Math.floor(s)); const h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), x = s % 60;
-  return (neg ? '+' : '') + h + ':' + String(m).padStart(2, '0') + ':' + String(x).padStart(2, '0'); };
-const shortTime = d => (L === 'en' ? (d.getHours() % 12 || 12) : d.getHours()) + ':' + String(d.getMinutes()).padStart(2, '0');
 let isOut = true;
 function buildDemo(){
   swapImg($('#shotOut'), `assets/demo/${L}-out.webp`, SHOT_ALT[L][0]);
@@ -1230,25 +1192,16 @@ hit.addEventListener('click', () => {
   if (wasOut) burst();
   if (navigator.vibrate) try { navigator.vibrate(12) } catch {}
 });
-setInterval(tickLock, 1000);
 
-/* ================= 功能区的小画面 ================= */
-let lockLeft = 38 * 60 + 12;
-function buildLock(){
-  const d = new Date();
-  $('#lkDate').textContent = d.toLocaleDateString(L, {weekday: 'long', month: 'long', day: 'numeric'});
-  paintLock();
+/* ================= 功能区：锁屏、灵动岛、警报的真实截图，按语言换图 ================= */
+function setLazy(img, url){
+  if (img.getAttribute('src') === url) return;
+  if (img.complete && img.naturalWidth) swapImg(img, url, img.alt); else img.src = url;  // 还没加载的懒加载图直接换地址，不提前下载
 }
-function tickLock(){
-  if (lockLeft <= 0) lockLeft = 38 * 60 + 12;
-  lockLeft--;
-  paintLock();
-}
-function paintLock(){
-  $('#lkTime').textContent = shortTime(new Date());
-  $('#lkT').textContent = clock(lockLeft);
-  $('#lkIsl').textContent = clock(lockLeft).replace(/^0:/, '');
-  $('#lkBar').style.width = (lockLeft / BUDGET * 100).toFixed(2) + '%';
+function buildPro(){
+  setLazy($('#proLock'), `assets/pro/${L}-lock.webp`);
+  setLazy($('#proIsland'), `assets/pro/${L}-island.webp`);
+  setLazy($('#proAlarm'), `assets/pro/${L}-alarm.webp`);
 }
 /* 日历：显示上个月（整月都有数据），大部分达标，两天差一点、一天未达标、两天生病暂停 */
 function buildCalendar(){
