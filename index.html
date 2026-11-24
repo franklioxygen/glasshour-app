@@ -1,19 +1,1364 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Glasshour</title>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Glasshour — Clear Aligner Wear Timer</title>
+<meta name="description" content="Take your aligners out with one tap and watch today’s out time count down. When it runs out, an alarm rings—even in Silent mode—so you never forget to put them back.">
+<meta name="theme-color" content="#FBF7EF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#061518" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://franklioxygen.github.io/glasshour-app/">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Glasshour">
+<meta property="og:title" content="Glasshour — Clear Aligner Wear Timer">
+<meta property="og:description" content="One tap when your aligners come out, one tap when they go back. A countdown you can see everywhere, and an alarm that rings even on Silent.">
+<meta property="og:url" content="https://franklioxygen.github.io/glasshour-app/">
+<meta property="og:image" content="https://franklioxygen.github.io/glasshour-app/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" hreflang="en" href="https://franklioxygen.github.io/glasshour-app/?lang=en">
+<link rel="alternate" hreflang="zh-Hans" href="https://franklioxygen.github.io/glasshour-app/?lang=zh-Hans">
+<link rel="alternate" hreflang="zh-Hant" href="https://franklioxygen.github.io/glasshour-app/?lang=zh-Hant">
+<link rel="alternate" hreflang="ja" href="https://franklioxygen.github.io/glasshour-app/?lang=ja">
+<link rel="alternate" hreflang="ko" href="https://franklioxygen.github.io/glasshour-app/?lang=ko">
+<link rel="alternate" hreflang="es" href="https://franklioxygen.github.io/glasshour-app/?lang=es">
+<link rel="alternate" hreflang="fr" href="https://franklioxygen.github.io/glasshour-app/?lang=fr">
+<link rel="alternate" hreflang="de" href="https://franklioxygen.github.io/glasshour-app/?lang=de">
+<link rel="alternate" hreflang="x-default" href="https://franklioxygen.github.io/glasshour-app/">
+<script>document.documentElement.classList.add('js')</script>
 <style>
-:root{--bg:#f6f8f9;--fg:#10181a;--muted:#55666b;--card:#fff;--line:#dde5e7;--accent:#00a3b8}
-@media (prefers-color-scheme:dark){:root{--bg:#0c1214;--fg:#e8eff1;--muted:#93a6ab;--card:#141c1f;--line:#24313a;--accent:#2ec7da}}
-body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,"PingFang SC","Hiragino Sans",sans-serif}
-main{max-width:640px;margin:0 auto;padding:56px 16px}
-h1{font-size:34px;margin:0}p{color:var(--muted)}
-a.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin:12px 0;color:var(--fg);text-decoration:none}
-a.card span{color:var(--accent)}
-</style></head>
-<body><main>
-<h1>Glasshour</h1>
-<p>Clear aligner wear timer for iPhone · 隐形牙套佩戴计时</p>
-<a class="card" href="privacy.html"><strong>Privacy Policy</strong> · 隐私政策 <span>→</span></a>
-<a class="card" href="support.html"><strong>Support</strong> · 支持 <span>→</span></a>
-<a class="card" href="https://github.com/franklioxygen/glasshour-app/issues"><strong>Feedback</strong> · 反馈 <span>→</span></a>
-</main></body></html>
+/* ---------- 颜色：取自 App（GlasshourKit StateColor）和图标 ---------- */
+:root{
+  --worn:#17A2B7; --gold:#F2AE45; --over:#E22342;
+  --pink:#FF6BA6; --violet:#8C73FF; --lime:#9EE659;
+  --ink-on:#0A2126;                       /* 青色、金色底上的字 */
+  --bg:#FBF7EF; --bg2:#F3ECDF;
+  --fg:#0A2126; --muted:#4D6266; --faint:#7C8E91;
+  --card:#FFFFFF; --card2:#F7F2E8; --line:rgba(14,89,102,.12);
+  --worn-text:#1B6E7B; --out-text:#8C5A00; --over-text:#C3302A;
+  --arch:#0E5966;                         /* 图标里的深青弧线 */
+  --em1:#C27A00; --em2:#E2553A;
+  --shadow:0 1px 2px rgba(10,33,38,.06),0 12px 32px -12px rgba(10,33,38,.18);
+  --app-bg:linear-gradient(180deg,#CFE8EE 0%,#EEF6F7 38%,#FFFFFF 70%);
+  --app-fg:#0A2126; --app-muted:#6B7C80; --app-row:rgba(10,33,38,.08);
+  --tabbar:rgba(255,255,255,.72);
+  --track:rgba(23,162,183,.16);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#061518; --bg2:#0A2126;
+  --fg:#F3EAD9; --muted:#A8BBBE; --faint:#7F9599;
+  --card:#0D2327; --card2:#0B1E22; --line:rgba(243,234,217,.10);
+  --worn-text:#45C9D6; --out-text:#F4B54C; --over-text:#FF7066;
+  --arch:#F3EAD9;
+  --em1:#F4B54C; --em2:#FF8A6B;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 16px 40px -16px rgba(0,0,0,.7);
+  --app-bg:linear-gradient(180deg,#0F3F48 0%,#071C20 45%,#000 80%);
+  --app-fg:#F2F5F5; --app-muted:#93A6AB; --app-row:rgba(255,255,255,.09);
+  --tabbar:rgba(30,36,38,.72);
+  --track:rgba(69,201,214,.16);
+}}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);
+  font:17px/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,"PingFang SC","PingFang TC","Hiragino Sans","Apple SD Gothic Neo","Noto Sans CJK SC",sans-serif;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+img{display:block;max-width:100%}
+.wrap{max-width:1140px;margin:0 auto;padding:0 20px}
+.num{font-family:ui-rounded,"SF Pro Rounded",-apple-system,system-ui,sans-serif;font-variant-numeric:tabular-nums}
+.ic{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:3px solid var(--worn);outline-offset:3px;border-radius:8px}
+
+/* ---------- 顶栏 ---------- */
+header{position:sticky;top:0;z-index:50;backdrop-filter:saturate(1.6) blur(18px);-webkit-backdrop-filter:saturate(1.6) blur(18px);
+  background:color-mix(in srgb,var(--bg) 72%,transparent);border-bottom:1px solid transparent;transition:border-color .3s}
+header.scrolled{border-bottom-color:var(--line)}
+.bar{display:flex;align-items:center;gap:16px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;font-size:19px;letter-spacing:-.01em}
+.brand img{width:34px;height:34px}
+.bar nav{display:flex;gap:4px;margin-left:auto;align-items:center}
+.bar nav a{text-decoration:none;font-size:15px;color:var(--muted);padding:8px 12px;border-radius:999px;transition:color .2s,background .2s}
+.bar nav a:hover{color:var(--fg);background:var(--line)}
+.lang{position:relative;display:flex;align-items:center}
+.lang select{appearance:none;-webkit-appearance:none;font:inherit;font-size:14px;color:var(--fg);background:var(--card);border:1px solid var(--line);
+  border-radius:999px;padding:7px 30px 7px 32px;cursor:pointer;box-shadow:var(--shadow)}
+.lang .ic{position:absolute;pointer-events:none;color:var(--muted);font-size:15px}
+.lang .ic:first-child{left:11px}.lang .ic:last-child{right:10px;font-size:12px}
+@media (max-width:720px){.bar nav a{display:none}}
+
+/* 图标：浅色 / 深色两套 */
+.icon-dark{display:none}
+@media (prefers-color-scheme:dark){.icon-light{display:none}.icon-dark{display:block}}
+
+/* ---------- 首屏 ---------- */
+.hero{position:relative;overflow:hidden;padding:56px 0 72px}
+.aurora{position:absolute;inset:-20% -10% 0;pointer-events:none;z-index:0;filter:blur(60px);opacity:.9}
+.aurora i{position:absolute;border-radius:50%;animation:drift 22s ease-in-out infinite alternate}
+.aurora i:nth-child(1){width:46vw;height:46vw;max-width:620px;max-height:620px;left:48%;top:4%;background:radial-gradient(circle,rgba(23,162,183,.42),transparent 65%)}
+.aurora i:nth-child(2){width:38vw;height:38vw;max-width:520px;max-height:520px;left:64%;top:36%;background:radial-gradient(circle,rgba(242,174,69,.45),transparent 65%);animation-duration:26s;animation-delay:-6s}
+.aurora i:nth-child(3){width:30vw;height:30vw;max-width:420px;max-height:420px;left:6%;top:50%;background:radial-gradient(circle,rgba(255,107,166,.20),transparent 65%);animation-duration:30s;animation-delay:-12s}
+.aurora i:nth-child(4){width:28vw;height:28vw;max-width:380px;max-height:380px;left:30%;top:-4%;background:radial-gradient(circle,rgba(140,115,255,.18),transparent 65%);animation-duration:34s;animation-delay:-3s}
+@keyframes drift{0%{transform:translate(0,0) scale(1)}50%{transform:translate(-6%,8%) scale(1.12)}100%{transform:translate(7%,-5%) scale(.94)}}
+#sand{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+.hero .wrap{position:relative;z-index:2;display:grid;grid-template-columns:1.08fr .92fr;gap:40px;align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--worn-text);
+  background:color-mix(in srgb,var(--worn) 12%,transparent);border:1px solid color-mix(in srgb,var(--worn) 25%,transparent);padding:6px 14px;border-radius:999px}
+h1{font-size:clamp(40px,6.2vw,72px);line-height:1.04;letter-spacing:-.035em;margin:20px 0 20px;font-weight:800;text-wrap:balance}
+:lang(zh-Hans) h1,:lang(zh-Hant) h1,:lang(ja) h1,:lang(ko) h1{letter-spacing:-.01em;line-height:1.14}
+h1 em{font-style:normal;background:linear-gradient(100deg,var(--em1),var(--em2) 70%,var(--em1));background-size:200% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 6s ease-in-out infinite}
+@keyframes shine{0%,100%{background-position:0 0}50%{background-position:100% 0}}
+.lede{font-size:clamp(17px,1.7vw,20px);color:var(--muted);max-width:34em;margin:0 0 32px;text-wrap:pretty}
+.ctas{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-weight:650;font-size:16px;border-radius:999px;padding:14px 22px;
+  transition:transform .2s cubic-bezier(.3,1.6,.5,1),box-shadow .2s;border:0;cursor:pointer;font-family:inherit}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:scale(.97)}
+.btn.primary{background:var(--fg);color:var(--bg);box-shadow:0 10px 30px -10px color-mix(in srgb,var(--fg) 60%,transparent)}
+.btn.ghost{background:var(--card);color:var(--fg);border:1px solid var(--line);box-shadow:var(--shadow)}
+.btn .ic{font-size:20px}
+.soon{display:inline-flex;align-items:center;gap:12px;border-radius:16px;padding:10px 18px 10px 14px;background:var(--fg);color:var(--bg);text-decoration:none;
+  box-shadow:0 10px 30px -10px color-mix(in srgb,var(--fg) 60%,transparent)}
+.soon .ic{font-size:26px}
+.soon small{display:block;font-size:12px;opacity:.7;line-height:1.2}
+.soon b{display:block;font-size:17px;line-height:1.25;font-weight:650}
+.req{margin-top:18px;font-size:14px;color:var(--faint);display:flex;align-items:center;gap:8px}
+
+/* ---------- 手机演示 ---------- */
+.stage{position:relative;display:flex;justify-content:center;--s:1;margin-bottom:56px}
+.phone-wrap{height:calc(624px * var(--s));width:calc(304px * var(--s));position:relative}
+.phone{position:absolute;left:0;top:0;width:304px;height:624px;transform:scale(var(--s));transform-origin:0 0;border-radius:54px;padding:11px;
+  background:linear-gradient(150deg,#3a4548,#0c1113 40%,#20292c);
+  box-shadow:0 50px 90px -30px rgba(10,33,38,.55),0 0 0 1px rgba(255,255,255,.06) inset,0 0 0 2px #0b0f10;
+  animation:float 7s ease-in-out infinite}
+@keyframes float{0%,100%{translate:0 0}50%{translate:0 -10px}}
+.phone::before{content:"";position:absolute;right:-3px;top:150px;width:3px;height:70px;border-radius:0 3px 3px 0;background:#1a2124}
+.phone::after{content:"";position:absolute;left:-3px;top:120px;width:3px;height:34px;border-radius:3px 0 0 3px;background:#1a2124;box-shadow:0 56px 0 #1a2124,0 104px 0 #1a2124}
+.screen{position:relative;height:100%;border-radius:43px;overflow:hidden;background:var(--app-bg);color:var(--app-fg);
+  font-family:-apple-system,BlinkMacSystemFont,system-ui,"PingFang SC","Hiragino Sans","Apple SD Gothic Neo",sans-serif;isolation:isolate}
+.sbar{position:absolute;top:0;left:0;right:0;height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 26px 0 32px;font-size:14px;font-weight:600;z-index:5}
+.sbar .sig{display:flex;gap:5px;align-items:center}
+.sbar .sig i{display:block;width:3px;border-radius:1px;background:currentColor}
+.batt{width:24px;height:12px;border-radius:4px;border:1.5px solid currentColor;opacity:.9;padding:1.5px}
+.batt::before{content:"";display:block;height:100%;width:78%;background:currentColor;border-radius:1.5px}
+.island{position:absolute;top:11px;left:50%;height:30px;width:98px;transform:translateX(-50%);background:#000;border-radius:20px;z-index:6}
+.app-top{position:absolute;top:54px;left:20px;right:16px;display:flex;align-items:center;justify-content:space-between}
+.app-top b{font-size:30px;letter-spacing:-.02em}
+.plus{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:var(--worn);background:var(--tabbar);
+  box-shadow:0 2px 10px rgba(0,0,0,.08),inset 0 0 0 .5px rgba(255,255,255,.6);font-size:18px}
+.dstage{position:absolute;top:104px;left:0;right:0;height:268px}
+.layer{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;transition:opacity .4s,transform .55s cubic-bezier(.3,1.35,.45,1)}
+.layer.hide{opacity:0;transform:scale(.72);pointer-events:none}
+.ringbox{position:relative;width:212px;height:212px;display:grid;place-items:center}
+.halo{position:absolute;inset:-22%;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--worn) 34%,transparent),transparent 62%);animation:breathe 4s ease-in-out infinite}
+@keyframes breathe{0%,100%{transform:scale(.9);opacity:.55}50%{transform:scale(1.06);opacity:1}}
+.ring{position:absolute;inset:0;transform:rotate(-90deg);overflow:visible}
+.ring circle{fill:none;stroke-width:15}
+.ring .trk{stroke:var(--track)}
+.ring .val{stroke:url(#ringGrad);stroke-linecap:round;filter:drop-shadow(0 0 7px rgba(23,162,183,.55));transition:stroke-dashoffset 1.3s cubic-bezier(.25,1,.35,1)}
+.ring .knob{fill:#fff;stroke:none;filter:drop-shadow(0 0 4px rgba(23,162,183,.9))}
+.rtext{position:relative;text-align:center;line-height:1.15}
+.rtext small{display:block;font-size:13px;color:var(--app-muted)}
+.rtext .dur{font-weight:650;margin:4px 0 3px;white-space:nowrap}
+.dur b{font-size:44px;letter-spacing:-.02em;font-weight:650}
+.dur u{text-decoration:none;font-size:17px;margin:0 3px 0 1px}
+.subline{margin-top:12px;font-size:14px;font-weight:600;color:var(--app-muted)}
+.glass{width:112px;height:138px;margin:4px 0 10px;transform-origin:50% 50%}
+.out .glass.flip{animation:flip .9s cubic-bezier(.3,1.4,.5,1)}
+@keyframes flip{0%{transform:rotate(180deg) scale(.7)}100%{transform:rotate(0) scale(1)}}
+.glass .arch{fill:var(--arch)}
+.glass .sandc{fill:var(--gold)}
+.glass .drip{fill:var(--gold);animation:drip 1.1s linear infinite}
+.glass .drip:nth-of-type(2){animation-delay:-.37s}.glass .drip:nth-of-type(3){animation-delay:-.74s}
+@keyframes drip{0%{transform:translateY(0);opacity:0}10%{opacity:1}100%{transform:translateY(44px);opacity:.3}}
+.paused .drip{animation-play-state:paused;opacity:0}
+.olabel{font-size:13px;color:var(--app-muted)}
+.big{font-size:56px;font-weight:650;letter-spacing:-.02em;color:var(--out-text);line-height:1.08;display:flex}
+.over .big{color:var(--over-text);animation:pulse 1s ease-in-out infinite}
+@keyframes pulse{50%{transform:scale(1.05)}}
+.big span{display:inline-block}
+.big span.roll{animation:roll .35s cubic-bezier(.3,1.3,.5,1)}
+@keyframes roll{0%{transform:translateY(-45%);opacity:0}100%{transform:none;opacity:1}}
+.mainbtn{position:absolute;top:386px;left:18px;right:18px;height:58px;border-radius:30px;border:0;cursor:pointer;font:inherit;font-size:21px;font-weight:700;
+  color:var(--ink-on);display:flex;align-items:center;justify-content:center;gap:10px;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--gold) 82%,#fff),var(--gold));
+  box-shadow:0 10px 24px -8px rgba(242,174,69,.8),inset 0 1px 0 rgba(255,255,255,.55),inset 0 -2px 0 rgba(0,0,0,.06);
+  transition:background .4s,box-shadow .4s,transform .25s cubic-bezier(.3,1.6,.5,1)}
+.mainbtn:hover{transform:scale(1.02)}
+.mainbtn:active{transform:scale(.95)}
+.out .mainbtn{background:linear-gradient(180deg,color-mix(in srgb,var(--worn) 80%,#fff),var(--worn));box-shadow:0 10px 24px -8px rgba(23,162,183,.8),inset 0 1px 0 rgba(255,255,255,.5),inset 0 -2px 0 rgba(0,0,0,.06)}
+.mainbtn .ic{font-size:24px;stroke-width:2.4}
+.mainbtn .ic-check{display:none}
+.out .mainbtn .ic-check{display:block}.out .mainbtn .ic-hg{display:none}
+.entries{position:absolute;top:462px;left:20px;right:20px;font-size:13px}
+.entries h4{margin:0 0 6px;font-size:14px}
+.entries div{display:flex;justify-content:space-between;padding:9px 0;border-bottom:.5px solid var(--app-row);color:var(--app-fg)}
+.entries div span:last-child{color:var(--app-muted)}
+.tabbar{position:absolute;left:9px;right:9px;bottom:12px;height:60px;border-radius:30px;background:var(--tabbar);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  box-shadow:0 6px 24px rgba(0,0,0,.12),inset 0 0 0 .5px rgba(255,255,255,.45);display:flex;align-items:center;justify-content:space-around;padding:0 4px;z-index:4}
+.tabbar span{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:8px;font-weight:600;letter-spacing:-.25px;width:20%;min-width:0;text-align:center;padding:6px 1px;border-radius:22px;color:var(--app-fg)}
+.tabbar em{font-style:normal;display:block;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tabbar span .ic{font-size:20px}
+.tabbar span.on{color:var(--worn);background:color-mix(in srgb,var(--worn) 13%,transparent)}
+.fx{position:absolute;inset:0;pointer-events:none;z-index:8;overflow:hidden}
+.fx i{position:absolute;display:block}
+.hint{position:absolute;left:50%;top:calc(100% + 18px);transform:translateX(-50%);display:flex;align-items:center;gap:8px;white-space:nowrap;font-size:15px;font-weight:650;color:var(--fg);
+  background:var(--card);padding:9px 16px;border-radius:14px;box-shadow:var(--shadow);transition:opacity .4s;animation:nudge 2.2s ease-in-out infinite;z-index:3}
+.hint::after{content:"";position:absolute;left:50%;top:-6px;width:12px;height:12px;background:var(--card);transform:translateX(-50%) rotate(45deg);border-radius:2px}
+.hint .ic{color:var(--gold);font-size:18px}
+.hint.gone{opacity:0;pointer-events:none;animation:none}
+@keyframes nudge{0%,100%{translate:0 0}50%{translate:0 -5px}}
+
+/* ---------- 通用区块 ---------- */
+section{position:relative}
+.sec{padding:96px 0}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--worn-text)}
+:lang(zh-Hans) .kicker,:lang(zh-Hant) .kicker,:lang(ja) .kicker,:lang(ko) .kicker{letter-spacing:.12em}
+h2{font-size:clamp(32px,4.4vw,52px);line-height:1.1;letter-spacing:-.03em;margin:12px 0 16px;font-weight:800;text-wrap:balance}
+:lang(zh-Hans) h2,:lang(zh-Hant) h2,:lang(ja) h2,:lang(ko) h2{letter-spacing:-.01em;line-height:1.2}
+h3{font-size:22px;line-height:1.25;letter-spacing:-.015em;margin:0 0 8px;font-weight:750}
+.center{text-align:center}
+.center .lede{margin-left:auto;margin-right:auto}
+.js .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+.js .reveal.in{opacity:1;transform:none}
+
+/* 三步 */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px;counter-reset:s}
+.step{position:relative;background:var(--card);border:1px solid var(--line);border-radius:28px;padding:28px 26px 26px;box-shadow:var(--shadow);overflow:hidden}
+.step::before{counter-increment:s;content:counter(s);position:absolute;right:18px;top:6px;font:800 84px/1 ui-rounded,"SF Pro Rounded",system-ui,sans-serif;color:var(--line);letter-spacing:-.04em}
+.bub{width:56px;height:56px;border-radius:18px;display:grid;place-items:center;font-size:28px;color:var(--ink-on);margin-bottom:18px;
+  box-shadow:0 10px 24px -10px currentColor}
+.bub .ic{stroke-width:2.2}
+.b-gold{background:linear-gradient(140deg,#FFD58C,var(--gold));color:#7a4d00}
+.b-teal{background:linear-gradient(140deg,#7FE3EE,var(--worn));color:#064a55}
+.b-pink{background:linear-gradient(140deg,#FFB1D0,var(--pink));color:#7a1240}
+.b-violet{background:linear-gradient(140deg,#C6B8FF,var(--violet));color:#2e1a8a}
+.b-lime{background:linear-gradient(140deg,#D5F7A8,var(--lime));color:#2c5a06}
+.bub .ic{color:var(--ink-on)}
+.step p,.card p{margin:0;color:var(--muted)}
+
+/* 功能卡片 */
+.bento{display:grid;grid-template-columns:repeat(12,1fr);gap:20px;margin-top:48px}
+.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:32px;padding:30px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;gap:24px}
+.c7{grid-column:span 7}.c5{grid-column:span 5}.c12{grid-column:span 12}
+.card .txt{max-width:36em}
+.pro{display:inline-block;vertical-align:3px;margin-left:8px;font-size:11px;font-weight:800;letter-spacing:.08em;color:#fff;padding:3px 8px;border-radius:999px;
+  background:linear-gradient(100deg,var(--worn),var(--violet),var(--pink))}
+.vis{position:relative;flex:1;display:grid;place-items:center;min-height:300px;border-radius:24px;background:var(--card2);overflow:hidden}
+.more{margin-top:10px!important;font-size:15px}
+
+/* 锁屏 */
+.lock{width:min(100%,300px);height:330px;border-radius:38px;position:relative;overflow:hidden;color:#fff;
+  background:radial-gradient(120% 80% at 80% 110%,rgba(242,174,69,.55),transparent 55%),radial-gradient(90% 70% at 0% 0%,rgba(23,162,183,.7),transparent 60%),linear-gradient(170deg,#0F3F48,#05181C);
+  box-shadow:0 30px 60px -25px rgba(5,24,28,.8)}
+.lock .isl{position:absolute;top:12px;left:50%;transform:translateX(-50%);height:28px;width:92px;border-radius:20px;background:#000}
+.dyn{position:absolute;z-index:2;top:22px;right:22px;height:40px;width:138px;border-radius:22px;background:#000;display:flex;justify-content:space-between;align-items:center;padding:0 16px 0 13px;
+  box-shadow:0 14px 30px -10px rgba(0,0,0,.6),0 0 0 4px color-mix(in srgb,var(--card2) 80%,transparent);animation:dyn 4s ease-in-out infinite}
+.dyn .ic{color:var(--gold);font-size:19px}
+.dyn span{color:#F4B54C;font-size:16px;font-weight:650}
+@keyframes dyn{0%,100%{width:138px}50%{width:150px}}
+@media (max-width:640px){.dyn{top:14px;right:14px;transform:scale(.85);transform-origin:top right}}
+.lock .date{position:absolute;top:58px;width:100%;text-align:center;font-size:14px;font-weight:600;opacity:.85}
+.lock .time{position:absolute;top:72px;width:100%;text-align:center;font-size:78px;font-weight:700;letter-spacing:-.03em;line-height:1.1;
+  background:linear-gradient(180deg,#fff,rgba(255,255,255,.75));-webkit-background-clip:text;background-clip:text;color:transparent}
+.la{position:absolute;left:12px;right:12px;bottom:14px;border-radius:24px;padding:14px 16px;background:rgba(0,0,0,.42);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  display:grid;grid-template-columns:auto 1fr;gap:4px 12px;align-items:center}
+.la .gi{grid-row:span 2;width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:rgba(242,174,69,.18);color:var(--gold);font-size:24px}
+.la small{font-size:12px;opacity:.7}
+.la b{font-size:30px;line-height:1;color:#F4B54C;font-weight:650}
+.la .pbar{grid-column:1/-1;height:6px;border-radius:3px;background:rgba(255,255,255,.14);margin-top:10px;overflow:hidden}
+.la .pbar i{display:block;height:100%;border-radius:3px;background:linear-gradient(90deg,#F4B54C,#FFD58C);transition:width 1s linear}
+
+/* 警报 */
+.alarm{width:min(100%,280px);min-height:350px;border-radius:38px;background:#0b0f10;color:#fff;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;padding:26px 20px 20px;text-align:center;
+  box-shadow:0 30px 60px -25px rgba(0,0,0,.8);animation:shake 3.2s ease-in-out infinite}
+@keyframes shake{0%,70%,100%{rotate:0deg}74%{rotate:-3deg}78%{rotate:3deg}82%{rotate:-2deg}86%{rotate:2deg}90%{rotate:0deg}}
+.silent{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:650;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.8)}
+.rings{position:relative;width:100px;height:100px;margin:18px 0 12px;display:grid;place-items:center}
+.rings i{position:absolute;inset:0;border-radius:50%;border:2px solid var(--over);animation:ripple 2.4s ease-out infinite;opacity:0}
+.rings i:nth-child(2){animation-delay:.8s}.rings i:nth-child(3){animation-delay:1.6s}
+@keyframes ripple{0%{transform:scale(.55);opacity:.9}100%{transform:scale(1.35);opacity:0}}
+.rings b{width:70px;height:70px;border-radius:50%;display:grid;place-items:center;font-size:34px;background:radial-gradient(circle at 35% 30%,#ff5a72,var(--over));box-shadow:0 0 34px rgba(226,35,66,.65)}
+.alarm h4{margin:0;font-size:18px;line-height:1.25}
+.alarm p{margin:6px 0 18px;font-size:12.5px;color:rgba(255,255,255,.65)!important;line-height:1.35}
+.alarm .ok{margin-top:auto;display:flex;align-items:center;gap:8px;justify-content:center;width:100%;padding:12px;border-radius:999px;background:var(--over);font-weight:700;font-size:16px}
+
+/* 日历 */
+.cal{width:min(100%,330px);padding:20px;border-radius:24px;background:var(--card);box-shadow:var(--shadow)}
+.cal .mh{font-weight:750;font-size:17px;margin-bottom:10px}
+.cal .grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center}
+.cal .wd{font-size:11px;color:var(--faint);font-weight:600}
+.cal .d{aspect-ratio:1;border-radius:50%;display:grid;place-items:center;font-size:12.5px;font-weight:650;color:var(--ink-on)}
+.cal .d.m{background:var(--worn)}.cal .d.c{background:var(--gold)}.cal .d.x{background:var(--over);color:#fff}.cal .d.p{background:color-mix(in srgb,var(--faint) 35%,transparent);color:var(--fg)}
+.js .cal .d{transform:scale(0);transition:transform .5s cubic-bezier(.3,1.6,.5,1)}
+.js .in .cal .d{transform:none}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:14px;font-size:12.5px;color:var(--muted)}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend i{width:10px;height:10px;border-radius:50%}
+
+/* 牙套 */
+.tray{width:min(100%,400px);padding:24px;border-radius:24px;background:var(--card);box-shadow:var(--shadow)}
+.tray .tn{display:flex;align-items:baseline;gap:8px}
+.tray .tn b{font-size:40px;letter-spacing:-.03em;font-weight:750}
+.tray .tn span{color:var(--muted);font-weight:600}
+.segs{display:grid;grid-template-columns:repeat(30,1fr);gap:3px;margin:16px 0 18px}
+.segs i{height:22px;border-radius:4px;background:var(--line)}
+.segs i.done{background:var(--worn)}
+.segs i.now{background:var(--gold);animation:glow 1.6s ease-in-out infinite}
+@keyframes glow{50%{box-shadow:0 0 0 3px color-mix(in srgb,var(--gold) 35%,transparent),0 0 16px var(--gold)}}
+.js .segs i{transform:scaleY(0);transform-origin:bottom;transition:transform .5s cubic-bezier(.3,1.5,.5,1)}
+.js .in .segs i{transform:none}
+.trow{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line);font-size:15px}
+.trow .ic{font-size:20px;color:var(--worn-text)}
+.trow .val{margin-left:auto;color:var(--muted);font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:650;padding:6px 12px;border-radius:999px;background:var(--card2);border:1px solid var(--line)}
+.chip .ic{font-size:15px}
+
+/* 成就 */
+.medals{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;width:100%;padding:34px 24px}
+.medal{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px}
+.md{position:relative;width:96px;height:96px;border-radius:50%;padding:6px;background:var(--rim);transition:transform .4s cubic-bezier(.3,1.6,.5,1);box-shadow:0 12px 24px -12px rgba(0,0,0,.45)}
+.md:hover{transform:scale(1.1) rotate(-6deg)}
+.face{position:relative;z-index:1;width:100%;height:100%;border-radius:50%;display:grid;place-items:center;font-size:38px;color:#fff;background:var(--face);overflow:hidden;box-shadow:inset 0 2px 6px rgba(255,255,255,.5),inset 0 -4px 10px rgba(0,0,0,.18)}
+.face::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.7) 50%,transparent 65%);background-size:250% 100%;background-position:150% 0;animation:sheen 5s ease-in-out infinite;animation-delay:var(--dl,0s)}
+@keyframes sheen{0%,60%{background-position:150% 0}85%,100%{background-position:-60% 0}}
+.face .ic{stroke-width:2.2;filter:drop-shadow(0 2px 3px rgba(0,0,0,.3))}
+.t1{--face:radial-gradient(circle at 35% 30%,#F1B98A,#B26A36 70%);--rim:linear-gradient(140deg,#F6CBA3,#8A4E25)}
+.t2{--face:radial-gradient(circle at 35% 30%,#FFFFFF,#9AA9B2 75%);--rim:linear-gradient(140deg,#fff,#7d8b93)}
+.t3{--face:radial-gradient(circle at 35% 30%,#FFE9A3,#E2A019 72%);--rim:linear-gradient(140deg,#FFF2C2,#B97C06)}
+.t4{--face:radial-gradient(circle at 35% 30%,#B5F3F9,#17A2B7 72%);--rim:linear-gradient(140deg,#D8FBFF,#0E6F7E)}
+.t5{--face:radial-gradient(circle at 35% 30%,#D6C9FF,#8C73FF 50%,#FF6BA6 95%);--rim:linear-gradient(140deg,#FFC2DC,#6A4FE0)}
+.t6{--face:radial-gradient(circle at 35% 30%,#FFF4D6,#F2AE45 55%,#E2553A 100%);--rim:transparent;overflow:hidden}
+.t6::before{content:"";position:absolute;inset:-20%;background:conic-gradient(#FF6BA6,#F2AE45,#9EE659,#17A2B7,#8C73FF,#FF6BA6);animation:spin 5s linear infinite}
+@keyframes spin{to{transform:rotate(1turn)}}
+.medal b{font-size:14px;line-height:1.25}
+.medal small{font-size:12px;color:var(--muted);font-weight:600;margin-top:-6px}
+
+/* 用在哪里 */
+.surf{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:40px}
+.surf span{display:inline-flex;align-items:center;gap:10px;font-weight:650;font-size:16px;padding:12px 18px;border-radius:18px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);transition:transform .3s cubic-bezier(.3,1.6,.5,1)}
+.surf span:hover{transform:translateY(-4px) rotate(-1deg)}
+.surf .ic{font-size:22px;color:var(--worn-text)}
+
+/* 记录 */
+.recs{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:48px}
+.rec{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:26px;box-shadow:var(--shadow)}
+.rec h3{font-size:19px}
+.rec p{margin:0;color:var(--muted);font-size:16px}
+
+/* 隐私 */
+.privacy{border-radius:40px;padding:56px;position:relative;overflow:hidden;color:#F3EAD9;
+  background:radial-gradient(70% 90% at 100% 0%,rgba(23,162,183,.45),transparent 60%),radial-gradient(60% 80% at 0% 100%,rgba(242,174,69,.28),transparent 60%),linear-gradient(160deg,#0F3F48,#05181C)}
+.privacy h2{color:#fff}
+.privacy .kicker{color:#7FE3EE}
+.privacy p{color:rgba(243,234,217,.8);font-size:19px;max-width:32em}
+.pills{display:flex;flex-wrap:wrap;gap:12px;margin:28px 0}
+.pills span{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:17px;padding:12px 20px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14)}
+.pills .ic{font-size:20px;color:var(--gold)}
+.privacy a.link{display:inline-flex;align-items:center;gap:8px;color:#fff;font-weight:650;text-decoration:none;border-bottom:1.5px solid rgba(255,255,255,.35);padding-bottom:2px}
+.privacy a.link:hover{border-color:#fff}
+.shield{position:absolute;right:56px;top:50%;width:220px;height:220px;transform:translateY(-50%);display:grid;place-items:center}
+.shield svg{width:100%;height:100%;stroke:url(#shieldGrad);stroke-width:1.2;fill:none;filter:drop-shadow(0 0 30px rgba(23,162,183,.5))}
+
+/* 价格 */
+.plans{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:48px;max-width:900px;margin-left:auto;margin-right:auto}
+.plan{position:relative;background:var(--card);border:1px solid var(--line);border-radius:32px;padding:32px;box-shadow:var(--shadow)}
+.plan h3{font-size:26px;display:flex;align-items:center;gap:10px}
+.plan ul{list-style:none;padding:0;margin:20px 0 0}
+.plan li{display:flex;gap:12px;align-items:flex-start;padding:9px 0;font-size:16.5px}
+.plan li .ic{font-size:20px;margin-top:3px;color:var(--worn-text);stroke-width:2.6}
+.plan.p2{border:2px solid transparent;background:linear-gradient(var(--card),var(--card)) padding-box,linear-gradient(120deg,var(--worn),var(--violet),var(--pink),var(--gold),var(--worn)) border-box;background-size:100% 100%,300% 100%;animation:border 8s linear infinite}
+@keyframes border{to{background-position:0 0,300% 0}}
+.plan.p2 li .ic{color:var(--violet)}
+.plan .note{margin:16px 0 0;font-size:14px;color:var(--faint)}
+
+/* 结尾 */
+.final{text-align:center;padding:110px 0 100px;position:relative;overflow:hidden}
+.final .appicon{width:132px;height:132px;margin:0 auto 28px;animation:bob 5s ease-in-out infinite;filter:drop-shadow(0 24px 40px rgba(14,89,102,.35))}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-14px) rotate(3deg)}}
+.final .ctas{justify-content:center}
+.final .lede{margin-left:auto;margin-right:auto}
+footer{border-top:1px solid var(--line);padding:36px 0 48px;font-size:14px;color:var(--faint)}
+footer .links{display:flex;flex-wrap:wrap;gap:6px 22px;margin-bottom:18px}
+footer .links a{color:var(--muted);text-decoration:none;font-weight:600}
+footer .links a:hover{color:var(--fg)}
+footer p{margin:6px 0;max-width:62em}
+
+/* ---------- 窄屏 ---------- */
+@media (max-width:980px){
+  .hero .wrap{grid-template-columns:1fr;gap:48px}
+  .hero{padding-top:36px}
+  .c7,.c5{grid-column:span 12}
+  .recs{grid-template-columns:1fr 1fr}
+  .medals{grid-template-columns:repeat(3,1fr)}
+  .shield{display:none}
+}
+@media (max-width:640px){
+  .wrap{padding:0 16px}
+  .sec{padding:72px 0}
+  .steps,.plans,.recs{grid-template-columns:1fr}
+  .card{padding:22px;border-radius:28px}
+  .privacy{padding:36px 24px;border-radius:32px}
+  .medals{gap:20px 8px;padding:26px 10px}
+  .md{width:78px;height:78px}.face{font-size:30px}
+  .stage{--s:.92}
+}
+@media (max-width:360px){.stage{--s:.84}}
+
+/* ---------- 减弱动态效果 ---------- */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+  .js .reveal{opacity:1;transform:none}
+  .js .cal .d,.js .segs i{transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- 图标：线条风格，和 SF Symbols 的意思对应 -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#45C9D6"/><stop offset="1" stop-color="#17A2B7"/></linearGradient>
+    <linearGradient id="shieldGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7FE3EE"/><stop offset="1" stop-color="#F2AE45"/></linearGradient>
+  </defs>
+  <symbol id="i-hg" viewBox="0 0 24 24"><path d="M6 3h12M6 21h12M7.5 3c0 5 4.5 6 4.5 9s-4.5 4-4.5 9M16.5 3c0 5-4.5 6-4.5 9s4.5 4 4.5 9"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="M7.5 12.5l3 3 6-6.5"/></symbol>
+  <symbol id="i-tick" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3.5"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-stack" viewBox="0 0 24 24"><path d="M12 3l9 4.8-9 4.8-9-4.8z"/><path d="M3 12.2l9 4.8 9-4.8"/><path d="M3 16.4l9 4.8 9-4.8"/></symbol>
+  <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3.2 4M16 6h3a3 3 0 0 1-3.2 4M12 13v4M8 21h8M9.5 17h5"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M2.5 12h3M18.5 12h3M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 21h4"/></symbol>
+  <symbol id="i-bellx" viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 0 1 9.5-4.9M18 11v5l1.5 2h-15"/><path d="M10 21h4M3 3l18 18"/></symbol>
+  <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 2.5c1.2 3.2 5.5 5.3 5.5 10.5a5.5 5.5 0 0 1-11 0c0-2.7 1.6-4.3 2.7-5.3.3 2 1.3 2.8 2.1 3.2.4-3.2-.4-5.8.7-8.4z"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2L4.5 13.5h6.5L10 22l8.5-11.5H12z"/></symbol>
+  <symbol id="i-crown" viewBox="0 0 24 24"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5z"/></symbol>
+  <symbol id="i-calok" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3.5"/><path d="M3 10h18M8 3v4M16 3v4M9 15.5l2 2 4-4"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></symbol>
+  <symbol id="i-pencil" viewBox="0 0 24 24"><path d="M4 20l4.2-1L19 8.2 15.8 5 5 15.8z"/><path d="M13.5 7.3l3.2 3.2"/></symbol>
+  <symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.4 3 14.6 0 18M12 3c-3 3.4-3 14.6 0 18"/></symbol>
+  <symbol id="i-widget" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="17" height="7" rx="2"/></symbol>
+  <symbol id="i-cc" viewBox="0 0 24 24"><rect x="4" y="3" width="6.5" height="18" rx="3.25"/><rect x="13.5" y="3" width="6.5" height="18" rx="3.25"/><path d="M7.25 13v5M16.75 9v9"/></symbol>
+  <symbol id="i-action" viewBox="0 0 24 24"><rect x="7" y="2.5" width="12" height="19" rx="3"/><path d="M4.5 6.5v4"/><path d="M11 6h4"/></symbol>
+  <symbol id="i-wave" viewBox="0 0 24 24"><path d="M3 12h1.5M7 9v6M11 5v14M15 8v8M19 10.5v3"/></symbol>
+  <symbol id="i-island" viewBox="0 0 24 24"><rect x="2.5" y="8.5" width="19" height="7" rx="3.5"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="3"/><path d="M10.5 5.5h3"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.5 21a7.5 7.5 0 0 1 15 0"/><path d="M3 3l18 18"/></symbol>
+  <symbol id="i-ad" viewBox="0 0 24 24"><path d="M3.5 10v4h4l7.5 5V5L7.5 10z"/><path d="M18.5 9a4 4 0 0 1 0 6"/><path d="M3 3l18 18"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7c2 0 3.7.7 5.1 1.6M22 12s-3.5 7-10 7c-2 0-3.7-.7-5.1-1.6"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2M3 3l18 18"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-swap" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.3-4.9L4 8M4 4v4h4M4 13a8 8 0 0 0 14.3 4.9L20 16M20 20v-4h-4"/></symbol>
+  <symbol id="i-steth" viewBox="0 0 24 24"><path d="M6 3v5.5a4 4 0 0 0 8 0V3"/><path d="M10 12.5v2a5 5 0 0 0 10 0v-1.5"/><circle cx="20" cy="11" r="2"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.8 5.7L19.5 10.5l-5.7 1.8L12 18l-1.8-5.7L4.5 10.5l5.7-1.8z"/><path d="M19 3v4M17 5h4"/></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></symbol>
+  <symbol id="i-msg" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v8a2.5 2.5 0 0 1-2.5 2.5H10l-5 4.5V16h-.5"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5"/></symbol>
+</svg>
+
+<header id="top">
+  <div class="wrap bar">
+    <a class="brand" href="./">
+      <img class="icon-light" src="assets/icon.png" alt="" width="34" height="34">
+      <img class="icon-dark" src="assets/icon-dark.png" alt="" width="34" height="34">
+      Glasshour
+    </a>
+    <nav>
+      <a href="#features" data-i18n="nav.features">Features</a>
+      <a href="privacy.html" data-href="privacy" data-i18n="nav.privacy">Privacy</a>
+      <a href="support.html" data-href="support" data-i18n="nav.support">Support</a>
+      <label class="lang">
+        <svg class="ic"><use href="#i-globe"/></svg>
+        <span class="sr" data-i18n="lang.label">Language</span>
+        <select id="lang">
+          <option value="en">English</option>
+          <option value="zh-Hans">简体中文</option>
+          <option value="zh-Hant">繁體中文</option>
+          <option value="ja">日本語</option>
+          <option value="ko">한국어</option>
+          <option value="es">Español</option>
+          <option value="fr">Français</option>
+          <option value="de">Deutsch</option>
+        </select>
+        <svg class="ic"><use href="#i-chev"/></svg>
+      </label>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- ================= 首屏 ================= -->
+<section class="hero">
+  <div class="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  <canvas id="sand" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div>
+      <span class="eyebrow"><svg class="ic"><use href="#i-hg"/></svg><span data-i18n="hero.eyebrow">Clear aligner timer for iPhone</span></span>
+      <h1 data-i18n-html="hero.title">Know exactly how much <em>out time</em> is left</h1>
+      <p class="lede" data-i18n="desc">Take your aligners out with one tap and watch today’s out time count down. When it runs out, an alarm rings—even in Silent mode—so you never forget to put them back.</p>
+      <div class="ctas">
+        <span class="soon" role="note"><svg class="ic"><use href="#i-phone"/></svg><span><small>Glasshour</small><b data-i18n="hero.soon">Coming soon to the App Store</b></span></span>
+        <a class="btn ghost" href="#how"><span data-i18n="hero.more">See how it works</span><svg class="ic"><use href="#i-arrow"/></svg></a>
+      </div>
+      <div class="req"><svg class="ic"><use href="#i-phone"/></svg><span data-i18n="hero.req">iPhone · iOS 26 or later</span></div>
+    </div>
+
+    <div class="stage">
+      <div class="hint" id="hint" aria-hidden="true"><svg class="ic"><use href="#i-spark"/></svg><span data-i18n="hero.hint">Try it — tap the button</span></div>
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="screen out" id="demo">
+            <div class="island" aria-hidden="true"></div>
+            <div class="sbar" aria-hidden="true"><span class="num" id="sbTime">9:41</span><span class="sig"><i style="height:4px"></i><i style="height:6px"></i><i style="height:8px"></i><i style="height:10px"></i><span class="batt"></span></span></div>
+            <div class="app-top"><b data-i18n="ph.today">Today</b><span class="plus" aria-hidden="true"><svg class="ic"><use href="#i-plus"/></svg></span></div>
+
+            <div class="dstage">
+              <!-- 戴着：发光进度环 -->
+              <div class="layer hide" id="wornL">
+                <div class="ringbox">
+                  <div class="halo"></div>
+                  <svg class="ring" viewBox="0 0 212 212" aria-hidden="true">
+                    <circle class="trk" cx="106" cy="106" r="90"/>
+                    <circle class="val" id="ringVal" cx="106" cy="106" r="90" stroke-dasharray="565.5" stroke-dashoffset="565.5"/>
+                  </svg>
+                  <div class="rtext">
+                    <small data-i18n="ph.worn">Worn Today</small>
+                    <div class="dur num" id="wornT"><b>18</b><u>h</u> <b>41</b><u>min</u></div>
+                    <small data-i18n="ph.goal">Goal 22 h</small>
+                  </div>
+                </div>
+                <div class="subline num" id="leftLine">Out time left: 0:44:32</div>
+              </div>
+              <!-- 摘下中：流沙沙漏 + 倒计时 -->
+              <div class="layer" id="outL">
+                <svg class="glass flip" id="glass" viewBox="0 0 100 124" aria-hidden="true">
+                  <defs>
+                    <clipPath id="cupClip"><path d="M20 6C20 42 35 55.5 50 55.5C67 55.5 84.6 40 84.6 6Z"/></clipPath>
+                    <clipPath id="domeClip"><path d="M15.4 118C15.4 84 33 68.5 50 68.5C65 68.5 80 82 80 118Z"/></clipPath>
+                  </defs>
+                  <g clip-path="url(#cupClip)"><path class="sandc" id="cupSand" d="M0 26Q50 29 100 26V60H0Z"/></g>
+                  <g clip-path="url(#domeClip)">
+                    <circle class="drip" cx="50" cy="60" r="1.7"/><circle class="drip" cx="50" cy="60" r="1.4"/><circle class="drip" cx="50" cy="60" r="1.1"/>
+                    <path class="sandc" id="domeSand" d="M10 118Q50 100 90 118Z"/>
+                  </g>
+                  <path class="arch" d="M14 6C14 46 32 60 50 60C68 60 86 44 86 6L84.6 6C84.6 40 67 55.5 50 55.5C35 55.5 20 42 20 6Z"/>
+                  <path class="arch" d="M86 118C86 78 68 64 50 64C32 64 14 80 14 118L15.4 118C15.4 84 33 68.5 50 68.5C65 68.5 80 82 80 118Z"/>
+                  <circle class="sandc" cx="50" cy="62" r="1.8"/>
+                </svg>
+                <div class="olabel" id="outLabel" data-i18n="ph.outLeft">Out Time Left Today</div>
+                <div class="big num" id="bigT" aria-live="off">0:44:32</div>
+                <div class="subline num" id="thisLine">This time out: 0:11:28</div>
+              </div>
+            </div>
+
+            <button class="mainbtn" id="mainBtn" type="button">
+              <svg class="ic ic-hg"><use href="#i-hg"/></svg><svg class="ic ic-check"><use href="#i-check"/></svg>
+              <span id="btnTxt">Put Back</span>
+            </button>
+
+            <div class="entries" aria-hidden="true">
+              <h4 data-i18n="ph.entries">Today’s Entries</h4>
+              <div><span class="num" id="e1">7:05 – 7:31 AM</span><span class="num" id="e1d">26 min</span></div>
+              <div><span class="num" id="e2">12:10 – 12:48 PM</span><span class="num" id="e2d">38 min</span></div>
+            </div>
+            <div class="tabbar" aria-hidden="true">
+              <span class="on"><svg class="ic"><use href="#i-hg"/></svg><em data-i18n="ph.today" style="font-style:normal">Today</em></span>
+              <span><svg class="ic"><use href="#i-cal"/></svg><em data-i18n="tab.cal" style="font-style:normal">Calendar</em></span>
+              <span><svg class="ic"><use href="#i-stack"/></svg><em data-i18n="tab.trays" style="font-style:normal">Aligners</em></span>
+              <span><svg class="ic"><use href="#i-trophy"/></svg><em data-i18n="tab.ach" style="font-style:normal">Achievements</em></span>
+              <span><svg class="ic"><use href="#i-gear"/></svg><em data-i18n="tab.set" style="font-style:normal">Settings</em></span>
+            </div>
+            <div class="fx" id="fx"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 三步 ================= -->
+<section class="sec" id="how">
+  <div class="wrap">
+    <div class="center reveal">
+      <span class="kicker" data-i18n="how.kicker">How it works</span>
+      <h2 data-i18n="how.title">One tap out. One tap back.</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal"><div class="bub b-gold"><svg class="ic"><use href="#i-hg"/></svg></div><h3 data-i18n="how.s1t">Tap when they come out</h3><p data-i18n="how.s1d">The hourglass flips and today’s remaining out time starts counting down.</p></div>
+      <div class="step reveal" style="transition-delay:.1s"><div class="bub b-teal"><svg class="ic"><use href="#i-island"/></svg></div><h3 data-i18n="how.s2t">Keep an eye on the sand</h3><p data-i18n="how.s2d">Check the countdown in the app, in the Dynamic Island or on your Lock Screen.</p></div>
+      <div class="step reveal" style="transition-delay:.2s"><div class="bub b-pink"><svg class="ic"><use href="#i-check"/></svg></div><h3 data-i18n="how.s3t">Tap when they’re back in</h3><p data-i18n="how.s3d">Worn time and your progress ring update instantly—with a burst of sparkles when you’re on time.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 功能 ================= -->
+<section class="sec" id="features" style="padding-top:24px">
+  <div class="wrap">
+    <div class="center reveal">
+      <span class="kicker" data-i18n="feat.kicker">Features</span>
+      <h2 data-i18n="feat.title">Everything you need to hit your goal</h2>
+    </div>
+    <div class="bento">
+      <article class="card c7 reveal">
+        <div class="txt"><h3><span data-i18n="lock.t">Countdown on your Lock Screen</span><span class="pro">PRO</span></h3><p data-i18n="lock.d">A Live Activity keeps the countdown on your Lock Screen and in the Dynamic Island, so a glance is all it takes.</p></div>
+        <div class="vis" aria-hidden="true">
+          <div class="dyn"><svg class="ic"><use href="#i-hg"/></svg><span class="num" id="lkIsl">38:12</span></div>
+          <div class="lock">
+            <div class="isl"></div>
+            <div class="date" id="lkDate">Tuesday, November 24</div>
+            <div class="time num" id="lkTime">9:41</div>
+            <div class="la">
+              <div class="gi"><svg class="ic"><use href="#i-hg"/></svg></div>
+              <small data-i18n="ph.outLeft">Out Time Left Today</small>
+              <b class="num" id="lkT">0:38:12</b>
+              <div class="pbar"><i id="lkBar" style="width:32%"></i></div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card c5 reveal" style="transition-delay:.08s">
+        <div class="txt"><h3><span data-i18n="alarm.t">An alarm that rings, even on Silent</span><span class="pro">PRO</span></h3><p data-i18n="alarm.d">When today’s out time runs out, Glasshour rings like an alarm—even in Silent mode or a Focus. Tap ✓ once they’re in, or it rings again in 10 minutes.</p></div>
+        <div class="vis" aria-hidden="true">
+          <div class="alarm">
+            <span class="silent"><svg class="ic"><use href="#i-bellx"/></svg><span data-i18n="alarm.silent">Silent</span></span>
+            <div class="rings"><i></i><i></i><i></i><b><svg class="ic"><use href="#i-bell"/></svg></b></div>
+            <h4 data-i18n="alarm.title">Time to put your aligners back</h4>
+            <p data-i18n="alarm.sub">Tap ✓ when they’re in, or it rings again in 10 min</p>
+            <div class="ok"><svg class="ic"><use href="#i-tick"/></svg><span data-i18n="alarm.done">Put Back</span></div>
+          </div>
+        </div>
+        <p class="more" data-i18n="alarm.more">Gentle reminders too: time running low, “Still eating?”, a bedtime check and tray change reminders.</p>
+      </article>
+
+      <article class="card c5 reveal">
+        <div class="txt"><h3 data-i18n="cal.t">Every day at a glance</h3><p data-i18n="cal.d">The calendar colors each day by whether you met your goal. Feeling sick? Mark the day as paused.</p></div>
+        <div class="vis" aria-hidden="true">
+          <div class="cal">
+            <div class="mh" id="calTitle">October 2026</div>
+            <div class="grid" id="calGrid"></div>
+            <div class="legend">
+              <span><i style="background:var(--worn)"></i><em data-i18n="cal.met" style="font-style:normal">Goal Met</em></span>
+              <span><i style="background:var(--gold)"></i><em data-i18n="cal.close" style="font-style:normal">Close</em></span>
+              <span><i style="background:var(--over)"></i><em data-i18n="cal.missed" style="font-style:normal">Missed</em></span>
+              <span><i style="background:color-mix(in srgb,var(--faint) 35%,transparent)"></i><em data-i18n="cal.paused" style="font-style:normal">Paused</em></span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card c7 reveal" style="transition-delay:.08s">
+        <div class="txt"><h3 data-i18n="tray.t">Your treatment, tray by tray</h3><p data-i18n="tray.d">Change days, expected finish date and checkups in one schedule. Postpone a change, switch early, go back a tray or start refinements.</p></div>
+        <div class="vis" aria-hidden="true">
+          <div class="tray">
+            <div class="tn"><b id="trayN">Tray 12</b><span data-i18n="tray.total">of 30</span></div>
+            <div class="segs" id="segs"></div>
+            <div class="trow"><svg class="ic"><use href="#i-swap"/></svg><span data-i18n="tray.next">Next change in 5 days</span></div>
+            <div class="trow"><svg class="ic"><use href="#i-flag"/></svg><span data-i18n="tray.finish">Expected finish</span><span class="val" id="finish">Apr 2027</span></div>
+            <div class="chips"><span class="chip"><svg class="ic"><use href="#i-steth"/></svg><span data-i18n="tray.checkup">Checkup</span></span><span class="chip"><svg class="ic"><use href="#i-spark"/></svg><span data-i18n="tray.refine">Refinement</span></span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card c12 reveal">
+        <div class="txt"><h3 data-i18n="ach.t">Achievements worth collecting</h3><p data-i18n="ach.d">34 achievements in six tiers, from Bronze to a Legendary rainbow medal—for streaks, on-time put-backs, tray milestones and a few hidden surprises. Free for everyone.</p></div>
+        <div class="vis" style="min-height:0" aria-hidden="true">
+          <div class="medals">
+            <div class="medal"><div class="md t1"><i class="face" style="--dl:0s"><svg class="ic"><use href="#i-flame"/></svg></i></div><b data-i18n="m1">Hat Trick</b><small data-i18n="tier1">Bronze</small></div>
+            <div class="medal"><div class="md t2"><i class="face" style="--dl:.4s"><svg class="ic"><use href="#i-calok"/></svg></i></div><b data-i18n="m2">Perfect Week</b><small data-i18n="tier2">Silver</small></div>
+            <div class="medal"><div class="md t3"><i class="face" style="--dl:.8s"><svg class="ic"><use href="#i-bolt"/></svg></i></div><b data-i18n="m3">Fully Charged</b><small data-i18n="tier3">Gold</small></div>
+            <div class="medal"><div class="md t4"><i class="face" style="--dl:1.2s"><svg class="ic"><use href="#i-moon"/></svg></i></div><b data-i18n="m4">Monthly Master</b><small data-i18n="tier4">Crystal</small></div>
+            <div class="medal"><div class="md t5"><i class="face" style="--dl:1.6s"><svg class="ic"><use href="#i-shield"/></svg></i></div><b data-i18n="m5">Iron Will</b><small data-i18n="tier5">Nebula</small></div>
+            <div class="medal"><div class="md t6"><i class="face" style="--dl:2s"><svg class="ic"><use href="#i-crown"/></svg></i></div><b data-i18n="m6">100-Day Legend</b><small data-i18n="tier6">Legendary</small></div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 用在哪里 ================= -->
+<section class="sec" style="padding-top:24px">
+  <div class="wrap center reveal">
+    <span class="kicker" data-i18n="surf.k">Shortcuts</span>
+    <h2 data-i18n="surf.t">Works wherever you are</h2>
+    <p class="lede" data-i18n="surf.d">Take out and put back from wherever is quickest.</p>
+    <div class="surf">
+      <span><svg class="ic"><use href="#i-hg"/></svg><em style="font-style:normal" data-i18n="sf.app">App</em></span>
+      <span><svg class="ic"><use href="#i-island"/></svg><em style="font-style:normal" data-i18n="sf.island">Dynamic Island</em></span>
+      <span><svg class="ic"><use href="#i-lock"/></svg><em style="font-style:normal" data-i18n="sf.lock">Lock Screen</em></span>
+      <span><svg class="ic"><use href="#i-widget"/></svg><em style="font-style:normal" data-i18n="sf.widget">Home Screen widgets</em></span>
+      <span><svg class="ic"><use href="#i-cc"/></svg><em style="font-style:normal" data-i18n="sf.cc">Control Center</em></span>
+      <span><svg class="ic"><use href="#i-action"/></svg><em style="font-style:normal" data-i18n="sf.action">Action button</em></span>
+      <span><svg class="ic"><use href="#i-wave"/></svg><em style="font-style:normal">Siri</em></span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 记录 ================= -->
+<section class="sec" style="padding-top:24px">
+  <div class="wrap">
+    <div class="center reveal">
+      <span class="kicker" data-i18n="rec.k">Reliable</span>
+      <h2 data-i18n="rec.t">Records you can trust</h2>
+    </div>
+    <div class="recs">
+      <div class="rec reveal"><div class="bub b-teal"><svg class="ic"><use href="#i-clock"/></svg></div><h3 data-i18n="r1t">Real timestamps</h3><p data-i18n="r1d">Every entry is based on start and end times, never a background timer.</p></div>
+      <div class="rec reveal" style="transition-delay:.08s"><div class="bub b-gold"><svg class="ic"><use href="#i-pencil"/></svg></div><h3 data-i18n="r2t">Easy to fix</h3><p data-i18n="r2d">Forgot to tap? Edit any entry or add one later. Overlapping entries can be merged.</p></div>
+      <div class="rec reveal" style="transition-delay:.16s"><div class="bub b-violet"><svg class="ic"><use href="#i-undo"/></svg></div><h3 data-i18n="r3t">One-tap undo</h3><p data-i18n="r3d">Tapped by mistake? Undo it right away.</p></div>
+      <div class="rec reveal" style="transition-delay:.24s"><div class="bub b-lime"><svg class="ic"><use href="#i-globe"/></svg></div><h3 data-i18n="r4t">Midnight and travel proof</h3><p data-i18n="r4d">Midnight snacks, time zones and daylight saving time are handled automatically.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 隐私 ================= -->
+<section class="sec" style="padding-top:24px" id="privacy">
+  <div class="wrap">
+    <div class="privacy reveal">
+      <span class="kicker" data-i18n="priv.k">Privacy</span>
+      <h2 data-i18n="priv.t">Private by design</h2>
+      <p data-i18n="priv.d">Your data stays on your iPhone and, if you choose, in your own iCloud.</p>
+      <div class="pills">
+        <span><svg class="ic"><use href="#i-user"/></svg><em style="font-style:normal" data-i18n="priv.p1">No account</em></span>
+        <span><svg class="ic"><use href="#i-ad"/></svg><em style="font-style:normal" data-i18n="priv.p2">No ads</em></span>
+        <span><svg class="ic"><use href="#i-eye"/></svg><em style="font-style:normal" data-i18n="priv.p3">No tracking</em></span>
+      </div>
+      <a class="link" href="privacy.html" data-href="privacy"><span data-i18n="priv.link">Read the privacy policy</span><svg class="ic"><use href="#i-arrow"/></svg></a>
+      <div class="shield" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.5l8.5 3.2v6.3c0 5.3-3.7 8.5-8.5 9.5-4.8-1-8.5-4.2-8.5-9.5V5.7z"/><rect x="8.6" y="11" width="6.8" height="5.2" rx="1.2"/><path d="M10.2 11V9.6a1.8 1.8 0 0 1 3.6 0V11"/></svg></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 免费和 Pro ================= -->
+<section class="sec" style="padding-top:24px">
+  <div class="wrap">
+    <div class="center reveal">
+      <span class="kicker" data-i18n="plan.k">Pricing</span>
+      <h2 data-i18n="plan.t">Free to start</h2>
+      <p class="lede" data-i18n="plan.d">Everyday tracking is free. Go Pro when you want the countdown everywhere.</p>
+    </div>
+    <div class="plans">
+      <div class="plan reveal">
+        <h3 data-i18n="free.t">Free</h3>
+        <ul>
+          <li><svg class="ic"><use href="#i-tick"/></svg><span data-i18n="free.i1">One-tap timing</span></li>
+          <li><svg class="ic"><use href="#i-tick"/></svg><span data-i18n="free.i2">Editing and undo</span></li>
+          <li><svg class="ic"><use href="#i-tick"/></svg><span data-i18n="free.i3">Calendar</span></li>
+          <li><svg class="ic"><use href="#i-tick"/></svg><span data-i18n="free.i4">Basic reminders</span></li>
+          <li><svg class="ic"><use href="#i-tick"/></svg><span data-i18n="free.i5">Achievements</span></li>
+        </ul>
+      </div>
+      <div class="plan p2 reveal" style="transition-delay:.08s">
+        <h3>Glasshour <span class="pro" style="margin:0;font-size:13px">PRO</span></h3>
+        <ul>
+          <li><svg class="ic"><use href="#i-tick"/></svg><span data-i18n="pro.i1">Dynamic Island and Lock Screen countdown</span></li>
+          <li><svg class="ic"><use href="#i-tick"/></svg><span data-i18n="pro.i2">Overtime alarm</span></li>
+          <li><svg class="ic"><use href="#i-tick"/></svg><span data-i18n="pro.i3">Widgets and controls</span></li>
+          <li><svg class="ic"><use href="#i-tick"/></svg><span data-i18n="pro.i4">Custom sounds</span></li>
+          <li><svg class="ic"><use href="#i-tick"/></svg><span data-i18n="pro.i5">Statistics</span></li>
+        </ul>
+        <p class="note" data-i18n="pro.note">The annual plan includes a free trial for eligible new subscribers.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 结尾 ================= -->
+<section class="final">
+  <div class="aurora" aria-hidden="true" style="inset:0;opacity:.6"><i style="left:10%;top:10%"></i><i style="left:55%;top:20%"></i></div>
+  <div class="wrap reveal" style="position:relative">
+    <picture>
+      <source srcset="assets/icon-dark.png" media="(prefers-color-scheme: dark)">
+      <img class="appicon" src="assets/icon.png" alt="Glasshour" width="132" height="132">
+    </picture>
+    <h2 data-i18n="cta.t">Your 22 hours, made easy</h2>
+    <p class="lede" data-i18n="cta.d">Glasshour is coming soon to the App Store. Ideas or bugs? We’d love to hear them on GitHub.</p>
+    <div class="ctas">
+      <span class="soon" role="note"><svg class="ic"><use href="#i-phone"/></svg><span><small>Glasshour</small><b data-i18n="hero.soon">Coming soon to the App Store</b></span></span>
+      <a class="btn ghost" href="https://github.com/franklioxygen/glasshour-app/issues"><svg class="ic"><use href="#i-msg"/></svg><span data-i18n="cta.btn">Send feedback</span></a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="links">
+      <a href="privacy.html" data-href="privacy" data-i18n="foot.privacy">Privacy Policy</a>
+      <a href="support.html" data-href="support" data-i18n="foot.support">Support</a>
+      <a href="https://github.com/franklioxygen/glasshour-app/issues" data-i18n="foot.feedback">Feedback</a>
+    </div>
+    <p data-i18n="foot.tm">Works with Invisalign® and other clear aligners. Glasshour is an independent app and is not affiliated with, endorsed or sponsored by Align Technology, Inc. Invisalign is a trademark of Align Technology, Inc.</p>
+    <p data-i18n="foot.med">Glasshour is not a medical device. Always follow your orthodontist’s instructions.</p>
+    <p>© 2026 Glasshour</p>
+  </div>
+</footer>
+
+<script>
+/* ================= 文案（8 种语言，和 App、App Store 文案一致） ================= */
+const I18N = {
+en:{
+ "title":"Glasshour — Clear Aligner Wear Timer",
+ "desc":"Take your aligners out with one tap and watch today’s out time count down. When it runs out, an alarm rings—even in Silent mode—so you never forget to put them back.",
+ "nav.features":"Features","nav.privacy":"Privacy","nav.support":"Support","lang.label":"Language",
+ "hero.eyebrow":"Clear aligner timer for iPhone",
+ "hero.title":"Know exactly how much <em>out time</em> is left",
+ "hero.soon":"Coming soon to the App Store","hero.req":"iPhone · iOS 26 or later","hero.more":"See how it works","hero.hint":"Try it — tap the button",
+ "ph.today":"Today","ph.worn":"Worn Today","ph.goal":"Goal 22 h","ph.left":"Out time left: {t}","ph.outLeft":"Out Time Left Today","ph.over":"Over",
+ "ph.this":"This time out: {t}","ph.take":"Take Out","ph.put":"Put Back","ph.entries":"Today’s Entries","u.h":"h","u.m":"min",
+ "tab.cal":"Calendar","tab.trays":"Aligners","tab.ach":"Achievements","tab.set":"Settings",
+ "how.kicker":"How it works","how.title":"One tap out. One tap back.",
+ "how.s1t":"Tap when they come out","how.s1d":"The hourglass flips and today’s remaining out time starts counting down.",
+ "how.s2t":"Keep an eye on the sand","how.s2d":"Check the countdown in the app, in the Dynamic Island or on your Lock Screen.",
+ "how.s3t":"Tap when they’re back in","how.s3d":"Worn time and your progress ring update instantly—with a burst of sparkles when you’re on time.",
+ "feat.kicker":"Features","feat.title":"Everything you need to hit your goal",
+ "lock.t":"Countdown on your Lock Screen","lock.d":"A Live Activity keeps the countdown on your Lock Screen and in the Dynamic Island, so a glance is all it takes.",
+ "alarm.t":"An alarm that rings, even on Silent","alarm.d":"When today’s out time runs out, Glasshour rings like an alarm—even in Silent mode or a Focus. Tap ✓ once they’re in, or it rings again in 10 minutes.",
+ "alarm.more":"Gentle reminders too: time running low, “Still eating?”, a bedtime check and tray change reminders.",
+ "alarm.title":"Time to put your aligners back","alarm.sub":"Tap ✓ when they’re in, or it rings again in 10 min","alarm.done":"Put Back","alarm.silent":"Silent",
+ "cal.t":"Every day at a glance","cal.d":"The calendar colors each day by whether you met your goal. Feeling sick? Mark the day as paused.",
+ "cal.met":"Goal Met","cal.close":"Close","cal.missed":"Missed","cal.paused":"Paused",
+ "tray.t":"Your treatment, tray by tray","tray.d":"Change days, expected finish date and checkups in one schedule. Postpone a change, switch early, go back a tray or start refinements.",
+ "tray.n":"Tray {n}","tray.total":"of 30","tray.next":"Next change in 5 days","tray.finish":"Expected finish","tray.checkup":"Checkup","tray.refine":"Refinement",
+ "ach.t":"Achievements worth collecting","ach.d":"34 achievements in six tiers, from Bronze to a Legendary rainbow medal—for streaks, on-time put-backs, tray milestones and a few hidden surprises. Free for everyone.",
+ "m1":"Hat Trick","m2":"Perfect Week","m3":"Fully Charged","m4":"Monthly Master","m5":"Iron Will","m6":"100-Day Legend",
+ "tier1":"Bronze","tier2":"Silver","tier3":"Gold","tier4":"Crystal","tier5":"Nebula","tier6":"Legendary",
+ "surf.k":"Shortcuts","surf.t":"Works wherever you are","surf.d":"Take out and put back from wherever is quickest.",
+ "sf.app":"App","sf.island":"Dynamic Island","sf.lock":"Lock Screen","sf.widget":"Home Screen widgets","sf.cc":"Control Center","sf.action":"Action button",
+ "rec.k":"Reliable","rec.t":"Records you can trust",
+ "r1t":"Real timestamps","r1d":"Every entry is based on start and end times, never a background timer.",
+ "r2t":"Easy to fix","r2d":"Forgot to tap? Edit any entry or add one later. Overlapping entries can be merged.",
+ "r3t":"One-tap undo","r3d":"Tapped by mistake? Undo it right away.",
+ "r4t":"Midnight and travel proof","r4d":"Midnight snacks, time zones and daylight saving time are handled automatically.",
+ "priv.k":"Privacy","priv.t":"Private by design","priv.d":"Your data stays on your iPhone and, if you choose, in your own iCloud.",
+ "priv.p1":"No account","priv.p2":"No ads","priv.p3":"No tracking","priv.link":"Read the privacy policy",
+ "plan.k":"Pricing","plan.t":"Free to start","plan.d":"Everyday tracking is free. Go Pro when you want the countdown everywhere.",
+ "free.t":"Free","free.i1":"One-tap timing","free.i2":"Editing and undo","free.i3":"Calendar","free.i4":"Basic reminders","free.i5":"Achievements",
+ "pro.i1":"Dynamic Island and Lock Screen countdown","pro.i2":"Overtime alarm","pro.i3":"Widgets and controls","pro.i4":"Custom sounds","pro.i5":"Statistics",
+ "pro.note":"The annual plan includes a free trial for eligible new subscribers.",
+ "cta.t":"Your 22 hours, made easy","cta.d":"Glasshour is coming soon to the App Store. Ideas or bugs? We’d love to hear them on GitHub.","cta.btn":"Send feedback",
+ "foot.privacy":"Privacy Policy","foot.support":"Support","foot.feedback":"Feedback",
+ "foot.tm":"Works with Invisalign® and other clear aligners. Glasshour is an independent app and is not affiliated with, endorsed or sponsored by Align Technology, Inc. Invisalign is a trademark of Align Technology, Inc.",
+ "foot.med":"Glasshour is not a medical device. Always follow your orthodontist’s instructions."
+},
+"zh-Hans":{
+ "title":"Glasshour 玻璃沙漏 — 隐形牙套佩戴计时",
+ "desc":"摘下牙套点一下，今天还剩多少摘套时间一目了然。时间用完就像闹钟一样响铃，手机静音也能听到，再也不会忘记戴回。",
+ "nav.features":"功能","nav.privacy":"隐私","nav.support":"支持","lang.label":"语言",
+ "hero.eyebrow":"iPhone 上的隐形牙套计时器",
+ "hero.title":"还能摘多久，<em>一眼就知道</em>",
+ "hero.soon":"即将登陆 App Store","hero.req":"iPhone · iOS 26 或更高版本","hero.more":"看看怎么用","hero.hint":"试试看：点一下按钮",
+ "ph.today":"今天","ph.worn":"今日已戴","ph.goal":"目标 22小时","ph.left":"剩余摘套时间 {t}","ph.outLeft":"今日剩余摘套时间","ph.over":"已超出",
+ "ph.this":"本次已摘 {t}","ph.take":"摘下","ph.put":"戴回","ph.entries":"今天的记录","u.h":"小时","u.m":"分钟",
+ "tab.cal":"日历","tab.trays":"牙套","tab.ach":"成就","tab.set":"设置",
+ "how.kicker":"怎么用","how.title":"摘下点一下，戴回点一下",
+ "how.s1t":"摘下时点一下","how.s1d":"沙漏翻转，今天剩余的摘套时间开始倒计时。",
+ "how.s2t":"看着沙子流","how.s2d":"App 里、灵动岛、锁屏上，随时看倒计时。",
+ "how.s3t":"戴回时再点一下","how.s3d":"今日已戴时长和进度环立即更新；按时戴回，还有星星为你庆祝。",
+ "feat.kicker":"功能","feat.title":"戴够时长，需要的都在这里",
+ "lock.t":"锁屏和灵动岛随时看","lock.d":"实时活动把倒计时放在锁屏和灵动岛上，瞄一眼就知道还剩多久。",
+ "alarm.t":"静音也叫得醒的超时警报","alarm.d":"今天的摘套时间用完时，像闹钟一样响铃，手机静音或开着专注模式也能听到。戴回了点 ✓；还没戴回，10 分钟后再响。",
+ "alarm.more":"也有温和的提醒：时间快用完、“还在吃吗？”、睡前检查和换套提醒。",
+ "alarm.title":"牙套该戴回了","alarm.sub":"戴回点 ✓，否则 10 分钟后再响","alarm.done":"已戴回","alarm.silent":"静音",
+ "cal.t":"每一天都看得清清楚楚","cal.d":"日历按达标、差一点、未达标给每天着色。生病了？可以把那天标为暂停。",
+ "cal.met":"达标","cal.close":"差一点","cal.missed":"未达标","cal.paused":"暂停",
+ "tray.t":"疗程进度，一副一副看","tray.d":"换套日、预计完成日期和复诊都在一张排期里。可以推迟换套、提前换套、退回上一副，或者进入精调。",
+ "tray.n":"第 {n} 副","tray.total":"共 30 副","tray.next":"5 天后换套","tray.finish":"预计完成","tray.checkup":"复诊","tray.refine":"精调",
+ "ach.t":"攒一墙闪亮的奖牌","ach.d":"34 个成就，从铜牌到彩虹流转的传说奖牌共六档：连续达标、按时戴回、疗程里程碑，还有几个隐藏彩蛋。全部免费。",
+ "m1":"三连击","m2":"一周全勤","m3":"两周不断电","m4":"月度达人","m5":"钢铁意志","m6":"百日传说",
+ "tier1":"铜","tier2":"银","tier3":"金","tier4":"晶","tier5":"星云","tier6":"传说",
+ "surf.k":"快捷操作","surf.t":"在哪儿都能点","surf.d":"哪里最顺手，就在哪里摘下、戴回。",
+ "sf.app":"App","sf.island":"灵动岛","sf.lock":"锁屏","sf.widget":"主屏小组件","sf.cc":"控制中心","sf.action":"操作按钮",
+ "rec.k":"可靠","rec.t":"靠得住的记录",
+ "r1t":"按真实时间计算","r1d":"每一段都按开始和结束时间计算，不依赖后台计时。",
+ "r2t":"随时修改","r2d":"忘了按？随时编辑或补录，重叠的记录可以合并。",
+ "r3t":"一键撤销","r3d":"点错了？马上撤销。",
+ "r4t":"跨零点、跨时区都不怕","r4d":"自动处理宵夜跨零点、换时区和夏令时。",
+ "priv.k":"隐私","priv.t":"注重隐私","priv.d":"数据只存在你的 iPhone 上，也可以选择同步到你自己的 iCloud。",
+ "priv.p1":"不用注册","priv.p2":"没有广告","priv.p3":"不追踪","priv.link":"阅读隐私政策",
+ "plan.k":"价格","plan.t":"免费开始","plan.d":"日常计时完全免费。想让倒计时无处不在，再升级 Pro。",
+ "free.t":"免费","free.i1":"一键计时","free.i2":"编辑和撤销","free.i3":"日历","free.i4":"基础提醒","free.i5":"成就",
+ "pro.i1":"灵动岛和锁屏倒计时","pro.i2":"超时警报","pro.i3":"小组件和控件","pro.i4":"自定义提示音","pro.i5":"统计",
+ "pro.note":"年订阅为符合条件的新订阅用户提供免费试用。",
+ "cta.t":"每天 22 小时，轻松戴够","cta.d":"Glasshour 即将登陆 App Store。有想法或发现问题？欢迎到 GitHub 告诉我们。","cta.btn":"提建议",
+ "foot.privacy":"隐私政策","foot.support":"支持","foot.feedback":"反馈",
+ "foot.tm":"适用于 Invisalign® 等隐形牙套。Glasshour 是独立 App，与 Align Technology, Inc. 无关联，也未获其认可或赞助；Invisalign 是 Align Technology, Inc. 的商标。",
+ "foot.med":"Glasshour 不是医疗器械，佩戴要求请遵医嘱。"
+},
+"zh-Hant":{
+ "title":"Glasshour 玻璃沙漏 — 隱形牙套配戴計時",
+ "desc":"摘下牙套點一下，今天還剩多少摘下時間一目了然。時間用完就像鬧鐘一樣響鈴，手機靜音也聽得到，再也不會忘記戴回。",
+ "nav.features":"功能","nav.privacy":"隱私","nav.support":"支援","lang.label":"語言",
+ "hero.eyebrow":"iPhone 上的隱形牙套計時器",
+ "hero.title":"還能摘多久，<em>一眼就知道</em>",
+ "hero.soon":"即將登上 App Store","hero.req":"iPhone · iOS 26 或以上版本","hero.more":"看看怎麼用","hero.hint":"試試看：點一下按鈕",
+ "ph.today":"今天","ph.worn":"今日已戴","ph.goal":"目標 22小時","ph.left":"剩餘摘下時間 {t}","ph.outLeft":"今日剩餘摘下時間","ph.over":"已超出",
+ "ph.this":"本次已摘 {t}","ph.take":"摘下","ph.put":"戴回","ph.entries":"今天的紀錄","u.h":"小時","u.m":"分鐘",
+ "tab.cal":"日曆","tab.trays":"牙套","tab.ach":"成就","tab.set":"設定",
+ "how.kicker":"怎麼用","how.title":"摘下點一下，戴回點一下",
+ "how.s1t":"摘下時點一下","how.s1d":"沙漏翻轉，今天剩餘的摘下時間開始倒數。",
+ "how.s2t":"看著沙子流","how.s2d":"App 裡、動態島、鎖定畫面上，隨時看倒數。",
+ "how.s3t":"戴回時再點一下","how.s3d":"今日已戴時長和進度環立即更新；準時戴回，還有星星為你慶祝。",
+ "feat.kicker":"功能","feat.title":"戴滿時長，需要的都在這裡",
+ "lock.t":"鎖定畫面和動態島隨時看","lock.d":"即時動態把倒數放在鎖定畫面和動態島上，瞄一眼就知道還剩多久。",
+ "alarm.t":"靜音也叫得醒的超時警報","alarm.d":"今天的摘下時間用完時，像鬧鐘一樣響鈴，即使手機靜音或開著專注模式也聽得到。戴回了點 ✓；還沒戴回，10 分鐘後再響。",
+ "alarm.more":"也有溫和的提醒：時間快用完、「還在吃嗎？」、睡前檢查和換套提醒。",
+ "alarm.title":"牙套該戴回了","alarm.sub":"戴回請點 ✓，否則 10 分鐘後再響","alarm.done":"已戴回","alarm.silent":"靜音",
+ "cal.t":"每一天都看得清清楚楚","cal.d":"日曆按達標、差一點、未達標替每天上色。生病了？可以把那天標為暫停。",
+ "cal.met":"達標","cal.close":"差一點","cal.missed":"未達標","cal.paused":"暫停",
+ "tray.t":"療程進度，一副一副看","tray.d":"換套日、預計完成日期和回診都在同一張排程裡。可以延後換套、提前換套、退回上一副，或進入精調。",
+ "tray.n":"第 {n} 副","tray.total":"共 30 副","tray.next":"5 天後換套","tray.finish":"預計完成","tray.checkup":"回診","tray.refine":"精調",
+ "ach.t":"收集一整牆閃亮獎牌","ach.d":"34 個成就，從銅牌到彩虹流轉的傳說獎牌共六級：連續達標、準時戴回、療程里程碑，還有幾個隱藏彩蛋。全部免費。",
+ "m1":"三連擊","m2":"一週全勤","m3":"兩週不斷電","m4":"月度達人","m5":"鋼鐵意志","m6":"百日傳說",
+ "tier1":"銅","tier2":"銀","tier3":"金","tier4":"晶","tier5":"星雲","tier6":"傳說",
+ "surf.k":"快速操作","surf.t":"在哪裡都能點","surf.d":"哪裡最順手，就在哪裡摘下、戴回。",
+ "sf.app":"App","sf.island":"動態島","sf.lock":"鎖定畫面","sf.widget":"主畫面小工具","sf.cc":"控制中心","sf.action":"動作按鈕",
+ "rec.k":"可靠","rec.t":"靠得住的紀錄",
+ "r1t":"按真實時間計算","r1d":"每一段都按開始和結束時間計算，不依賴背景計時。",
+ "r2t":"隨時修改","r2d":"忘了按？隨時編輯或補錄，重疊的紀錄可以合併。",
+ "r3t":"一鍵復原","r3d":"點錯了？馬上復原。",
+ "r4t":"跨午夜、跨時區都不怕","r4d":"自動處理宵夜跨午夜、換時區和夏令時間。",
+ "priv.k":"隱私","priv.t":"重視隱私","priv.d":"資料只存在你的 iPhone 上，也可以選擇同步到你自己的 iCloud。",
+ "priv.p1":"不用註冊","priv.p2":"沒有廣告","priv.p3":"不追蹤","priv.link":"閱讀隱私權政策",
+ "plan.k":"價格","plan.t":"免費開始","plan.d":"日常計時完全免費。想讓倒數無所不在，再升級 Pro。",
+ "free.t":"免費","free.i1":"一鍵計時","free.i2":"編輯和復原","free.i3":"日曆","free.i4":"基本提醒","free.i5":"成就",
+ "pro.i1":"動態島和鎖定畫面倒數","pro.i2":"超時警報","pro.i3":"小工具和控制項","pro.i4":"自訂提示音","pro.i5":"統計",
+ "pro.note":"年訂閱為符合資格的新訂閱者提供免費試用。",
+ "cta.t":"每天 22 小時，輕鬆戴滿","cta.d":"Glasshour 即將登上 App Store。有想法或發現問題？歡迎到 GitHub 告訴我們。","cta.btn":"提建議",
+ "foot.privacy":"隱私權政策","foot.support":"支援","foot.feedback":"意見回饋",
+ "foot.tm":"適用於 Invisalign® 等隱形牙套。Glasshour 為獨立 App，與 Align Technology, Inc. 無關聯，亦未獲其認可或贊助；Invisalign 為 Align Technology, Inc. 的商標。",
+ "foot.med":"Glasshour 不是醫療器材，配戴要求請遵照醫囑。"
+},
+ja:{
+ "title":"Glasshour — マウスピース矯正の装着タイマー",
+ "desc":"マウスピースを外したらワンタップ。今日あと何分外せるかがひと目でわかります。時間切れになると消音モード中でもアラームが鳴るので、着け忘れません。",
+ "nav.features":"機能","nav.privacy":"プライバシー","nav.support":"サポート","lang.label":"言語",
+ "hero.eyebrow":"iPhone用マウスピース矯正タイマー",
+ "hero.title":"外せる残り時間が<em>ひと目でわかる</em>",
+ "hero.soon":"App Storeで近日公開","hero.req":"iPhone · iOS 26以降","hero.more":"使い方を見る","hero.hint":"ボタンをタップしてみて",
+ "ph.today":"今日","ph.worn":"今日の装着","ph.goal":"目標 22時間","ph.left":"外せる残り時間 {t}","ph.outLeft":"今日の外せる残り時間","ph.over":"超過",
+ "ph.this":"今回 {t}","ph.take":"外す","ph.put":"着ける","ph.entries":"今日の記録","u.h":"時間","u.m":"分",
+ "tab.cal":"カレンダー","tab.trays":"マウスピース","tab.ach":"実績","tab.set":"設定",
+ "how.kicker":"使い方","how.title":"外すときにタップ、着けるときにタップ",
+ "how.s1t":"外したらタップ","how.s1d":"砂時計がひっくり返り、今日の残り時間のカウントダウンが始まります。",
+ "how.s2t":"砂の流れをチェック","how.s2d":"アプリ、ダイナミックアイランド、ロック画面でいつでも残り時間を確認できます。",
+ "how.s3t":"着けたらもう一度タップ","how.s3d":"装着時間と進捗リングがすぐに更新。時間内に着けたら、キラキラでお祝いします。",
+ "feat.kicker":"機能","feat.title":"毎日の目標達成に必要なものがすべて",
+ "lock.t":"ロック画面でもカウントダウン","lock.d":"ライブアクティビティがロック画面とダイナミックアイランドにカウントダウンを表示。ちらっと見るだけでOK。",
+ "alarm.t":"消音中でも鳴る超過アラーム","alarm.d":"今日の外せる時間がなくなると、消音モードや集中モード中でもアラームのように鳴ります。着けたら ✓、まだなら10分後にもう一度鳴ります。",
+ "alarm.more":"残りわずか、「まだ食事中？」、就寝前チェック、交換リマインダーなどのやさしい通知も。",
+ "alarm.title":"マウスピースを着ける時間です","alarm.sub":"着けたら ✓、そうでなければ10分後にまた鳴ります","alarm.done":"着けました","alarm.silent":"消音",
+ "cal.t":"毎日の記録をひと目で","cal.d":"目標を達成できたかどうかで、カレンダーの毎日を色分け。体調が悪い日は休止にできます。",
+ "cal.met":"達成","cal.close":"あと少し","cal.missed":"未達成","cal.paused":"休止",
+ "tray.t":"治療をマウスピースごとに","tray.d":"交換日、完了予定日、通院予定をひとつのスケジュールに。交換の延期、早めの交換、前のマウスピースに戻す、リファインメントの開始もできます。",
+ "tray.n":"{n}枚目","tray.total":"全30枚","tray.next":"5日後に交換","tray.finish":"完了予定","tray.checkup":"通院","tray.refine":"リファインメント",
+ "ach.t":"集めたくなる実績","ach.d":"ブロンズから虹色に輝くレジェンドまで、6ランク・34個の実績。連続達成、時間内の装着、治療の節目、そして隠し実績も。すべて無料です。",
+ "m1":"3連続","m2":"1週間皆勤","m3":"2週間フル充電","m4":"1か月の達人","m5":"鉄の意志","m6":"100日の伝説",
+ "tier1":"ブロンズ","tier2":"シルバー","tier3":"ゴールド","tier4":"クリスタル","tier5":"ネビュラ","tier6":"レジェンド",
+ "surf.k":"ショートカット","surf.t":"どこからでも操作","surf.d":"いちばん手軽な場所から、外す・着けるを記録。",
+ "sf.app":"アプリ","sf.island":"ダイナミックアイランド","sf.lock":"ロック画面","sf.widget":"ホーム画面ウィジェット","sf.cc":"コントロールセンター","sf.action":"アクションボタン",
+ "rec.k":"安心","rec.t":"信頼できる記録",
+ "r1t":"実際の時刻で計算","r1d":"すべての記録は開始・終了時刻から計算。バックグラウンドのタイマーに頼りません。",
+ "r2t":"あとから直せる","r2d":"押し忘れても、あとから編集・追加できます。重なった記録は結合できます。",
+ "r3t":"ワンタップで取り消し","r3d":"間違えてタップしても、すぐに取り消せます。",
+ "r4t":"深夜も旅先も安心","r4d":"深夜の夜食、タイムゾーン、夏時間も自動で処理します。",
+ "priv.k":"プライバシー","priv.t":"プライバシー重視","priv.d":"データはあなたのiPhone、または選べばあなた自身のiCloudにだけ保存されます。",
+ "priv.p1":"アカウント不要","priv.p2":"広告なし","priv.p3":"トラッキングなし","priv.link":"プライバシーポリシーを読む",
+ "plan.k":"料金","plan.t":"無料ではじめよう","plan.d":"毎日の記録は無料。カウントダウンをどこでも見たくなったらProへ。",
+ "free.t":"無料","free.i1":"ワンタップ計測","free.i2":"編集と取り消し","free.i3":"カレンダー","free.i4":"基本の通知","free.i5":"実績",
+ "pro.i1":"ダイナミックアイランドとロック画面のカウントダウン","pro.i2":"超過アラーム","pro.i3":"ウィジェットとコントロール","pro.i4":"カスタムサウンド","pro.i5":"統計",
+ "pro.note":"年額プランには対象の新規登録者向けの無料トライアルがあります。",
+ "cta.t":"毎日の22時間を、もっとかんたんに","cta.d":"GlasshourはApp Storeで近日公開予定です。アイデアや不具合はGitHubで教えてください。","cta.btn":"フィードバックを送る",
+ "foot.privacy":"プライバシーポリシー","foot.support":"サポート","foot.feedback":"フィードバック",
+ "foot.tm":"Invisalign®などのマウスピース矯正に対応。GlasshourはAlign Technology, Inc.とは関係のない独立したアプリであり、同社による承認・後援を受けていません。InvisalignはAlign Technology, Inc.の商標です。",
+ "foot.med":"Glasshourは医療機器ではありません。必ず担当医の指示に従ってください。"
+},
+ko:{
+ "title":"Glasshour — 투명 교정 장치 착용 타이머",
+ "desc":"장치를 뺄 때 한 번 탭하면 오늘 남은 시간이 한눈에 보여요. 시간이 다 되면 무음 모드에서도 알람이 울려서 다시 끼우는 걸 잊지 않아요.",
+ "nav.features":"기능","nav.privacy":"개인정보","nav.support":"지원","lang.label":"언어",
+ "hero.eyebrow":"iPhone용 투명 교정 타이머",
+ "hero.title":"남은 시간을 <em>한눈에</em>",
+ "hero.soon":"App Store 출시 예정","hero.req":"iPhone · iOS 26 이상","hero.more":"사용 방법 보기","hero.hint":"버튼을 눌러 보세요",
+ "ph.today":"오늘","ph.worn":"오늘 착용","ph.goal":"목표 22시간","ph.left":"남은 뺄 수 있는 시간 {t}","ph.outLeft":"오늘 남은 뺄 수 있는 시간","ph.over":"초과",
+ "ph.this":"이번에 뺀 시간 {t}","ph.take":"빼기","ph.put":"끼우기","ph.entries":"오늘 기록","u.h":"시간","u.m":"분",
+ "tab.cal":"캘린더","tab.trays":"교정 장치","tab.ach":"업적","tab.set":"설정",
+ "how.kicker":"사용 방법","how.title":"뺄 때 한 번, 끼울 때 한 번",
+ "how.s1t":"뺄 때 탭","how.s1d":"모래시계가 뒤집히고 오늘 남은 시간이 줄어들기 시작해요.",
+ "how.s2t":"모래를 지켜보세요","how.s2d":"앱, Dynamic Island, 잠금 화면에서 언제든 카운트다운을 확인해요.",
+ "how.s3t":"끼울 때 다시 탭","how.s3d":"착용 시간과 진행 링이 바로 업데이트돼요. 제때 끼우면 반짝이는 축하도 있어요.",
+ "feat.kicker":"기능","feat.title":"매일 목표 달성에 필요한 모든 것",
+ "lock.t":"잠금 화면에서도 카운트다운","lock.d":"실시간 현황이 잠금 화면과 Dynamic Island에 카운트다운을 보여 줘요. 슬쩍 보기만 하면 돼요.",
+ "alarm.t":"무음에서도 울리는 초과 알람","alarm.d":"오늘 뺄 수 있는 시간이 다 되면 무음 모드나 집중 모드에서도 알람처럼 울려요. 다시 꼈으면 ✓, 아직이면 10분 후 다시 울려요.",
+ "alarm.more":"시간 임박, “아직 식사 중?”, 취침 전 확인, 교체 알림 같은 부드러운 알림도 있어요.",
+ "alarm.title":"교정 장치를 다시 낄 시간이에요","alarm.sub":"꼈으면 ✓, 아니면 10분 후 다시 울려요","alarm.done":"착용 완료","alarm.silent":"무음",
+ "cal.t":"매일의 기록을 한눈에","cal.d":"목표 달성 여부에 따라 캘린더의 하루하루를 색으로 보여 줘요. 아픈 날은 일시중지로 표시할 수 있어요.",
+ "cal.met":"달성","cal.close":"아깝게 미달","cal.missed":"미달성","cal.paused":"일시중지",
+ "tray.t":"장치별로 보는 치료 진행","tray.d":"교체일, 완료 예정일, 내원 일정을 한 일정표에. 교체 미루기, 미리 교체, 이전 장치로 되돌리기, 리파인먼트 시작도 할 수 있어요.",
+ "tray.n":"{n}번째 장치","tray.total":"총 30개","tray.next":"5일 후 교체","tray.finish":"완료 예정","tray.checkup":"내원","tray.refine":"리파인먼트",
+ "ach.t":"모으고 싶은 업적","ach.d":"브론즈부터 무지갯빛 레전드까지 6등급, 34개의 업적. 연속 달성, 제때 끼우기, 치료 이정표, 그리고 숨겨진 업적까지. 모두 무료예요.",
+ "m1":"3연속","m2":"일주일 개근","m3":"2주 풀충전","m4":"한 달 달인","m5":"강철 의지","m6":"100일의 전설",
+ "tier1":"브론즈","tier2":"실버","tier3":"골드","tier4":"크리스탈","tier5":"네뷸라","tier6":"레전드",
+ "surf.k":"바로가기","surf.t":"어디서든 바로","surf.d":"가장 편한 곳에서 빼기와 끼우기를 기록하세요.",
+ "sf.app":"앱","sf.island":"Dynamic Island","sf.lock":"잠금 화면","sf.widget":"홈 화면 위젯","sf.cc":"제어 센터","sf.action":"동작 버튼",
+ "rec.k":"신뢰","rec.t":"믿을 수 있는 기록",
+ "r1t":"실제 시각으로 계산","r1d":"모든 기록은 시작과 종료 시각으로 계산해요. 백그라운드 타이머에 의존하지 않아요.",
+ "r2t":"쉽게 수정","r2d":"깜빡했다면 나중에 편집하거나 추가할 수 있고, 겹친 기록은 합칠 수 있어요.",
+ "r3t":"탭 한 번으로 취소","r3d":"잘못 눌렀다면 바로 취소하세요.",
+ "r4t":"자정도 여행도 걱정 없이","r4d":"자정을 넘긴 야식, 시간대 변경, 서머타임도 자동으로 처리해요.",
+ "priv.k":"개인정보","priv.t":"개인정보 보호","priv.d":"데이터는 내 iPhone에만, 원하면 내 iCloud에만 저장돼요.",
+ "priv.p1":"계정 없음","priv.p2":"광고 없음","priv.p3":"추적 없음","priv.link":"개인정보 처리방침 보기",
+ "plan.k":"가격","plan.t":"무료로 시작","plan.d":"매일의 기록은 무료예요. 어디서나 카운트다운을 보고 싶다면 Pro로.",
+ "free.t":"무료","free.i1":"원탭 측정","free.i2":"편집과 취소","free.i3":"캘린더","free.i4":"기본 알림","free.i5":"업적",
+ "pro.i1":"Dynamic Island와 잠금 화면 카운트다운","pro.i2":"초과 알람","pro.i3":"위젯과 제어 항목","pro.i4":"사용자 지정 사운드","pro.i5":"통계",
+ "pro.note":"연간 플랜은 대상 신규 구독자에게 무료 체험을 제공해요.",
+ "cta.t":"하루 22시간, 더 쉽게","cta.d":"Glasshour가 곧 App Store에 출시돼요. 아이디어나 버그는 GitHub에서 알려 주세요.","cta.btn":"의견 보내기",
+ "foot.privacy":"개인정보 처리방침","foot.support":"지원","foot.feedback":"의견 보내기",
+ "foot.tm":"Invisalign® 등 투명 교정 장치와 함께 사용할 수 있어요. Glasshour는 독립 앱으로 Align Technology, Inc.와 관련이 없으며 승인이나 후원을 받지 않았어요. Invisalign은 Align Technology, Inc.의 상표예요.",
+ "foot.med":"Glasshour는 의료기기가 아니에요. 항상 담당 의사의 지시를 따르세요."
+},
+es:{
+ "title":"Glasshour — Temporizador para alineadores",
+ "desc":"Quítate los alineadores con un toque y mira cuánto tiempo te queda hoy. Cuando se acabe, suena una alarma, incluso en silencio, para que nunca olvides ponértelos.",
+ "nav.features":"Funciones","nav.privacy":"Privacidad","nav.support":"Soporte","lang.label":"Idioma",
+ "hero.eyebrow":"Temporizador de alineadores para iPhone",
+ "hero.title":"Sabes cuánto <em>tiempo te queda</em>",
+ "hero.soon":"Próximamente en el App Store","hero.req":"iPhone · iOS 26 o posterior","hero.more":"Mira cómo funciona","hero.hint":"Pruébalo: toca el botón",
+ "ph.today":"Hoy","ph.worn":"Uso de hoy","ph.goal":"Meta: 22 h","ph.left":"Tiempo restante: {t}","ph.outLeft":"Tiempo restante hoy","ph.over":"Excedido",
+ "ph.this":"Esta vez: {t}","ph.take":"Quitar","ph.put":"Poner","ph.entries":"Registros de hoy","u.h":"h","u.m":"min",
+ "tab.cal":"Calendario","tab.trays":"Alineadores","tab.ach":"Logros","tab.set":"Ajustes",
+ "how.kicker":"Cómo funciona","how.title":"Un toque al quitar. Otro al poner.",
+ "how.s1t":"Toca al quitártelos","how.s1d":"El reloj de arena se da la vuelta y empieza la cuenta atrás del tiempo que te queda hoy.",
+ "how.s2t":"Vigila la arena","how.s2d":"Mira la cuenta atrás en la app, en la Dynamic Island o en la pantalla bloqueada.",
+ "how.s3t":"Toca al ponértelos","how.s3d":"El tiempo de uso y el anillo de progreso se actualizan al instante, con destellos si llegas a tiempo.",
+ "feat.kicker":"Funciones","feat.title":"Todo lo que necesitas para cumplir tu meta",
+ "lock.t":"Cuenta atrás en la pantalla bloqueada","lock.d":"Una Actividad en Vivo muestra la cuenta atrás en la pantalla bloqueada y en la Dynamic Island: basta un vistazo.",
+ "alarm.t":"Una alarma que suena incluso en silencio","alarm.d":"Cuando se acaba tu tiempo sin alineadores, Glasshour suena como una alarma, incluso en silencio o con un modo de concentración. Toca ✓ cuando te los pongas o volverá a sonar en 10 minutos.",
+ "alarm.more":"También avisos suaves: poco tiempo restante, «¿Sigues comiendo?», revisión antes de dormir y recordatorios de cambio.",
+ "alarm.title":"Hora de ponerte los alineadores","alarm.sub":"Toca ✓ al ponerlos o sonará de nuevo en 10 min","alarm.done":"Ya puestos","alarm.silent":"Silencio",
+ "cal.t":"Cada día de un vistazo","cal.d":"El calendario colorea cada día según si cumpliste tu meta. ¿Te encuentras mal? Marca el día como pausa.",
+ "cal.met":"Meta cumplida","cal.close":"Casi","cal.missed":"No cumplida","cal.paused":"En pausa",
+ "tray.t":"Tu tratamiento, alineador a alineador","tray.d":"Días de cambio, fecha de fin prevista y citas en una sola programación. Pospón un cambio, cambia antes, vuelve al anterior o empieza el refinamiento.",
+ "tray.n":"Alineador {n}","tray.total":"de 30","tray.next":"Cambio en 5 días","tray.finish":"Fin previsto","tray.checkup":"Cita","tray.refine":"Refinamiento",
+ "ach.t":"Logros para coleccionar","ach.d":"34 logros en seis niveles, del bronce a una medalla legendaria con arcoíris: rachas, alineadores puestos a tiempo, hitos del tratamiento y alguna sorpresa oculta. Gratis para todos.",
+ "m1":"Triplete","m2":"Semana perfecta","m3":"Batería llena","m4":"Maestro del mes","m5":"Voluntad de hierro","m6":"Leyenda de 100 días",
+ "tier1":"Bronce","tier2":"Plata","tier3":"Oro","tier4":"Cristal","tier5":"Nebulosa","tier6":"Legendario",
+ "surf.k":"Accesos rápidos","surf.t":"Donde estés","surf.d":"Quita y pon desde donde te resulte más rápido.",
+ "sf.app":"App","sf.island":"Dynamic Island","sf.lock":"Pantalla bloqueada","sf.widget":"Widgets de inicio","sf.cc":"Centro de control","sf.action":"Botón de Acción",
+ "rec.k":"Fiable","rec.t":"Registros fiables",
+ "r1t":"Horas reales","r1d":"Cada registro se calcula con la hora de inicio y fin, nunca con un temporizador en segundo plano.",
+ "r2t":"Fáciles de corregir","r2d":"¿Olvidaste tocar? Edita o añade registros después; los que se superponen se pueden combinar.",
+ "r3t":"Deshacer con un toque","r3d":"¿Tocaste por error? Deshazlo al momento.",
+ "r4t":"Medianoche y viajes","r4d":"Gestiona automáticamente la medianoche, las zonas horarias y los cambios de hora.",
+ "priv.k":"Privacidad","priv.t":"Privacidad ante todo","priv.d":"Tus datos se quedan en tu iPhone y, si quieres, en tu propio iCloud.",
+ "priv.p1":"Sin cuenta","priv.p2":"Sin anuncios","priv.p3":"Sin rastreo","priv.link":"Lee la política de privacidad",
+ "plan.k":"Precio","plan.t":"Empieza gratis","plan.d":"El seguimiento diario es gratis. Pásate a Pro cuando quieras la cuenta atrás en todas partes.",
+ "free.t":"Gratis","free.i1":"Cronometraje con un toque","free.i2":"Edición y deshacer","free.i3":"Calendario","free.i4":"Recordatorios básicos","free.i5":"Logros",
+ "pro.i1":"Cuenta atrás en la Dynamic Island y la pantalla bloqueada","pro.i2":"Alarma de exceso","pro.i3":"Widgets y controles","pro.i4":"Sonidos personalizados","pro.i5":"Estadísticas",
+ "pro.note":"El plan anual incluye una prueba gratuita para nuevos suscriptores que cumplan los requisitos.",
+ "cta.t":"Tus 22 horas, más fáciles","cta.d":"Glasshour llegará pronto al App Store. ¿Ideas o errores? Cuéntanoslo en GitHub.","cta.btn":"Enviar comentarios",
+ "foot.privacy":"Política de privacidad","foot.support":"Soporte","foot.feedback":"Comentarios",
+ "foot.tm":"Compatible con Invisalign® y otros alineadores transparentes. Glasshour es una app independiente y no está afiliada, respaldada ni patrocinada por Align Technology, Inc. Invisalign es una marca de Align Technology, Inc.",
+ "foot.med":"Glasshour no es un dispositivo médico. Sigue siempre las indicaciones de tu ortodoncista."
+},
+fr:{
+ "title":"Glasshour — Minuteur pour gouttières",
+ "desc":"Retirez vos gouttières d’un geste et voyez le temps restant. Une fois écoulé, une alarme sonne, même en mode silencieux : vous n’oublierez plus de les remettre.",
+ "nav.features":"Fonctions","nav.privacy":"Confidentialité","nav.support":"Assistance","lang.label":"Langue",
+ "hero.eyebrow":"Minuteur de gouttières pour iPhone",
+ "hero.title":"Le temps restant, <em>d’un coup d’œil</em>",
+ "hero.soon":"Bientôt sur l’App Store","hero.req":"iPhone · iOS 26 ou version ultérieure","hero.more":"Voir comment ça marche","hero.hint":"Essayez : touchez le bouton",
+ "ph.today":"Aujourd’hui","ph.worn":"Porté aujourd’hui","ph.goal":"Objectif : 22 h","ph.left":"Temps restant : {t}","ph.outLeft":"Temps restant aujourd’hui","ph.over":"Dépassé",
+ "ph.this":"Ce retrait : {t}","ph.take":"Retirer","ph.put":"Remettre","ph.entries":"Entrées du jour","u.h":"h","u.m":"min",
+ "tab.cal":"Calendrier","tab.trays":"Gouttières","tab.ach":"Succès","tab.set":"Réglages",
+ "how.kicker":"Comment ça marche","how.title":"Un geste pour retirer. Un geste pour remettre.",
+ "how.s1t":"Touchez en les retirant","how.s1d":"Le sablier se retourne et le temps restant du jour commence à défiler.",
+ "how.s2t":"Surveillez le sable","how.s2d":"Suivez le compte à rebours dans l’app, la Dynamic Island ou sur l’écran verrouillé.",
+ "how.s3t":"Touchez en les remettant","how.s3d":"Le temps de port et l’anneau de progression se mettent à jour aussitôt, avec des étincelles si vous êtes à l’heure.",
+ "feat.kicker":"Fonctions","feat.title":"Tout pour atteindre votre objectif",
+ "lock.t":"Compte à rebours sur l’écran verrouillé","lock.d":"Une activité en direct affiche le compte à rebours sur l’écran verrouillé et dans la Dynamic Island : un coup d’œil suffit.",
+ "alarm.t":"Une alarme qui sonne même en silencieux","alarm.d":"Quand votre temps sans gouttières est écoulé, Glasshour sonne comme un réveil, même en mode silencieux ou avec un mode de concentration. Touchez ✓ une fois remises, sinon l’alarme sonne de nouveau dans 10 minutes.",
+ "alarm.more":"Des rappels plus doux aussi : temps presque écoulé, « Toujours à table ? », vérification du coucher et rappels de changement.",
+ "alarm.title":"Il est temps de remettre vos gouttières","alarm.sub":"Touchez ✓ une fois remises, sinon l’alarme sonne à nouveau dans 10 min","alarm.done":"Remises","alarm.silent":"Silencieux",
+ "cal.t":"Chaque jour en un coup d’œil","cal.d":"Le calendrier colore chaque jour selon que vous avez atteint votre objectif. Malade ? Marquez la journée en pause.",
+ "cal.met":"Objectif atteint","cal.close":"Presque","cal.missed":"Non atteint","cal.paused":"En pause",
+ "tray.t":"Votre traitement, gouttière par gouttière","tray.d":"Jours de changement, date de fin prévue et rendez-vous dans un seul planning. Reportez un changement, changez plus tôt, revenez à la précédente ou commencez l’affinement.",
+ "tray.n":"Gouttière {n}","tray.total":"sur 30","tray.next":"Changement dans 5 jours","tray.finish":"Fin prévue","tray.checkup":"Rendez-vous","tray.refine":"Affinement",
+ "ach.t":"Des succès à collectionner","ach.d":"34 succès répartis en six niveaux, du bronze à une médaille légendaire arc-en-ciel : séries, gouttières remises à temps, étapes du traitement et quelques surprises cachées. Gratuit pour tous.",
+ "m1":"Triplé","m2":"Semaine parfaite","m3":"Pleine charge","m4":"Maître du mois","m5":"Volonté de fer","m6":"Légende des 100 jours",
+ "tier1":"Bronze","tier2":"Argent","tier3":"Or","tier4":"Cristal","tier5":"Nébuleuse","tier6":"Légendaire",
+ "surf.k":"Raccourcis","surf.t":"Où que vous soyez","surf.d":"Retirez et remettez depuis l’endroit le plus pratique.",
+ "sf.app":"App","sf.island":"Dynamic Island","sf.lock":"Écran verrouillé","sf.widget":"Widgets de l’écran d’accueil","sf.cc":"Centre de contrôle","sf.action":"Bouton Action",
+ "rec.k":"Fiable","rec.t":"Des données fiables",
+ "r1t":"De vraies heures","r1d":"Chaque entrée est calculée à partir des heures de début et de fin, jamais d’un minuteur en arrière-plan.",
+ "r2t":"Faciles à corriger","r2d":"Un oubli ? Modifiez ou ajoutez une entrée après coup ; les entrées qui se chevauchent peuvent être fusionnées.",
+ "r3t":"Annuler d’un geste","r3d":"Touché par erreur ? Annulez tout de suite.",
+ "r4t":"Minuit et voyages","r4d":"Minuit, fuseaux horaires et changements d’heure sont gérés automatiquement.",
+ "priv.k":"Confidentialité","priv.t":"Confidentialité d’abord","priv.d":"Vos données restent sur votre iPhone et, si vous le souhaitez, dans votre propre iCloud.",
+ "priv.p1":"Pas de compte","priv.p2":"Pas de publicité","priv.p3":"Pas de pistage","priv.link":"Lire la politique de confidentialité",
+ "plan.k":"Tarifs","plan.t":"Commencez gratuitement","plan.d":"Le suivi quotidien est gratuit. Passez à Pro pour avoir le compte à rebours partout.",
+ "free.t":"Gratuit","free.i1":"Chronométrage d’un geste","free.i2":"Modification et annulation","free.i3":"Calendrier","free.i4":"Rappels de base","free.i5":"Succès",
+ "pro.i1":"Compte à rebours dans la Dynamic Island et sur l’écran verrouillé","pro.i2":"Alarme de dépassement","pro.i3":"Widgets et commandes","pro.i4":"Sons personnalisés","pro.i5":"Statistiques",
+ "pro.note":"L’abonnement annuel inclut un essai gratuit pour les nouveaux abonnés éligibles.",
+ "cta.t":"Vos 22 heures, en toute simplicité","cta.d":"Glasshour arrive bientôt sur l’App Store. Des idées ou des bugs ? Dites-le-nous sur GitHub.","cta.btn":"Donner votre avis",
+ "foot.privacy":"Politique de confidentialité","foot.support":"Assistance","foot.feedback":"Avis",
+ "foot.tm":"Compatible avec Invisalign® et d’autres gouttières transparentes. Glasshour est une app indépendante, non affiliée, approuvée ni sponsorisée par Align Technology, Inc. Invisalign est une marque d’Align Technology, Inc.",
+ "foot.med":"Glasshour n’est pas un dispositif médical. Suivez toujours les consignes de votre orthodontiste."
+},
+de:{
+ "title":"Glasshour — Tragezeit-Timer für Aligner",
+ "desc":"Aligner raus, einmal tippen – und du siehst, wie viel Pausenzeit noch bleibt. Ist sie um, klingelt ein Alarm, auch im Stummmodus. So vergisst du das Einsetzen nie.",
+ "nav.features":"Funktionen","nav.privacy":"Datenschutz","nav.support":"Support","lang.label":"Sprache",
+ "hero.eyebrow":"Aligner-Timer fürs iPhone",
+ "hero.title":"Restzeit <em>auf einen Blick</em>",
+ "hero.soon":"Bald im App Store","hero.req":"iPhone · iOS 26 oder neuer","hero.more":"So funktioniert’s","hero.hint":"Probier’s aus: Tippe auf den Button",
+ "ph.today":"Heute","ph.worn":"Heute getragen","ph.goal":"Ziel: 22 h","ph.left":"Verbleibende Pausenzeit: {t}","ph.outLeft":"Heute verbleibende Pausenzeit","ph.over":"Überzogen",
+ "ph.this":"Diese Pause: {t}","ph.take":"Herausnehmen","ph.put":"Einsetzen","ph.entries":"Heutige Einträge","u.h":"h","u.m":"min",
+ "tab.cal":"Kalender","tab.trays":"Aligner","tab.ach":"Erfolge","tab.set":"Einstellungen",
+ "how.kicker":"So funktioniert’s","how.title":"Ein Tipp raus. Ein Tipp rein.",
+ "how.s1t":"Tippen beim Herausnehmen","how.s1d":"Die Sanduhr dreht sich um und deine verbleibende Pausenzeit zählt herunter.",
+ "how.s2t":"Den Sand im Blick","how.s2d":"Den Countdown siehst du in der App, in der Dynamic Island und auf dem Sperrbildschirm.",
+ "how.s3t":"Tippen beim Einsetzen","how.s3d":"Tragezeit und Fortschrittsring aktualisieren sich sofort – mit Funkeln, wenn du pünktlich bist.",
+ "feat.kicker":"Funktionen","feat.title":"Alles, was du für dein Tagesziel brauchst",
+ "lock.t":"Countdown auf dem Sperrbildschirm","lock.d":"Eine Live-Aktivität zeigt den Countdown auf dem Sperrbildschirm und in der Dynamic Island – ein kurzer Blick genügt.",
+ "alarm.t":"Ein Alarm, der auch lautlos klingelt","alarm.d":"Ist deine Pausenzeit für heute aufgebraucht, klingelt Glasshour wie ein Wecker – auch im Stummmodus oder mit Fokus. Tippe auf ✓, wenn sie wieder drin sind, sonst klingelt es in 10 Minuten erneut.",
+ "alarm.more":"Dazu sanfte Erinnerungen: knappe Restzeit, „Isst du noch?“, Check vor dem Schlafen und Wechsel-Erinnerungen.",
+ "alarm.title":"Zeit, die Aligner einzusetzen","alarm.sub":"Tippe auf ✓, sonst klingelt es in 10 Min. erneut","alarm.done":"Wieder drin","alarm.silent":"Stumm",
+ "cal.t":"Jeder Tag auf einen Blick","cal.d":"Der Kalender färbt jeden Tag danach, ob du dein Ziel erreicht hast. Krank? Markiere den Tag als Pause.",
+ "cal.met":"Ziel erreicht","cal.close":"Knapp verfehlt","cal.missed":"Verfehlt","cal.paused":"Pausiert",
+ "tray.t":"Deine Behandlung, Aligner für Aligner","tray.d":"Wechseltage, voraussichtliches Ende und Termine in einem Zeitplan. Wechsel verschieben, früher wechseln, zurück zum vorherigen Aligner oder Refinement starten.",
+ "tray.n":"Aligner {n}","tray.total":"von 30","tray.next":"Wechsel in 5 Tagen","tray.finish":"Voraussichtliches Ende","tray.checkup":"Termin","tray.refine":"Refinement",
+ "ach.t":"Erfolge zum Sammeln","ach.d":"34 Erfolge in sechs Stufen, von Bronze bis zur legendären Regenbogen-Medaille: Serien, pünktliches Einsetzen, Meilensteine der Behandlung und ein paar versteckte Überraschungen. Für alle kostenlos.",
+ "m1":"Hattrick","m2":"Perfekte Woche","m3":"Voll geladen","m4":"Monatsmeister","m5":"Eiserner Wille","m6":"100-Tage-Legende",
+ "tier1":"Bronze","tier2":"Silber","tier3":"Gold","tier4":"Kristall","tier5":"Nebel","tier6":"Legendär",
+ "surf.k":"Kurzbefehle","surf.t":"Überall zur Hand","surf.d":"Herausnehmen und Einsetzen von dort, wo es am schnellsten geht.",
+ "sf.app":"App","sf.island":"Dynamic Island","sf.lock":"Sperrbildschirm","sf.widget":"Home-Bildschirm-Widgets","sf.cc":"Kontrollzentrum","sf.action":"Aktionstaste",
+ "rec.k":"Verlässlich","rec.t":"Daten, denen du vertrauen kannst",
+ "r1t":"Echte Uhrzeiten","r1d":"Jeder Eintrag wird aus Beginn und Ende berechnet, nie aus einem Hintergrund-Timer.",
+ "r2t":"Leicht zu korrigieren","r2d":"Vergessen zu tippen? Einträge lassen sich bearbeiten oder nachtragen, überlappende zusammenführen.",
+ "r3t":"Mit einem Tipp rückgängig","r3d":"Versehentlich getippt? Sofort rückgängig machen.",
+ "r4t":"Mitternacht und Reisen","r4d":"Mitternacht, Zeitzonen und Zeitumstellung werden automatisch berücksichtigt.",
+ "priv.k":"Datenschutz","priv.t":"Datenschutz zuerst","priv.d":"Deine Daten bleiben auf deinem iPhone und, wenn du willst, in deiner eigenen iCloud.",
+ "priv.p1":"Kein Konto","priv.p2":"Keine Werbung","priv.p3":"Kein Tracking","priv.link":"Datenschutzerklärung lesen",
+ "plan.k":"Preise","plan.t":"Kostenlos starten","plan.d":"Das tägliche Tracking ist kostenlos. Mit Pro hast du den Countdown überall.",
+ "free.t":"Kostenlos","free.i1":"Zeitmessung mit einem Tipp","free.i2":"Bearbeiten und Rückgängig","free.i3":"Kalender","free.i4":"Einfache Erinnerungen","free.i5":"Erfolge",
+ "pro.i1":"Countdown in der Dynamic Island und auf dem Sperrbildschirm","pro.i2":"Überzieh-Alarm","pro.i3":"Widgets und Steuerelemente","pro.i4":"Eigene Töne","pro.i5":"Statistiken",
+ "pro.note":"Das Jahresabo enthält eine kostenlose Testphase für berechtigte neue Abonnenten.",
+ "cta.t":"Deine 22 Stunden, ganz einfach","cta.d":"Glasshour kommt bald in den App Store. Ideen oder Fehler? Erzähl uns davon auf GitHub.","cta.btn":"Feedback senden",
+ "foot.privacy":"Datenschutzerklärung","foot.support":"Support","foot.feedback":"Feedback",
+ "foot.tm":"Funktioniert mit Invisalign® und anderen Alignern. Glasshour ist eine unabhängige App und steht in keiner Verbindung zu Align Technology, Inc. und wird von dieser weder unterstützt noch gesponsert. Invisalign ist eine Marke von Align Technology, Inc.",
+ "foot.med":"Glasshour ist kein Medizinprodukt. Befolge immer die Anweisungen deines Kieferorthopäden."
+}};
+/* 隐私政策、支持页里每种语言的锚点 */
+const ANCHOR = {en:"en","zh-Hans":"zh-Hans","zh-Hant":"zh-Hant",ja:"ja",ko:"ko",es:"es",fr:"fr",de:"de"};
+
+const $ = s => document.querySelector(s);
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let L = 'en', T = I18N.en;
+const t = (k, v) => { let s = T[k] ?? I18N.en[k] ?? k; if (v) for (const x in v) s = s.replace('{' + x + '}', v[x]); return s; };
+const store = { get(k){ try { return localStorage.getItem(k) } catch { return null } }, set(k,v){ try { localStorage.setItem(k,v) } catch {} } };
+
+function pickLang(){
+  const q = new URLSearchParams(location.search).get('lang');
+  if (q && I18N[q]) return q;
+  const saved = store.get('gh-lang'); if (saved && I18N[saved]) return saved;
+  for (const raw of (navigator.languages || [navigator.language || 'en'])) {
+    const l = raw.toLowerCase();
+    if (l.startsWith('zh')) return /hant|tw|hk|mo/.test(l) ? 'zh-Hant' : 'zh-Hans';
+    const b = l.split('-')[0];
+    if (I18N[b]) return b;
+  }
+  return 'en';
+}
+
+function applyLang(l){
+  L = l; T = I18N[l];
+  document.documentElement.lang = l;
+  document.title = t('title');
+  document.querySelector('meta[name=description]').content = t('desc');
+  document.querySelectorAll('[data-i18n]').forEach(e => e.textContent = t(e.dataset.i18n));
+  document.querySelectorAll('[data-i18n-html]').forEach(e => e.innerHTML = t(e.dataset.i18nHtml));
+  document.querySelectorAll('[data-href]').forEach(e => e.href = e.dataset.href + '.html#' + ANCHOR[l]);
+  $('#lang').value = l;
+  $('#trayN').textContent = t('tray.n', {n: 12});
+  buildCalendar(); buildEntries(); buildLock(); render(true);
+}
+
+/* ================= 手机演示：和 App 的“今天”页一样的两种状态 ================= */
+const GOAL = 22 * 3600, BUDGET = 2 * 3600;
+const S = { out: true, remaining: 44 * 60 + 32, thisOut: 11 * 60 + 28, worn: 18 * 3600 + 41 * 60 };
+const demo = $('#demo'), bigT = $('#bigT');
+const clock = s => { const neg = s < 0; s = Math.abs(Math.floor(s)); const h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), x = s % 60;
+  return (neg ? '+' : '') + h + ':' + String(m).padStart(2, '0') + ':' + String(x).padStart(2, '0'); };
+const shortTime = d => (L === 'en' ? (d.getHours() % 12 || 12) : d.getHours()) + ':' + String(d.getMinutes()).padStart(2, '0');
+const fmtDur = s => { const h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60); return `<b>${h}</b><u>${t('u.h')}</u> <b>${m}</b><u>${t('u.m')}</u>`; };
+let lastBig = '';
+function setBig(str, force){
+  if (force || str.length !== lastBig.length) { bigT.innerHTML = [...str].map(c => `<span>${c}</span>`).join(''); }
+  else { [...str].forEach((c, i) => { if (c !== lastBig[i]) { const sp = bigT.children[i]; sp.textContent = c; if (!reduce) { sp.classList.remove('roll'); void sp.offsetWidth; sp.classList.add('roll'); } } }); }
+  lastBig = str;
+}
+function setRing(fromZero){
+  const v = $('#ringVal'), C = 565.5, p = Math.min(1, S.worn / GOAL);
+  if (fromZero) { v.style.transition = 'none'; v.style.strokeDashoffset = C; void v.getBoundingClientRect(); v.style.transition = ''; }
+  v.style.strokeDashoffset = C * (1 - p);
+}
+function setGlass(){
+  const f = Math.max(0, Math.min(1, S.remaining / BUDGET));
+  const top = 55.5 - f * 29.5, h = 3 + (1 - f) * 26;
+  $('#cupSand').setAttribute('d', `M0 ${top}Q50 ${top + 3} 100 ${top}V60H0Z`);
+  $('#domeSand').setAttribute('d', `M10 118Q50 ${118 - 2 * h} 90 118Z`);
+  $('#glass').classList.toggle('paused', !(S.out && S.remaining > 0));
+}
+function render(force){
+  const over = S.out && S.remaining < 0;
+  demo.classList.toggle('out', S.out); demo.classList.toggle('over', over);
+  $('#wornL').classList.toggle('hide', S.out); $('#outL').classList.toggle('hide', !S.out);
+  $('#btnTxt').textContent = S.out ? t('ph.put') : t('ph.take');
+  $('#mainBtn').setAttribute('aria-pressed', String(S.out));
+  $('#wornT').innerHTML = fmtDur(S.worn);
+  $('#leftLine').textContent = S.remaining >= 0 ? t('ph.left', {t: clock(S.remaining)}) : t('ph.over') + ' ' + clock(S.remaining);
+  $('#leftLine').style.color = S.remaining >= 0 ? '' : 'var(--over-text)';
+  $('#outLabel').textContent = over ? t('ph.over') : t('ph.outLeft');
+  setBig(clock(S.remaining), force);
+  $('#thisLine').textContent = t('ph.this', {t: clock(S.thisOut)});
+  setGlass();
+  $('#sbTime').textContent = shortTime(new Date());
+}
+function burst(){
+  if (reduce) return;
+  const fx = $('#fx'), b = $('#mainBtn').getBoundingClientRect(), r = fx.getBoundingClientRect();
+  const sc = r.width / fx.offsetWidth, cx = (b.left + b.width / 2 - r.left) / sc, cy = (b.top + b.height / 2 - r.top) / sc;
+  const cols = ['#17A2B7', '#F2AE45', '#FF6BA6', '#8C73FF', '#9EE659', '#FFFFFF'];
+  for (let i = 0; i < 34; i++) {
+    const p = document.createElement('i'), w = 5 + Math.random() * 5, tall = Math.random() < .5;
+    Object.assign(p.style, {left: cx + 'px', top: cy + 'px', width: w + 'px', height: (tall ? w * 1.8 : w) + 'px', background: cols[i % cols.length], borderRadius: Math.random() < .3 ? '50%' : '2px'});
+    fx.appendChild(p);
+    const a = Math.random() * Math.PI - Math.PI, d = 90 + Math.random() * 150, dx = Math.cos(a) * d, dy = Math.sin(a) * d - 40, rot = (Math.random() * 2 - 1) * 540;
+    p.animate([{transform: 'translate(-50%,-50%) rotate(0)', opacity: 1},
+               {transform: `translate(${dx}px,${dy}px) rotate(${rot / 2}deg)`, opacity: 1, offset: .55},
+               {transform: `translate(${dx * 1.15}px,${dy + 220}px) rotate(${rot}deg)`, opacity: 0}],
+              {duration: 1500 + Math.random() * 700, easing: 'cubic-bezier(.15,.7,.35,1)'}).onfinish = () => p.remove();
+  }
+  for (let i = 0; i < 8; i++) {
+    const s = document.createElement('i'), a = i / 8 * Math.PI * 2;
+    s.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 2l2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2z" fill="' + (i % 2 ? '#F2AE45' : '#fff') + '"/></svg>';
+    Object.assign(s.style, {left: cx + 'px', top: cy + 'px'});
+    fx.appendChild(s);
+    s.animate([{transform: 'translate(-50%,-50%) scale(.2)', opacity: 1}, {transform: `translate(${Math.cos(a) * 130 - 8}px,${Math.sin(a) * 60 - 8}px) scale(1.1) rotate(90deg)`, opacity: 0}],
+              {duration: 900, easing: 'cubic-bezier(.2,.8,.3,1)'}).onfinish = () => s.remove();
+  }
+}
+$('#mainBtn').addEventListener('click', () => {
+  $('#hint').classList.add('gone');
+  if (S.out) {
+    const onTime = S.remaining >= 0;
+    S.out = false; render(); setRing(true);
+    if (onTime) burst();
+  } else {
+    S.out = true; S.thisOut = 0;
+    const g = $('#glass'); g.classList.remove('flip'); void g.getBoundingClientRect(); g.classList.add('flip');
+    render(true);
+  }
+  if (navigator.vibrate) try { navigator.vibrate(12) } catch {}
+});
+setInterval(() => {
+  if (S.out) { S.remaining--; S.thisOut++; } else { S.worn++; }
+  render();
+  tickLock();
+}, 1000);
+
+/* ================= 功能区的小画面 ================= */
+let lockLeft = 38 * 60 + 12;
+function buildLock(){
+  const d = new Date();
+  $('#lkDate').textContent = d.toLocaleDateString(L, {weekday: 'long', month: 'long', day: 'numeric'});
+  paintLock();
+}
+function tickLock(){
+  if (lockLeft <= 0) lockLeft = 38 * 60 + 12;
+  lockLeft--;
+  paintLock();
+}
+function paintLock(){
+  $('#lkTime').textContent = shortTime(new Date());
+  $('#lkT').textContent = clock(lockLeft);
+  $('#lkIsl').textContent = clock(lockLeft).replace(/^0:/, '');
+  $('#lkBar').style.width = (lockLeft / BUDGET * 100).toFixed(2) + '%';
+}
+function buildEntries(){
+  const fmt = (h, m) => new Date(2026, 0, 1, h, m).toLocaleTimeString(L, {hour: 'numeric', minute: '2-digit'});
+  $('#e1').textContent = fmt(7, 5) + ' – ' + fmt(7, 31);
+  $('#e2').textContent = fmt(12, 10) + ' – ' + fmt(12, 48);
+  $('#e1d').textContent = '26 ' + t('u.m'); $('#e2d').textContent = '38 ' + t('u.m');
+}
+/* 日历：显示上个月（整月都有数据），大部分达标，两天差一点、一天未达标、两天生病暂停 */
+function buildCalendar(){
+  const now = new Date(), y = now.getMonth() === 0 ? now.getFullYear() - 1 : now.getFullYear(), m = (now.getMonth() + 11) % 12;
+  $('#calTitle').textContent = new Date(y, m, 1).toLocaleDateString(L, {year: 'numeric', month: 'long'});
+  const sundayFirst = L === 'en' || L === 'ja' || L === 'ko' || L === 'zh-Hant';
+  const g = $('#calGrid'); g.innerHTML = '';
+  for (let i = 0; i < 7; i++) {
+    const day = new Date(2026, 1, (sundayFirst ? 1 : 2) + i); // 2026-02-01 是星期日
+    g.insertAdjacentHTML('beforeend', `<span class="wd">${day.toLocaleDateString(L, {weekday: 'narrow'})}</span>`);
+  }
+  const first = new Date(y, m, 1).getDay(), lead = sundayFirst ? first : (first + 6) % 7, days = new Date(y, m + 1, 0).getDate();
+  for (let i = 0; i < lead; i++) g.insertAdjacentHTML('beforeend', '<span></span>');
+  const kind = d => d === 6 || d === 19 ? 'c' : d === 11 ? 'x' : d === 23 || d === 24 ? 'p' : 'm';
+  for (let d = 1; d <= days; d++) g.insertAdjacentHTML('beforeend', `<span class="d ${kind(d)}" style="transition-delay:${(d * 18)}ms">${d}</span>`);
+}
+(function buildTray(){
+  const s = $('#segs');
+  for (let i = 1; i <= 30; i++) s.insertAdjacentHTML('beforeend', `<i class="${i < 12 ? 'done' : i === 12 ? 'now' : ''}" style="transition-delay:${i * 22}ms"></i>`);
+})();
+function updateFinish(){
+  const d = new Date(); d.setDate(d.getDate() + 5 + 18 * 7);
+  $('#finish').textContent = d.toLocaleDateString(L, {year: 'numeric', month: 'short'});
+}
+
+/* ================= 首屏落沙 ================= */
+(function sand(){
+  const c = $('#sand'), ctx = c.getContext('2d'); if (reduce || !ctx) return;
+  let W, H, dpr, parts = [], running = true;
+  const resize = () => { dpr = Math.min(2, devicePixelRatio || 1); W = c.clientWidth; H = c.clientHeight; c.width = W * dpr; c.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); };
+  const spawn = (y) => ({x: Math.random() * W, y: y ?? -10, r: .8 + Math.random() * 2.2, v: .25 + Math.random() * .9, w: Math.random() * Math.PI * 2, a: .25 + Math.random() * .55, gold: Math.random() < .8});
+  resize(); addEventListener('resize', resize);
+  for (let i = 0; i < Math.min(90, W / 12); i++) parts.push(spawn(Math.random() * H));
+  new IntersectionObserver(e => { running = e[0].isIntersecting; if (running) requestAnimationFrame(loop); }).observe(c);
+  function loop(){
+    if (!running) return;
+    ctx.clearRect(0, 0, W, H);
+    for (const p of parts) {
+      p.y += p.v; p.w += .02; p.x += Math.sin(p.w) * .3;
+      if (p.y > H + 10) Object.assign(p, spawn());
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283);
+      ctx.fillStyle = p.gold ? `rgba(242,174,69,${p.a})` : `rgba(23,162,183,${p.a * .8})`; ctx.fill();
+    }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
+
+/* 滚动出现 */
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold: .15, rootMargin: '0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+addEventListener('scroll', () => $('#top').classList.toggle('scrolled', scrollY > 8), {passive: true});
+
+$('#lang').addEventListener('change', e => {
+  const l = e.target.value; store.set('gh-lang', l);
+  const u = new URL(location.href); u.searchParams.set('lang', l); history.replaceState(null, '', u);
+  applyLang(l); updateFinish();
+});
+applyLang(pickLang()); updateFinish(); setRing(false);
+</script>
+</body>
+</html>
