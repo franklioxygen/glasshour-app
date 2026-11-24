@@ -27,7 +27,22 @@
 <link rel="alternate" hreflang="fr" href="https://franklioxygen.github.io/glasshour-app/?lang=fr">
 <link rel="alternate" hreflang="de" href="https://franklioxygen.github.io/glasshour-app/?lang=de">
 <link rel="alternate" hreflang="x-default" href="https://franklioxygen.github.io/glasshour-app/">
-<script>document.documentElement.classList.add('js')</script>
+<script>
+document.documentElement.classList.add('js');
+window.GH_LANG = (function(){
+  var A = ['en','zh-Hans','zh-Hant','ja','ko','es','fr','de'];
+  try { var q = new URLSearchParams(location.search).get('lang'); if (A.indexOf(q) >= 0) return q; } catch (e) {}
+  try { var s = localStorage.getItem('gh-lang'); if (A.indexOf(s) >= 0) return s; } catch (e) {}
+  var ls = navigator.languages || [navigator.language || 'en'];
+  for (var i = 0; i < ls.length; i++) {
+    var l = String(ls[i]).toLowerCase();
+    if (l.indexOf('zh') === 0) return /hant|tw|hk|mo/.test(l) ? 'zh-Hant' : 'zh-Hans';
+    var b = l.split('-')[0]; if (A.indexOf(b) >= 0) return b;
+  }
+  return 'en';
+})();
+document.documentElement.lang = window.GH_LANG;
+</script>
 <style>
 /* ---------- 颜色：取自 App（GlasshourKit StateColor）和图标 ---------- */
 :root{
@@ -38,26 +53,16 @@
   --fg:#0A2126; --muted:#4D6266; --faint:#7C8E91;
   --card:#FFFFFF; --card2:#F7F2E8; --line:rgba(14,89,102,.12);
   --worn-text:#1B6E7B; --out-text:#8C5A00; --over-text:#C3302A;
-  --arch:#0E5966;                         /* 图标里的深青弧线 */
   --em1:#C27A00; --em2:#E2553A;
   --shadow:0 1px 2px rgba(10,33,38,.06),0 12px 32px -12px rgba(10,33,38,.18);
-  --app-bg:linear-gradient(180deg,#CFE8EE 0%,#EEF6F7 38%,#FFFFFF 70%);
-  --app-fg:#0A2126; --app-muted:#6B7C80; --app-row:rgba(10,33,38,.08);
-  --tabbar:rgba(255,255,255,.72);
-  --track:rgba(23,162,183,.16);
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#061518; --bg2:#0A2126;
   --fg:#F3EAD9; --muted:#A8BBBE; --faint:#7F9599;
   --card:#0D2327; --card2:#0B1E22; --line:rgba(243,234,217,.10);
   --worn-text:#45C9D6; --out-text:#F4B54C; --over-text:#FF7066;
-  --arch:#F3EAD9;
   --em1:#F4B54C; --em2:#FF8A6B;
   --shadow:0 1px 2px rgba(0,0,0,.4),0 16px 40px -16px rgba(0,0,0,.7);
-  --app-bg:linear-gradient(180deg,#0F3F48 0%,#071C20 45%,#000 80%);
-  --app-fg:#F2F5F5; --app-muted:#93A6AB; --app-row:rgba(255,255,255,.09);
-  --tabbar:rgba(30,36,38,.72);
-  --track:rgba(69,201,214,.16);
 }}
 
 *{box-sizing:border-box}
@@ -128,82 +133,29 @@ h1 em{font-style:normal;background:linear-gradient(100deg,var(--em1),var(--em2) 
 .soon b{display:block;font-size:17px;line-height:1.25;font-weight:650}
 .req{margin-top:18px;font-size:14px;color:var(--faint);display:flex;align-items:center;gap:8px}
 
-/* ---------- 手机演示 ---------- */
+/* ---------- 手机演示：真实的“今天”页截图（摘下中 / 戴着），点截图里的按钮切换 ---------- */
 .stage{position:relative;display:flex;justify-content:center;--s:1;margin-bottom:56px}
-.phone-wrap{height:calc(624px * var(--s));width:calc(304px * var(--s));position:relative}
-.phone{position:absolute;left:0;top:0;width:304px;height:624px;transform:scale(var(--s));transform-origin:0 0;border-radius:54px;padding:11px;
+.phone-wrap{height:calc(636px * var(--s));width:calc(304px * var(--s));position:relative}
+.phone{position:absolute;left:0;top:0;width:304px;height:636px;transform:scale(var(--s));transform-origin:0 0;border-radius:52px;padding:11px;
   background:linear-gradient(150deg,#3a4548,#0c1113 40%,#20292c);
-  box-shadow:0 50px 90px -30px rgba(10,33,38,.55),0 0 0 1px rgba(255,255,255,.06) inset,0 0 0 2px #0b0f10;
+  box-shadow:0 50px 90px -30px rgba(10,33,38,.6),0 0 0 1px rgba(255,255,255,.07) inset,0 0 0 2px #0b0f10;
   animation:float 7s ease-in-out infinite}
 @keyframes float{0%,100%{translate:0 0}50%{translate:0 -10px}}
-.phone::before{content:"";position:absolute;right:-3px;top:150px;width:3px;height:70px;border-radius:0 3px 3px 0;background:#1a2124}
-.phone::after{content:"";position:absolute;left:-3px;top:120px;width:3px;height:34px;border-radius:3px 0 0 3px;background:#1a2124;box-shadow:0 56px 0 #1a2124,0 104px 0 #1a2124}
-.screen{position:relative;height:100%;border-radius:43px;overflow:hidden;background:var(--app-bg);color:var(--app-fg);
-  font-family:-apple-system,BlinkMacSystemFont,system-ui,"PingFang SC","Hiragino Sans","Apple SD Gothic Neo",sans-serif;isolation:isolate}
-.sbar{position:absolute;top:0;left:0;right:0;height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 26px 0 32px;font-size:14px;font-weight:600;z-index:5}
-.sbar .sig{display:flex;gap:5px;align-items:center}
-.sbar .sig i{display:block;width:3px;border-radius:1px;background:currentColor}
-.batt{width:24px;height:12px;border-radius:4px;border:1.5px solid currentColor;opacity:.9;padding:1.5px}
-.batt::before{content:"";display:block;height:100%;width:78%;background:currentColor;border-radius:1.5px}
-.island{position:absolute;top:11px;left:50%;height:30px;width:98px;transform:translateX(-50%);background:#000;border-radius:20px;z-index:6}
-.app-top{position:absolute;top:54px;left:20px;right:16px;display:flex;align-items:center;justify-content:space-between}
-.app-top b{font-size:30px;letter-spacing:-.02em}
-.plus{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:var(--worn);background:var(--tabbar);
-  box-shadow:0 2px 10px rgba(0,0,0,.08),inset 0 0 0 .5px rgba(255,255,255,.6);font-size:18px}
-.dstage{position:absolute;top:104px;left:0;right:0;height:268px}
-.layer{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;transition:opacity .4s,transform .55s cubic-bezier(.3,1.35,.45,1)}
-.layer.hide{opacity:0;transform:scale(.72);pointer-events:none}
-.ringbox{position:relative;width:212px;height:212px;display:grid;place-items:center}
-.halo{position:absolute;inset:-22%;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--worn) 34%,transparent),transparent 62%);animation:breathe 4s ease-in-out infinite}
-@keyframes breathe{0%,100%{transform:scale(.9);opacity:.55}50%{transform:scale(1.06);opacity:1}}
-.ring{position:absolute;inset:0;transform:rotate(-90deg);overflow:visible}
-.ring circle{fill:none;stroke-width:15}
-.ring .trk{stroke:var(--track)}
-.ring .val{stroke:url(#ringGrad);stroke-linecap:round;filter:drop-shadow(0 0 7px rgba(23,162,183,.55));transition:stroke-dashoffset 1.3s cubic-bezier(.25,1,.35,1)}
-.ring .knob{fill:#fff;stroke:none;filter:drop-shadow(0 0 4px rgba(23,162,183,.9))}
-.rtext{position:relative;text-align:center;line-height:1.15}
-.rtext small{display:block;font-size:13px;color:var(--app-muted)}
-.rtext .dur{font-weight:650;margin:4px 0 3px;white-space:nowrap}
-.dur b{font-size:44px;letter-spacing:-.02em;font-weight:650}
-.dur u{text-decoration:none;font-size:17px;margin:0 3px 0 1px}
-.subline{margin-top:12px;font-size:14px;font-weight:600;color:var(--app-muted)}
-.glass{width:112px;height:138px;margin:4px 0 10px;transform-origin:50% 50%}
-.out .glass.flip{animation:flip .9s cubic-bezier(.3,1.4,.5,1)}
-@keyframes flip{0%{transform:rotate(180deg) scale(.7)}100%{transform:rotate(0) scale(1)}}
-.glass .arch{fill:var(--arch)}
-.glass .sandc{fill:var(--gold)}
-.glass .drip{fill:var(--gold);animation:drip 1.1s linear infinite}
-.glass .drip:nth-of-type(2){animation-delay:-.37s}.glass .drip:nth-of-type(3){animation-delay:-.74s}
-@keyframes drip{0%{transform:translateY(0);opacity:0}10%{opacity:1}100%{transform:translateY(44px);opacity:.3}}
-.paused .drip{animation-play-state:paused;opacity:0}
-.olabel{font-size:13px;color:var(--app-muted)}
-.big{font-size:56px;font-weight:650;letter-spacing:-.02em;color:var(--out-text);line-height:1.08;display:flex}
-.over .big{color:var(--over-text);animation:pulse 1s ease-in-out infinite}
-@keyframes pulse{50%{transform:scale(1.05)}}
-.big span{display:inline-block}
-.big span.roll{animation:roll .35s cubic-bezier(.3,1.3,.5,1)}
-@keyframes roll{0%{transform:translateY(-45%);opacity:0}100%{transform:none;opacity:1}}
-.mainbtn{position:absolute;top:386px;left:18px;right:18px;height:58px;border-radius:30px;border:0;cursor:pointer;font:inherit;font-size:21px;font-weight:700;
-  color:var(--ink-on);display:flex;align-items:center;justify-content:center;gap:10px;
-  background:linear-gradient(180deg,color-mix(in srgb,var(--gold) 82%,#fff),var(--gold));
-  box-shadow:0 10px 24px -8px rgba(242,174,69,.8),inset 0 1px 0 rgba(255,255,255,.55),inset 0 -2px 0 rgba(0,0,0,.06);
-  transition:background .4s,box-shadow .4s,transform .25s cubic-bezier(.3,1.6,.5,1)}
-.mainbtn:hover{transform:scale(1.02)}
-.mainbtn:active{transform:scale(.95)}
-.out .mainbtn{background:linear-gradient(180deg,color-mix(in srgb,var(--worn) 80%,#fff),var(--worn));box-shadow:0 10px 24px -8px rgba(23,162,183,.8),inset 0 1px 0 rgba(255,255,255,.5),inset 0 -2px 0 rgba(0,0,0,.06)}
-.mainbtn .ic{font-size:24px;stroke-width:2.4}
-.mainbtn .ic-check{display:none}
-.out .mainbtn .ic-check{display:block}.out .mainbtn .ic-hg{display:none}
-.entries{position:absolute;top:462px;left:20px;right:20px;font-size:13px}
-.entries h4{margin:0 0 6px;font-size:14px}
-.entries div{display:flex;justify-content:space-between;padding:9px 0;border-bottom:.5px solid var(--app-row);color:var(--app-fg)}
-.entries div span:last-child{color:var(--app-muted)}
-.tabbar{position:absolute;left:9px;right:9px;bottom:12px;height:60px;border-radius:30px;background:var(--tabbar);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  box-shadow:0 6px 24px rgba(0,0,0,.12),inset 0 0 0 .5px rgba(255,255,255,.45);display:flex;align-items:center;justify-content:space-around;padding:0 4px;z-index:4}
-.tabbar span{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:8px;font-weight:600;letter-spacing:-.25px;width:20%;min-width:0;text-align:center;padding:6px 1px;border-radius:22px;color:var(--app-fg)}
-.tabbar em{font-style:normal;display:block;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.tabbar span .ic{font-size:20px}
-.tabbar span.on{color:var(--worn);background:color-mix(in srgb,var(--worn) 13%,transparent)}
+.phone::before{content:"";position:absolute;right:-3px;top:160px;width:3px;height:74px;border-radius:0 3px 3px 0;background:#1a2124}
+.phone::after{content:"";position:absolute;left:-3px;top:124px;width:3px;height:34px;border-radius:3px 0 0 3px;background:#1a2124;box-shadow:0 58px 0 #1a2124,0 108px 0 #1a2124}
+.screen{position:relative;width:282px;height:614px;border-radius:41px;overflow:hidden;background:#000;isolation:isolate}
+.screen img{position:absolute;inset:0;width:100%;height:100%;color:transparent;transition:opacity .45s ease,transform .6s cubic-bezier(.3,1.3,.5,1),filter .45s}
+.screen img.off{opacity:0;transform:scale(1.04);filter:blur(4px)}
+.island{position:absolute;top:8px;left:50%;height:25px;width:82px;transform:translateX(-50%);background:#000;border-radius:14px;z-index:3}
+/* 截图里主按钮的位置：宽 4%–96%，高 52.6%–61%（两种状态一样） */
+.hit{position:absolute;left:4%;width:92%;top:52.6%;height:8.4%;border:0;padding:0;border-radius:999px;background:transparent;cursor:pointer;z-index:4;overflow:hidden;
+  box-shadow:0 0 0 0 rgba(255,255,255,0);animation:invite 2.4s ease-out infinite}
+.hit:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.hit.used{animation:none}
+@keyframes invite{0%{box-shadow:0 0 0 0 rgba(255,255,255,.55)}70%,100%{box-shadow:0 0 0 14px rgba(255,255,255,0)}}
+.hit::after{content:"";position:absolute;inset:0;border-radius:inherit;background:rgba(255,255,255,0);transition:background .25s}
+.hit:hover::after{background:rgba(255,255,255,.08)}
+.hit.press::after{background:rgba(255,255,255,.28);transition:none}
 .fx{position:absolute;inset:0;pointer-events:none;z-index:8;overflow:hidden}
 .fx i{position:absolute;display:block}
 .hint{position:absolute;left:50%;top:calc(100% + 18px);transform:translateX(-50%);display:flex;align-items:center;gap:8px;white-space:nowrap;font-size:15px;font-weight:650;color:var(--fg);
@@ -452,7 +404,6 @@ footer p{margin:6px 0;max-width:62em}
 <!-- 图标：线条风格，和 SF Symbols 的意思对应 -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
-    <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#45C9D6"/><stop offset="1" stop-color="#17A2B7"/></linearGradient>
     <linearGradient id="shieldGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7FE3EE"/><stop offset="1" stop-color="#F2AE45"/></linearGradient>
   </defs>
   <symbol id="i-hg" viewBox="0 0 24 24"><path d="M6 3h12M6 21h12M7.5 3c0 5 4.5 6 4.5 9s-4.5 4-4.5 9M16.5 3c0 5-4.5 6-4.5 9s4.5 4 4.5 9"/></symbol>
@@ -546,67 +497,12 @@ footer p{margin:6px 0;max-width:62em}
       <div class="hint" id="hint" aria-hidden="true"><svg class="ic"><use href="#i-spark"/></svg><span data-i18n="hero.hint">Try it — tap the button</span></div>
       <div class="phone-wrap">
         <div class="phone">
-          <div class="screen out" id="demo">
+          <div class="screen" id="demo">
+            <img id="shotOut" src="assets/demo/en-out.webp" alt="Know exactly how much out time is left" width="720" height="1566" fetchpriority="high">
+            <img id="shotWorn" class="off" src="assets/demo/en-worn.webp" alt="Hit your 22 hours every day" width="720" height="1566">
+            <script>(function(l){ if (l !== 'en') { document.getElementById('shotOut').src = 'assets/demo/' + l + '-out.webp'; document.getElementById('shotWorn').src = 'assets/demo/' + l + '-worn.webp'; } })(window.GH_LANG);</script>
             <div class="island" aria-hidden="true"></div>
-            <div class="sbar" aria-hidden="true"><span class="num" id="sbTime">9:41</span><span class="sig"><i style="height:4px"></i><i style="height:6px"></i><i style="height:8px"></i><i style="height:10px"></i><span class="batt"></span></span></div>
-            <div class="app-top"><b data-i18n="ph.today">Today</b><span class="plus" aria-hidden="true"><svg class="ic"><use href="#i-plus"/></svg></span></div>
-
-            <div class="dstage">
-              <!-- 戴着：发光进度环 -->
-              <div class="layer hide" id="wornL">
-                <div class="ringbox">
-                  <div class="halo"></div>
-                  <svg class="ring" viewBox="0 0 212 212" aria-hidden="true">
-                    <circle class="trk" cx="106" cy="106" r="90"/>
-                    <circle class="val" id="ringVal" cx="106" cy="106" r="90" stroke-dasharray="565.5" stroke-dashoffset="565.5"/>
-                  </svg>
-                  <div class="rtext">
-                    <small data-i18n="ph.worn">Worn Today</small>
-                    <div class="dur num" id="wornT"><b>18</b><u>h</u> <b>41</b><u>min</u></div>
-                    <small data-i18n="ph.goal">Goal 22 h</small>
-                  </div>
-                </div>
-                <div class="subline num" id="leftLine">Out time left: 0:44:32</div>
-              </div>
-              <!-- 摘下中：流沙沙漏 + 倒计时 -->
-              <div class="layer" id="outL">
-                <svg class="glass flip" id="glass" viewBox="0 0 100 124" aria-hidden="true">
-                  <defs>
-                    <clipPath id="cupClip"><path d="M20 6C20 42 35 55.5 50 55.5C67 55.5 84.6 40 84.6 6Z"/></clipPath>
-                    <clipPath id="domeClip"><path d="M15.4 118C15.4 84 33 68.5 50 68.5C65 68.5 80 82 80 118Z"/></clipPath>
-                  </defs>
-                  <g clip-path="url(#cupClip)"><path class="sandc" id="cupSand" d="M0 26Q50 29 100 26V60H0Z"/></g>
-                  <g clip-path="url(#domeClip)">
-                    <circle class="drip" cx="50" cy="60" r="1.7"/><circle class="drip" cx="50" cy="60" r="1.4"/><circle class="drip" cx="50" cy="60" r="1.1"/>
-                    <path class="sandc" id="domeSand" d="M10 118Q50 100 90 118Z"/>
-                  </g>
-                  <path class="arch" d="M14 6C14 46 32 60 50 60C68 60 86 44 86 6L84.6 6C84.6 40 67 55.5 50 55.5C35 55.5 20 42 20 6Z"/>
-                  <path class="arch" d="M86 118C86 78 68 64 50 64C32 64 14 80 14 118L15.4 118C15.4 84 33 68.5 50 68.5C65 68.5 80 82 80 118Z"/>
-                  <circle class="sandc" cx="50" cy="62" r="1.8"/>
-                </svg>
-                <div class="olabel" id="outLabel" data-i18n="ph.outLeft">Out Time Left Today</div>
-                <div class="big num" id="bigT" aria-live="off">0:44:32</div>
-                <div class="subline num" id="thisLine">This time out: 0:11:28</div>
-              </div>
-            </div>
-
-            <button class="mainbtn" id="mainBtn" type="button">
-              <svg class="ic ic-hg"><use href="#i-hg"/></svg><svg class="ic ic-check"><use href="#i-check"/></svg>
-              <span id="btnTxt">Put Back</span>
-            </button>
-
-            <div class="entries" aria-hidden="true">
-              <h4 data-i18n="ph.entries">Today’s Entries</h4>
-              <div><span class="num" id="e1">7:05 – 7:31 AM</span><span class="num" id="e1d">26 min</span></div>
-              <div><span class="num" id="e2">12:10 – 12:48 PM</span><span class="num" id="e2d">38 min</span></div>
-            </div>
-            <div class="tabbar" aria-hidden="true">
-              <span class="on"><svg class="ic"><use href="#i-hg"/></svg><em data-i18n="ph.today" style="font-style:normal">Today</em></span>
-              <span><svg class="ic"><use href="#i-cal"/></svg><em data-i18n="tab.cal" style="font-style:normal">Calendar</em></span>
-              <span><svg class="ic"><use href="#i-stack"/></svg><em data-i18n="tab.trays" style="font-style:normal">Aligners</em></span>
-              <span><svg class="ic"><use href="#i-trophy"/></svg><em data-i18n="tab.ach" style="font-style:normal">Achievements</em></span>
-              <span><svg class="ic"><use href="#i-gear"/></svg><em data-i18n="tab.set" style="font-style:normal">Settings</em></span>
-            </div>
+            <button class="hit" id="mainBtn" type="button" aria-label="Put Back"></button>
             <div class="fx" id="fx"></div>
           </div>
         </div>
@@ -866,9 +762,8 @@ en:{
  "hero.eyebrow":"Clear aligner timer for iPhone",
  "hero.title":"Know exactly how much <em>out time</em> is left",
  "hero.soon":"Coming soon to the App Store","hero.req":"iPhone · iOS 26 or later","hero.more":"See how it works","hero.hint":"Try it — tap the button",
- "ph.today":"Today","ph.worn":"Worn Today","ph.goal":"Goal 22 h","ph.left":"Out time left: {t}","ph.outLeft":"Out Time Left Today","ph.over":"Over",
- "ph.this":"This time out: {t}","ph.take":"Take Out","ph.put":"Put Back","ph.entries":"Today’s Entries","u.h":"h","u.m":"min",
- "tab.cal":"Calendar","tab.trays":"Aligners","tab.ach":"Achievements","tab.set":"Settings",
+ "ph.outLeft":"Out Time Left Today",
+ "ph.take":"Take Out","ph.put":"Put Back",
  "how.kicker":"How it works","how.title":"One tap out. One tap back.",
  "how.s1t":"Tap when they come out","how.s1d":"The hourglass flips and today’s remaining out time starts counting down.",
  "how.s2t":"Keep an eye on the sand","how.s2d":"Check the countdown in the app, in the Dynamic Island or on your Lock Screen.",
@@ -911,9 +806,8 @@ en:{
  "hero.eyebrow":"iPhone 上的隐形牙套计时器",
  "hero.title":"还能摘多久，<em>一眼就知道</em>",
  "hero.soon":"即将登陆 App Store","hero.req":"iPhone · iOS 26 或更高版本","hero.more":"看看怎么用","hero.hint":"试试看：点一下按钮",
- "ph.today":"今天","ph.worn":"今日已戴","ph.goal":"目标 22小时","ph.left":"剩余摘套时间 {t}","ph.outLeft":"今日剩余摘套时间","ph.over":"已超出",
- "ph.this":"本次已摘 {t}","ph.take":"摘下","ph.put":"戴回","ph.entries":"今天的记录","u.h":"小时","u.m":"分钟",
- "tab.cal":"日历","tab.trays":"牙套","tab.ach":"成就","tab.set":"设置",
+ "ph.outLeft":"今日剩余摘套时间",
+ "ph.take":"摘下","ph.put":"戴回",
  "how.kicker":"怎么用","how.title":"摘下点一下，戴回点一下",
  "how.s1t":"摘下时点一下","how.s1d":"沙漏翻转，今天剩余的摘套时间开始倒计时。",
  "how.s2t":"看着沙子流","how.s2d":"App 里、灵动岛、锁屏上，随时看倒计时。",
@@ -956,9 +850,8 @@ en:{
  "hero.eyebrow":"iPhone 上的隱形牙套計時器",
  "hero.title":"還能摘多久，<em>一眼就知道</em>",
  "hero.soon":"即將登上 App Store","hero.req":"iPhone · iOS 26 或以上版本","hero.more":"看看怎麼用","hero.hint":"試試看：點一下按鈕",
- "ph.today":"今天","ph.worn":"今日已戴","ph.goal":"目標 22小時","ph.left":"剩餘摘下時間 {t}","ph.outLeft":"今日剩餘摘下時間","ph.over":"已超出",
- "ph.this":"本次已摘 {t}","ph.take":"摘下","ph.put":"戴回","ph.entries":"今天的紀錄","u.h":"小時","u.m":"分鐘",
- "tab.cal":"日曆","tab.trays":"牙套","tab.ach":"成就","tab.set":"設定",
+ "ph.outLeft":"今日剩餘摘下時間",
+ "ph.take":"摘下","ph.put":"戴回",
  "how.kicker":"怎麼用","how.title":"摘下點一下，戴回點一下",
  "how.s1t":"摘下時點一下","how.s1d":"沙漏翻轉，今天剩餘的摘下時間開始倒數。",
  "how.s2t":"看著沙子流","how.s2d":"App 裡、動態島、鎖定畫面上，隨時看倒數。",
@@ -1001,9 +894,8 @@ ja:{
  "hero.eyebrow":"iPhone用マウスピース矯正タイマー",
  "hero.title":"外せる残り時間が<em>ひと目でわかる</em>",
  "hero.soon":"App Storeで近日公開","hero.req":"iPhone · iOS 26以降","hero.more":"使い方を見る","hero.hint":"ボタンをタップしてみて",
- "ph.today":"今日","ph.worn":"今日の装着","ph.goal":"目標 22時間","ph.left":"外せる残り時間 {t}","ph.outLeft":"今日の外せる残り時間","ph.over":"超過",
- "ph.this":"今回 {t}","ph.take":"外す","ph.put":"着ける","ph.entries":"今日の記録","u.h":"時間","u.m":"分",
- "tab.cal":"カレンダー","tab.trays":"マウスピース","tab.ach":"実績","tab.set":"設定",
+ "ph.outLeft":"今日の外せる残り時間",
+ "ph.take":"外す","ph.put":"着ける",
  "how.kicker":"使い方","how.title":"外すときにタップ、着けるときにタップ",
  "how.s1t":"外したらタップ","how.s1d":"砂時計がひっくり返り、今日の残り時間のカウントダウンが始まります。",
  "how.s2t":"砂の流れをチェック","how.s2d":"アプリ、ダイナミックアイランド、ロック画面でいつでも残り時間を確認できます。",
@@ -1046,9 +938,8 @@ ko:{
  "hero.eyebrow":"iPhone용 투명 교정 타이머",
  "hero.title":"남은 시간을 <em>한눈에</em>",
  "hero.soon":"App Store 출시 예정","hero.req":"iPhone · iOS 26 이상","hero.more":"사용 방법 보기","hero.hint":"버튼을 눌러 보세요",
- "ph.today":"오늘","ph.worn":"오늘 착용","ph.goal":"목표 22시간","ph.left":"남은 뺄 수 있는 시간 {t}","ph.outLeft":"오늘 남은 뺄 수 있는 시간","ph.over":"초과",
- "ph.this":"이번에 뺀 시간 {t}","ph.take":"빼기","ph.put":"끼우기","ph.entries":"오늘 기록","u.h":"시간","u.m":"분",
- "tab.cal":"캘린더","tab.trays":"교정 장치","tab.ach":"업적","tab.set":"설정",
+ "ph.outLeft":"오늘 남은 뺄 수 있는 시간",
+ "ph.take":"빼기","ph.put":"끼우기",
  "how.kicker":"사용 방법","how.title":"뺄 때 한 번, 끼울 때 한 번",
  "how.s1t":"뺄 때 탭","how.s1d":"모래시계가 뒤집히고 오늘 남은 시간이 줄어들기 시작해요.",
  "how.s2t":"모래를 지켜보세요","how.s2d":"앱, Dynamic Island, 잠금 화면에서 언제든 카운트다운을 확인해요.",
@@ -1091,9 +982,8 @@ es:{
  "hero.eyebrow":"Temporizador de alineadores para iPhone",
  "hero.title":"Sabes cuánto <em>tiempo te queda</em>",
  "hero.soon":"Próximamente en el App Store","hero.req":"iPhone · iOS 26 o posterior","hero.more":"Mira cómo funciona","hero.hint":"Pruébalo: toca el botón",
- "ph.today":"Hoy","ph.worn":"Uso de hoy","ph.goal":"Meta: 22 h","ph.left":"Tiempo restante: {t}","ph.outLeft":"Tiempo restante hoy","ph.over":"Excedido",
- "ph.this":"Esta vez: {t}","ph.take":"Quitar","ph.put":"Poner","ph.entries":"Registros de hoy","u.h":"h","u.m":"min",
- "tab.cal":"Calendario","tab.trays":"Alineadores","tab.ach":"Logros","tab.set":"Ajustes",
+ "ph.outLeft":"Tiempo restante hoy",
+ "ph.take":"Quitar","ph.put":"Poner",
  "how.kicker":"Cómo funciona","how.title":"Un toque al quitar. Otro al poner.",
  "how.s1t":"Toca al quitártelos","how.s1d":"El reloj de arena se da la vuelta y empieza la cuenta atrás del tiempo que te queda hoy.",
  "how.s2t":"Vigila la arena","how.s2d":"Mira la cuenta atrás en la app, en la Dynamic Island o en la pantalla bloqueada.",
@@ -1136,9 +1026,8 @@ fr:{
  "hero.eyebrow":"Minuteur de gouttières pour iPhone",
  "hero.title":"Le temps restant, <em>d’un coup d’œil</em>",
  "hero.soon":"Bientôt sur l’App Store","hero.req":"iPhone · iOS 26 ou version ultérieure","hero.more":"Voir comment ça marche","hero.hint":"Essayez : touchez le bouton",
- "ph.today":"Aujourd’hui","ph.worn":"Porté aujourd’hui","ph.goal":"Objectif : 22 h","ph.left":"Temps restant : {t}","ph.outLeft":"Temps restant aujourd’hui","ph.over":"Dépassé",
- "ph.this":"Ce retrait : {t}","ph.take":"Retirer","ph.put":"Remettre","ph.entries":"Entrées du jour","u.h":"h","u.m":"min",
- "tab.cal":"Calendrier","tab.trays":"Gouttières","tab.ach":"Succès","tab.set":"Réglages",
+ "ph.outLeft":"Temps restant aujourd’hui",
+ "ph.take":"Retirer","ph.put":"Remettre",
  "how.kicker":"Comment ça marche","how.title":"Un geste pour retirer. Un geste pour remettre.",
  "how.s1t":"Touchez en les retirant","how.s1d":"Le sablier se retourne et le temps restant du jour commence à défiler.",
  "how.s2t":"Surveillez le sable","how.s2d":"Suivez le compte à rebours dans l’app, la Dynamic Island ou sur l’écran verrouillé.",
@@ -1181,9 +1070,8 @@ de:{
  "hero.eyebrow":"Aligner-Timer fürs iPhone",
  "hero.title":"Restzeit <em>auf einen Blick</em>",
  "hero.soon":"Bald im App Store","hero.req":"iPhone · iOS 26 oder neuer","hero.more":"So funktioniert’s","hero.hint":"Probier’s aus: Tippe auf den Button",
- "ph.today":"Heute","ph.worn":"Heute getragen","ph.goal":"Ziel: 22 h","ph.left":"Verbleibende Pausenzeit: {t}","ph.outLeft":"Heute verbleibende Pausenzeit","ph.over":"Überzogen",
- "ph.this":"Diese Pause: {t}","ph.take":"Herausnehmen","ph.put":"Einsetzen","ph.entries":"Heutige Einträge","u.h":"h","u.m":"min",
- "tab.cal":"Kalender","tab.trays":"Aligner","tab.ach":"Erfolge","tab.set":"Einstellungen",
+ "ph.outLeft":"Heute verbleibende Pausenzeit",
+ "ph.take":"Herausnehmen","ph.put":"Einsetzen",
  "how.kicker":"So funktioniert’s","how.title":"Ein Tipp raus. Ein Tipp rein.",
  "how.s1t":"Tippen beim Herausnehmen","how.s1d":"Die Sanduhr dreht sich um und deine verbleibende Pausenzeit zählt herunter.",
  "how.s2t":"Den Sand im Blick","how.s2d":"Den Countdown siehst du in der App, in der Dynamic Island und auf dem Sperrbildschirm.",
@@ -1238,18 +1126,7 @@ let L = 'en', T = I18N.en;
 const t = (k, v) => { let s = T[k] ?? I18N.en[k] ?? k; if (v) for (const x in v) s = s.replace('{' + x + '}', v[x]); return s; };
 const store = { get(k){ try { return localStorage.getItem(k) } catch { return null } }, set(k,v){ try { localStorage.setItem(k,v) } catch {} } };
 
-function pickLang(){
-  const q = new URLSearchParams(location.search).get('lang');
-  if (q && I18N[q]) return q;
-  const saved = store.get('gh-lang'); if (saved && I18N[saved]) return saved;
-  for (const raw of (navigator.languages || [navigator.language || 'en'])) {
-    const l = raw.toLowerCase();
-    if (l.startsWith('zh')) return /hant|tw|hk|mo/.test(l) ? 'zh-Hant' : 'zh-Hans';
-    const b = l.split('-')[0];
-    if (I18N[b]) return b;
-  }
-  return 'en';
-}
+function pickLang(){ return I18N[window.GH_LANG] ? window.GH_LANG : 'en'; }
 
 function applyLang(l){
   L = l; T = I18N[l];
@@ -1261,10 +1138,22 @@ function applyLang(l){
   document.querySelectorAll('[data-href]').forEach(e => e.href = e.dataset.href + '.html#' + ANCHOR[l]);
   $('#lang').value = l;
   $('#trayN').textContent = t('tray.n', {n: 12});
-  buildCalendar(); buildEntries(); buildLock(); buildShots(); render(true);
+  buildCalendar(); buildLock(); buildShots(); buildDemo();
 }
+/* 换图：先在后台下载解码好再换上，切换语言时不会闪出空白；下载失败自动重试一次 */
+function swapImg(img, url, alt){
+  img.alt = alt;
+  if (img.getAttribute('src') === url) return;
+  const pre = new Image(); pre.src = url;
+  (pre.decode ? pre.decode() : Promise.resolve()).catch(() => {}).finally(() => { img.dataset.retried = ''; img.src = url; });
+}
+document.addEventListener('error', e => {
+  const img = e.target;
+  if (img.tagName !== 'IMG' || img.dataset.retried) return;
+  img.dataset.retried = '1'; img.src = img.getAttribute('src').split('?')[0] + '?r=' + Date.now();
+}, true);
 function buildShots(){
-  document.querySelectorAll('.shot img').forEach((img, i) => { img.src = `assets/shots/${L}/${i + 1}.webp`; img.alt = SHOT_ALT[L][i]; });
+  document.querySelectorAll('.shot img').forEach((img, i) => swapImg(img, `assets/shots/${L}/${i + 1}.webp`, SHOT_ALT[L][i]));
   if (lb.open) showShot(cur);
 }
 /* 点截图放大看，左右键 / 按钮切换 */
@@ -1286,47 +1175,25 @@ let sx = null;
 lb.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, {passive: true});
 lb.addEventListener('touchend', e => { if (sx === null) return; const dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 40) showShot(cur + (dx < 0 ? 1 : -1)); sx = null; });
 
-/* ================= 手机演示：和 App 的“今天”页一样的两种状态 ================= */
-const GOAL = 22 * 3600, BUDGET = 2 * 3600;
-const S = { out: true, remaining: 44 * 60 + 32, thisOut: 11 * 60 + 28, worn: 18 * 3600 + 41 * 60 };
-const demo = $('#demo'), bigT = $('#bigT');
+/* ================= 手机演示：真实截图，点按钮在“摘下中”和“戴着”之间切换 ================= */
+const BUDGET = 2 * 3600;
 const clock = s => { const neg = s < 0; s = Math.abs(Math.floor(s)); const h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), x = s % 60;
   return (neg ? '+' : '') + h + ':' + String(m).padStart(2, '0') + ':' + String(x).padStart(2, '0'); };
 const shortTime = d => (L === 'en' ? (d.getHours() % 12 || 12) : d.getHours()) + ':' + String(d.getMinutes()).padStart(2, '0');
-const fmtDur = s => { const h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60); return `<b>${h}</b><u>${t('u.h')}</u> <b>${m}</b><u>${t('u.m')}</u>`; };
-let lastBig = '';
-function setBig(str, force){
-  if (force || str.length !== lastBig.length) { bigT.innerHTML = [...str].map(c => `<span>${c}</span>`).join(''); }
-  else { [...str].forEach((c, i) => { if (c !== lastBig[i]) { const sp = bigT.children[i]; sp.textContent = c; if (!reduce) { sp.classList.remove('roll'); void sp.offsetWidth; sp.classList.add('roll'); } } }); }
-  lastBig = str;
+let isOut = true;
+function buildDemo(){
+  swapImg($('#shotOut'), `assets/demo/${L}-out.webp`, SHOT_ALT[L][0]);
+  swapImg($('#shotWorn'), `assets/demo/${L}-worn.webp`, SHOT_ALT[L][1]);
+  renderDemo();
 }
-function setRing(fromZero){
-  const v = $('#ringVal'), C = 565.5, p = Math.min(1, S.worn / GOAL);
-  if (fromZero) { v.style.transition = 'none'; v.style.strokeDashoffset = C; void v.getBoundingClientRect(); v.style.transition = ''; }
-  v.style.strokeDashoffset = C * (1 - p);
+function renderDemo(){
+  $('#shotOut').classList.toggle('off', !isOut);
+  $('#shotWorn').classList.toggle('off', isOut);
+  $('#shotOut').setAttribute('aria-hidden', String(!isOut));
+  $('#shotWorn').setAttribute('aria-hidden', String(isOut));
+  $('#mainBtn').setAttribute('aria-label', isOut ? t('ph.put') : t('ph.take'));
 }
-function setGlass(){
-  const f = Math.max(0, Math.min(1, S.remaining / BUDGET));
-  const top = 55.5 - f * 29.5, h = 3 + (1 - f) * 26;
-  $('#cupSand').setAttribute('d', `M0 ${top}Q50 ${top + 3} 100 ${top}V60H0Z`);
-  $('#domeSand').setAttribute('d', `M10 118Q50 ${118 - 2 * h} 90 118Z`);
-  $('#glass').classList.toggle('paused', !(S.out && S.remaining > 0));
-}
-function render(force){
-  const over = S.out && S.remaining < 0;
-  demo.classList.toggle('out', S.out); demo.classList.toggle('over', over);
-  $('#wornL').classList.toggle('hide', S.out); $('#outL').classList.toggle('hide', !S.out);
-  $('#btnTxt').textContent = S.out ? t('ph.put') : t('ph.take');
-  $('#mainBtn').setAttribute('aria-pressed', String(S.out));
-  $('#wornT').innerHTML = fmtDur(S.worn);
-  $('#leftLine').textContent = S.remaining >= 0 ? t('ph.left', {t: clock(S.remaining)}) : t('ph.over') + ' ' + clock(S.remaining);
-  $('#leftLine').style.color = S.remaining >= 0 ? '' : 'var(--over-text)';
-  $('#outLabel').textContent = over ? t('ph.over') : t('ph.outLeft');
-  setBig(clock(S.remaining), force);
-  $('#thisLine').textContent = t('ph.this', {t: clock(S.thisOut)});
-  setGlass();
-  $('#sbTime').textContent = shortTime(new Date());
-}
+/* 按时戴回：和 App 一样，按钮周围放彩纸和星星 */
 function burst(){
   if (reduce) return;
   const fx = $('#fx'), b = $('#mainBtn').getBoundingClientRect(), r = fx.getBoundingClientRect();
@@ -1351,24 +1218,17 @@ function burst(){
               {duration: 900, easing: 'cubic-bezier(.2,.8,.3,1)'}).onfinish = () => s.remove();
   }
 }
-$('#mainBtn').addEventListener('click', () => {
-  $('#hint').classList.add('gone');
-  if (S.out) {
-    const onTime = S.remaining >= 0;
-    S.out = false; render(); setRing(true);
-    if (onTime) burst();
-  } else {
-    S.out = true; S.thisOut = 0;
-    const g = $('#glass'); g.classList.remove('flip'); void g.getBoundingClientRect(); g.classList.add('flip');
-    render(true);
-  }
+const hit = $('#mainBtn');
+hit.addEventListener('pointerdown', () => hit.classList.add('press'));
+['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => hit.addEventListener(ev, () => hit.classList.remove('press')));
+hit.addEventListener('click', () => {
+  $('#hint').classList.add('gone'); hit.classList.add('used');
+  const wasOut = isOut;
+  isOut = !isOut; renderDemo();
+  if (wasOut) burst();
   if (navigator.vibrate) try { navigator.vibrate(12) } catch {}
 });
-setInterval(() => {
-  if (S.out) { S.remaining--; S.thisOut++; } else { S.worn++; }
-  render();
-  tickLock();
-}, 1000);
+setInterval(tickLock, 1000);
 
 /* ================= 功能区的小画面 ================= */
 let lockLeft = 38 * 60 + 12;
@@ -1387,12 +1247,6 @@ function paintLock(){
   $('#lkT').textContent = clock(lockLeft);
   $('#lkIsl').textContent = clock(lockLeft).replace(/^0:/, '');
   $('#lkBar').style.width = (lockLeft / BUDGET * 100).toFixed(2) + '%';
-}
-function buildEntries(){
-  const fmt = (h, m) => new Date(2026, 0, 1, h, m).toLocaleTimeString(L, {hour: 'numeric', minute: '2-digit'});
-  $('#e1').textContent = fmt(7, 5) + ' – ' + fmt(7, 31);
-  $('#e2').textContent = fmt(12, 10) + ' – ' + fmt(12, 48);
-  $('#e1d').textContent = '26 ' + t('u.m'); $('#e2d').textContent = '38 ' + t('u.m');
 }
 /* 日历：显示上个月（整月都有数据），大部分达标，两天差一点、一天未达标、两天生病暂停 */
 function buildCalendar(){
@@ -1451,7 +1305,7 @@ $('#lang').addEventListener('change', e => {
   const u = new URL(location.href); u.searchParams.set('lang', l); history.replaceState(null, '', u);
   applyLang(l); updateFinish();
 });
-applyLang(pickLang()); updateFinish(); setRing(false);
+applyLang(pickLang()); updateFinish();
 </script>
 </body>
 </html>
