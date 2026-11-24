@@ -147,8 +147,8 @@ h1 em{font-style:normal;background:linear-gradient(100deg,var(--em1),var(--em2) 
 .screen img{position:absolute;inset:0;width:100%;height:100%;color:transparent;transition:opacity .45s ease,transform .6s cubic-bezier(.3,1.3,.5,1),filter .45s}
 .screen img.off{opacity:0;transform:scale(1.04);filter:blur(4px)}
 .island{position:absolute;top:8px;left:50%;height:25px;width:82px;transform:translateX(-50%);background:#000;border-radius:14px;z-index:3}
-/* 截图里主按钮的位置：宽 4%–96%，高 52.6%–61%（两种状态一样） */
-.hit{position:absolute;left:4%;width:92%;top:52.6%;height:8.4%;border:0;padding:0;border-radius:999px;background:transparent;cursor:pointer;z-index:4;overflow:hidden;
+/* 截图里主按钮的位置：宽 4%–96%，高 55%–63.5%（两种状态一样；2026-11-24 重拍后量的） */
+.hit{position:absolute;left:4%;width:92%;top:54.5%;height:9.5%;border:0;padding:0;border-radius:999px;background:transparent;cursor:pointer;z-index:4;overflow:hidden;
   box-shadow:0 0 0 0 rgba(255,255,255,0);animation:invite 2.4s ease-out infinite}
 .hit:focus-visible{outline:3px solid #fff;outline-offset:2px}
 .hit.used{animation:none}
@@ -275,8 +275,12 @@ h3{font-size:22px;line-height:1.25;letter-spacing:-.015em;margin:0 0 8px;font-we
 .segs{display:grid;grid-template-columns:repeat(30,1fr);gap:3px;margin:16px 0 18px}
 .segs i{height:22px;border-radius:4px;background:var(--line)}
 .segs i.done{background:var(--worn)}
-.segs i.now{background:var(--gold);animation:glow 1.6s ease-in-out infinite}
-@keyframes glow{50%{box-shadow:0 0 0 3px color-mix(in srgb,var(--gold) 35%,transparent),0 0 16px var(--gold)}}
+.segs i.gold{background:var(--gold)}
+/* 正在戴的这一副：按天数填充（第 10 / 14 天），轻轻呼吸，和 App 里一样 */
+.segs i.now{background:linear-gradient(90deg,var(--worn) 71%,color-mix(in srgb,var(--worn) 28%,var(--line)) 71%);animation:segpulse 1.8s ease-in-out infinite}
+@keyframes segpulse{50%{opacity:.55}}
+.tsum{display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;margin:-8px 0 12px;font-size:13px;font-weight:600;color:var(--muted)}
+.tsum .star{color:var(--gold)}
 .js .segs i{transform:scaleY(0);transform-origin:bottom;transition:transform .5s cubic-bezier(.3,1.5,.5,1)}
 .js .in .segs i{transform:none}
 .trow{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line);font-size:15px}
@@ -584,6 +588,7 @@ footer p{margin:6px 0;max-width:62em}
           <div class="tray">
             <div class="tn"><b id="trayN">Tray 12</b><span data-i18n="tray.total">of 30</span></div>
             <div class="segs" id="segs"></div>
+            <div class="tsum"><span data-i18n="tray.done">11 trays done</span><span><span class="star">★</span> <span data-i18n="tray.perfect">1 perfect tray</span></span></div>
             <div class="trow"><svg class="ic"><use href="#i-swap"/></svg><span data-i18n="tray.next">Next change in 5 days</span></div>
             <div class="trow"><svg class="ic"><use href="#i-flag"/></svg><span data-i18n="tray.finish">Expected finish</span><span class="val" id="finish">Apr 2027</span></div>
             <div class="chips"><span class="chip"><svg class="ic"><use href="#i-steth"/></svg><span data-i18n="tray.checkup">Checkup</span></span><span class="chip"><svg class="ic"><use href="#i-spark"/></svg><span data-i18n="tray.refine">Refinement</span></span></div>
@@ -751,7 +756,7 @@ en:{
  "cal.t":"Every day at a glance","cal.d":"The calendar colors each day by whether you met your goal. Feeling sick? Mark the day as paused.",
  "cal.met":"Goal Met","cal.close":"Close","cal.missed":"Missed","cal.paused":"Paused",
  "tray.t":"Your treatment, tray by tray","tray.d":"Change days, expected finish date and checkups in one schedule. Postpone a change, switch early, go back a tray or start refinements.",
- "tray.n":"Tray {n}","tray.total":"of 30","tray.next":"Next change in 5 days","tray.finish":"Expected finish","tray.checkup":"Checkup","tray.refine":"Refinement",
+ "tray.n":"Tray {n}","tray.total":"of 30","tray.done":"11 trays done","tray.perfect":"1 perfect tray","tray.next":"Next change in 5 days","tray.finish":"Expected finish","tray.checkup":"Checkup","tray.refine":"Refinement",
  "ach.t":"Awards worth collecting","ach.d":"34 awards in six tiers, from Bronze to a Legendary rainbow medal—for streaks, on-time put-backs, tray milestones and a few hidden surprises. Free for everyone.",
  "m1":"Hat Trick","m2":"Perfect Week","m3":"Fully Charged","m4":"Monthly Master","m5":"Iron Will","m6":"100-Day Legend",
  "tier1":"Bronze","tier2":"Silver","tier3":"Gold","tier4":"Crystal","tier5":"Nebula","tier6":"Legendary",
@@ -794,7 +799,7 @@ en:{
  "cal.t":"每一天都看得清清楚楚","cal.d":"日历按达标、差一点、未达标给每天着色。生病了？可以把那天标为暂停。",
  "cal.met":"达标","cal.close":"差一点","cal.missed":"未达标","cal.paused":"暂停",
  "tray.t":"疗程进度，一副一副看","tray.d":"换套日、预计完成日期和复诊都在一张排期里。可以推迟换套、提前换套、退回上一副，或者进入精调。",
- "tray.n":"第 {n} 副","tray.total":"共 30 副","tray.next":"5 天后换套","tray.finish":"预计完成","tray.checkup":"复诊","tray.refine":"精调",
+ "tray.n":"第 {n} 副","tray.total":"共 30 副","tray.done":"已戴完 11 副","tray.perfect":"1 副满分","tray.next":"5 天后换套","tray.finish":"预计完成","tray.checkup":"复诊","tray.refine":"精调",
  "ach.t":"攒一墙闪亮的奖牌","ach.d":"34 个成就，从铜牌到彩虹流转的传说奖牌共六档：连续达标、按时戴回、疗程里程碑，还有几个隐藏彩蛋。全部免费。",
  "m1":"三连击","m2":"一周全勤","m3":"两周不断电","m4":"月度达人","m5":"钢铁意志","m6":"百日传说",
  "tier1":"铜","tier2":"银","tier3":"金","tier4":"晶","tier5":"星云","tier6":"传说",
@@ -837,7 +842,7 @@ en:{
  "cal.t":"每一天都看得清清楚楚","cal.d":"日曆按達標、差一點、未達標替每天上色。生病了？可以把那天標為暫停。",
  "cal.met":"達標","cal.close":"差一點","cal.missed":"未達標","cal.paused":"暫停",
  "tray.t":"療程進度，一副一副看","tray.d":"換套日、預計完成日期和回診都在同一張排程裡。可以延後換套、提前換套、退回上一副，或進入精調。",
- "tray.n":"第 {n} 副","tray.total":"共 30 副","tray.next":"5 天後換套","tray.finish":"預計完成","tray.checkup":"回診","tray.refine":"精調",
+ "tray.n":"第 {n} 副","tray.total":"共 30 副","tray.done":"已戴完 11 副","tray.perfect":"1 副滿分","tray.next":"5 天後換套","tray.finish":"預計完成","tray.checkup":"回診","tray.refine":"精調",
  "ach.t":"收集一整牆閃亮獎牌","ach.d":"34 個成就，從銅牌到彩虹流轉的傳說獎牌共六級：連續達標、準時戴回、療程里程碑，還有幾個隱藏彩蛋。全部免費。",
  "m1":"三連擊","m2":"一週全勤","m3":"兩週不斷電","m4":"月度達人","m5":"鋼鐵意志","m6":"百日傳說",
  "tier1":"銅","tier2":"銀","tier3":"金","tier4":"晶","tier5":"星雲","tier6":"傳說",
@@ -880,7 +885,7 @@ ja:{
  "cal.t":"毎日の記録をひと目で","cal.d":"目標を達成できたかどうかで、カレンダーの毎日を色分け。体調が悪い日は休止にできます。",
  "cal.met":"達成","cal.close":"あと少し","cal.missed":"未達成","cal.paused":"休止",
  "tray.t":"治療をマウスピースごとに","tray.d":"交換日、完了予定日、通院予定をひとつのスケジュールに。交換の延期、早めの交換、前のマウスピースに戻す、リファインメントの開始もできます。",
- "tray.n":"{n}枚目","tray.total":"全30枚","tray.next":"5日後に交換","tray.finish":"完了予定","tray.checkup":"通院","tray.refine":"リファインメント",
+ "tray.n":"{n}枚目","tray.total":"全30枚","tray.done":"11枚完了","tray.perfect":"満点1枚","tray.next":"5日後に交換","tray.finish":"完了予定","tray.checkup":"通院","tray.refine":"リファインメント",
  "ach.t":"集めたくなる実績","ach.d":"ブロンズから虹色に輝くレジェンドまで、6ランク・34個の実績。連続達成、時間内の装着、治療の節目、そして隠し実績も。すべて無料です。",
  "m1":"3連続","m2":"1週間皆勤","m3":"2週間フル充電","m4":"1か月の達人","m5":"鉄の意志","m6":"100日の伝説",
  "tier1":"ブロンズ","tier2":"シルバー","tier3":"ゴールド","tier4":"クリスタル","tier5":"ネビュラ","tier6":"レジェンド",
@@ -923,7 +928,7 @@ ko:{
  "cal.t":"매일의 기록을 한눈에","cal.d":"목표 달성 여부에 따라 캘린더의 하루하루를 색으로 보여 줘요. 아픈 날은 일시중지로 표시할 수 있어요.",
  "cal.met":"달성","cal.close":"아깝게 미달","cal.missed":"미달성","cal.paused":"일시중지",
  "tray.t":"장치별로 보는 치료 진행","tray.d":"교체일, 완료 예정일, 내원 일정을 한 일정표에. 교체 미루기, 미리 교체, 이전 장치로 되돌리기, 리파인먼트 시작도 할 수 있어요.",
- "tray.n":"{n}번째 장치","tray.total":"총 30개","tray.next":"5일 후 교체","tray.finish":"완료 예정","tray.checkup":"내원","tray.refine":"리파인먼트",
+ "tray.n":"{n}번째 장치","tray.total":"총 30개","tray.done":"11개 완료","tray.perfect":"만점 1개","tray.next":"5일 후 교체","tray.finish":"완료 예정","tray.checkup":"내원","tray.refine":"리파인먼트",
  "ach.t":"모으고 싶은 업적","ach.d":"브론즈부터 무지갯빛 레전드까지 6등급, 34개의 업적. 연속 달성, 제때 끼우기, 치료 이정표, 그리고 숨겨진 업적까지. 모두 무료예요.",
  "m1":"3연속","m2":"일주일 개근","m3":"2주 풀충전","m4":"한 달 달인","m5":"강철 의지","m6":"100일의 전설",
  "tier1":"브론즈","tier2":"실버","tier3":"골드","tier4":"크리스탈","tier5":"네뷸라","tier6":"레전드",
@@ -966,7 +971,7 @@ es:{
  "cal.t":"Cada día de un vistazo","cal.d":"El calendario colorea cada día según si cumpliste tu meta. ¿Te encuentras mal? Marca el día como pausa.",
  "cal.met":"Meta cumplida","cal.close":"Casi","cal.missed":"No cumplida","cal.paused":"En pausa",
  "tray.t":"Tu tratamiento, alineador a alineador","tray.d":"Días de cambio, fecha de fin prevista y citas en una sola programación. Pospón un cambio, cambia antes, vuelve al anterior o empieza el refinamiento.",
- "tray.n":"Alineador {n}","tray.total":"de 30","tray.next":"Cambio en 5 días","tray.finish":"Fin previsto","tray.checkup":"Cita","tray.refine":"Refinamiento",
+ "tray.n":"Alineador {n}","tray.total":"de 30","tray.done":"11 alineadores terminados","tray.perfect":"1 alineador perfecto","tray.next":"Cambio en 5 días","tray.finish":"Fin previsto","tray.checkup":"Cita","tray.refine":"Refinamiento",
  "ach.t":"Logros para coleccionar","ach.d":"34 logros en seis niveles, del bronce a una medalla legendaria con arcoíris: rachas, alineadores puestos a tiempo, hitos del tratamiento y alguna sorpresa oculta. Gratis para todos.",
  "m1":"Triplete","m2":"Semana perfecta","m3":"Batería llena","m4":"Maestro del mes","m5":"Voluntad de hierro","m6":"Leyenda de 100 días",
  "tier1":"Bronce","tier2":"Plata","tier3":"Oro","tier4":"Cristal","tier5":"Nebulosa","tier6":"Legendario",
@@ -1009,7 +1014,7 @@ fr:{
  "cal.t":"Chaque jour en un coup d’œil","cal.d":"Le calendrier colore chaque jour selon que vous avez atteint votre objectif. Malade ? Marquez la journée en pause.",
  "cal.met":"Objectif atteint","cal.close":"Presque","cal.missed":"Non atteint","cal.paused":"En pause",
  "tray.t":"Votre traitement, gouttière par gouttière","tray.d":"Jours de changement, date de fin prévue et rendez-vous dans un seul planning. Reportez un changement, changez plus tôt, revenez à la précédente ou commencez l’affinement.",
- "tray.n":"Gouttière {n}","tray.total":"sur 30","tray.next":"Changement dans 5 jours","tray.finish":"Fin prévue","tray.checkup":"Rendez-vous","tray.refine":"Affinement",
+ "tray.n":"Gouttière {n}","tray.total":"sur 30","tray.done":"11 gouttières terminées","tray.perfect":"1 gouttière parfaite","tray.next":"Changement dans 5 jours","tray.finish":"Fin prévue","tray.checkup":"Rendez-vous","tray.refine":"Affinement",
  "ach.t":"Des succès à collectionner","ach.d":"34 succès répartis en six niveaux, du bronze à une médaille légendaire arc-en-ciel : séries, gouttières remises à temps, étapes du traitement et quelques surprises cachées. Gratuit pour tous.",
  "m1":"Triplé","m2":"Semaine parfaite","m3":"Pleine charge","m4":"Maître du mois","m5":"Volonté de fer","m6":"Légende des 100 jours",
  "tier1":"Bronze","tier2":"Argent","tier3":"Or","tier4":"Cristal","tier5":"Nébuleuse","tier6":"Légendaire",
@@ -1052,7 +1057,7 @@ de:{
  "cal.t":"Jeder Tag auf einen Blick","cal.d":"Der Kalender färbt jeden Tag danach, ob du dein Ziel erreicht hast. Krank? Markiere den Tag als Pause.",
  "cal.met":"Ziel erreicht","cal.close":"Knapp verfehlt","cal.missed":"Verfehlt","cal.paused":"Pausiert",
  "tray.t":"Deine Behandlung, Aligner für Aligner","tray.d":"Wechseltage, voraussichtliches Ende und Termine in einem Zeitplan. Wechsel verschieben, früher wechseln, zurück zum vorherigen Aligner oder Refinement starten.",
- "tray.n":"Aligner {n}","tray.total":"von 30","tray.next":"Wechsel in 5 Tagen","tray.finish":"Voraussichtliches Ende","tray.checkup":"Termin","tray.refine":"Refinement",
+ "tray.n":"Aligner {n}","tray.total":"von 30","tray.done":"11 Aligner fertig","tray.perfect":"1 perfekter Aligner","tray.next":"Wechsel in 5 Tagen","tray.finish":"Voraussichtliches Ende","tray.checkup":"Termin","tray.refine":"Refinement",
  "ach.t":"Erfolge zum Sammeln","ach.d":"34 Erfolge in sechs Stufen, von Bronze bis zur legendären Regenbogen-Medaille: Serien, pünktliches Einsetzen, Meilensteine der Behandlung und ein paar versteckte Überraschungen. Für alle kostenlos.",
  "m1":"Hattrick","m2":"Perfekte Woche","m3":"Voll geladen","m4":"Monatsmeister","m5":"Eiserner Wille","m6":"100-Tage-Legende",
  "tier1":"Bronze","tier2":"Silber","tier3":"Gold","tier4":"Kristall","tier5":"Nebel","tier6":"Legendär",
@@ -1220,7 +1225,7 @@ function buildCalendar(){
 }
 (function buildTray(){
   const s = $('#segs');
-  for (let i = 1; i <= 30; i++) s.insertAdjacentHTML('beforeend', `<i class="${i < 12 ? 'done' : i === 12 ? 'now' : ''}" style="transition-delay:${i * 22}ms"></i>`);
+  for (let i = 1; i <= 30; i++) s.insertAdjacentHTML('beforeend', `<i class="${i === 10 ? 'gold' : i < 12 ? 'done' : i === 12 ? 'now' : ''}" style="transition-delay:${i * 22}ms"></i>`);
 })();
 function updateFinish(){
   const d = new Date(); d.setDate(d.getDate() + 5 + 18 * 7);
