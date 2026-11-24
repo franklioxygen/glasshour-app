@@ -241,6 +241,31 @@ h3{font-size:22px;line-height:1.25;letter-spacing:-.015em;margin:0 0 8px;font-we
 .bub .ic{color:var(--ink-on)}
 .step p,.card p{margin:0;color:var(--muted)}
 
+/* 截图 */
+.shots{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin-top:40px;
+  padding:16px max(20px,calc((100vw - 1140px) / 2 + 20px)) 56px;scroll-padding:0 max(20px,calc((100vw - 1140px) / 2 + 20px))}
+.shots::-webkit-scrollbar{display:none}
+.shot{flex:0 0 calc((min(1140px,100vw) - 40px - 80px) / 5);min-width:170px;scroll-snap-align:start;border:0;padding:0;background:none;cursor:zoom-in;border-radius:26px;
+  transition:transform .5s cubic-bezier(.3,1.5,.5,1),box-shadow .4s}
+.shot img{width:100%;height:auto;border-radius:26px;background:#0B3A42;box-shadow:0 1px 2px rgba(0,0,0,.12),0 24px 48px -20px rgba(10,33,38,.55)}
+.shot:nth-child(even){margin-top:36px}
+.shot:hover{transform:translateY(-10px) rotate(-1.2deg) scale(1.03)}
+.shot:nth-child(even):hover{transform:translateY(-10px) rotate(1.2deg) scale(1.03)}
+.js .shots .shot{opacity:0;translate:0 40px;transition:opacity .7s var(--d,0s),translate .9s cubic-bezier(.2,.8,.2,1) var(--d,0s),transform .5s cubic-bezier(.3,1.5,.5,1)}
+.shot:nth-child(2){--d:.08s}.shot:nth-child(3){--d:.16s}.shot:nth-child(4){--d:.24s}.shot:nth-child(5){--d:.32s}
+.js .shots.in .shot{opacity:1;translate:0 0}
+.shots-note{margin:-28px 0 0;text-align:center;font-size:14px;color:var(--faint)}
+#lb{border:0;padding:0;background:none;max-width:100vw;max-height:100vh;width:100vw;height:100vh;overflow:hidden}
+#lb::backdrop{background:rgba(3,12,14,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+#lb[open]{display:grid;place-items:center}
+#lb img{max-height:calc(100vh - 48px);max-width:calc(100vw - 32px);width:auto;height:auto;border-radius:28px;box-shadow:0 40px 80px -20px rgba(0,0,0,.7);animation:lbIn .35s cubic-bezier(.3,1.4,.5,1)}
+@keyframes lbIn{from{transform:scale(.9);opacity:0}}
+.lbb{position:fixed;width:48px;height:48px;border-radius:50%;border:0;display:grid;place-items:center;cursor:pointer;font-size:22px;color:#fff;background:rgba(255,255,255,.14);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:background .2s}
+.lbb:hover{background:rgba(255,255,255,.26)}
+.lbb.x{top:18px;right:18px}.lbb.p{left:18px;top:50%;margin-top:-24px}.lbb.n{right:18px;top:50%;margin-top:-24px}
+.lbb.p .ic{transform:rotate(180deg)}
+@media (max-width:640px){#lb img{max-height:calc(100vh - 130px);margin-bottom:56px}.lbb.p,.lbb.n{top:auto;bottom:18px;margin:0}.lbb.p{left:calc(50% - 60px)}.lbb.n{right:calc(50% - 60px)}}
+
 /* 功能卡片 */
 .bento{display:grid;grid-template-columns:repeat(12,1fr);gap:20px;margin-top:48px}
 .card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:32px;padding:30px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;gap:24px}
@@ -397,6 +422,7 @@ footer p{margin:6px 0;max-width:62em}
   .recs{grid-template-columns:1fr 1fr}
   .medals{grid-template-columns:repeat(3,1fr)}
   .shield{display:none}
+  .shot{flex-basis:230px}
 }
 @media (max-width:640px){
   .wrap{padding:0 16px}
@@ -407,6 +433,8 @@ footer p{margin:6px 0;max-width:62em}
   .medals{gap:20px 8px;padding:26px 10px}
   .md{width:78px;height:78px}.face{font-size:30px}
   .stage{--s:.92}
+  .shot{flex-basis:64vw;scroll-snap-align:center}
+  .shot:nth-child(even){margin-top:24px}
 }
 @media (max-width:360px){.stage{--s:.84}}
 
@@ -415,6 +443,7 @@ footer p{margin:6px 0;max-width:62em}
   *,*::before,*::after{animation:none!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
   .js .reveal{opacity:1;transform:none}
   .js .cal .d,.js .segs i{transform:none}
+  .js .shots .shot{opacity:1;translate:0 0}
 }
 </style>
 </head>
@@ -434,6 +463,7 @@ footer p{margin:6px 0;max-width:62em}
   <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3.2 4M16 6h3a3 3 0 0 1-3.2 4M12 13v4M8 21h8M9.5 17h5"/></symbol>
   <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M2.5 12h3M18.5 12h3M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></symbol>
   <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></symbol>
   <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
   <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 21h4"/></symbol>
   <symbol id="i-bellx" viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 0 1 9.5-4.9M18 11v5l1.5 2h-15"/><path d="M10 21h4M3 3l18 18"/></symbol>
@@ -599,6 +629,28 @@ footer p{margin:6px 0;max-width:62em}
     </div>
   </div>
 </section>
+
+<!-- ================= 截图 ================= -->
+<section class="sec" id="screens" style="padding-top:24px;padding-bottom:64px">
+  <div class="wrap center reveal">
+    <span class="kicker" data-i18n="shots.k">Screenshots</span>
+    <h2 data-i18n="shots.t">See it in action</h2>
+  </div>
+  <div class="shots reveal" id="shots">
+    <button class="shot" type="button" data-i="0"><img loading="lazy" decoding="async" width="720" height="1565" src="assets/shots/en/1.webp" alt="Know exactly how much out time is left"></button>
+    <button class="shot" type="button" data-i="1"><img loading="lazy" decoding="async" width="720" height="1565" src="assets/shots/en/2.webp" alt="Hit your 22 hours every day"></button>
+    <button class="shot" type="button" data-i="2"><img loading="lazy" decoding="async" width="720" height="1565" src="assets/shots/en/3.webp" alt="Every day at a glance"></button>
+    <button class="shot" type="button" data-i="3"><img loading="lazy" decoding="async" width="720" height="1565" src="assets/shots/en/4.webp" alt="Your treatment, tray by tray"></button>
+    <button class="shot" type="button" data-i="4"><img loading="lazy" decoding="async" width="720" height="1565" src="assets/shots/en/5.webp" alt="Streaks and badges keep you going"></button>
+  </div>
+  <p class="shots-note wrap" data-i18n="shots.d">Real screens from Glasshour, filled with demo data.</p>
+</section>
+<dialog id="lb">
+  <img id="lbImg" alt="">
+  <button class="lbb x" type="button" id="lbX"><svg class="ic"><use href="#i-x"/></svg><span class="sr" data-i18n="lb.close">Close</span></button>
+  <button class="lbb p" type="button" id="lbP"><svg class="ic"><use href="#i-arrow"/></svg><span class="sr" data-i18n="lb.prev">Previous</span></button>
+  <button class="lbb n" type="button" id="lbN"><svg class="ic"><use href="#i-arrow"/></svg><span class="sr" data-i18n="lb.next">Next</span></button>
+</dialog>
 
 <!-- ================= 功能 ================= -->
 <section class="sec" id="features" style="padding-top:24px">
@@ -807,6 +859,7 @@ footer p{margin:6px 0;max-width:62em}
 /* ================= 文案（8 种语言，和 App、App Store 文案一致） ================= */
 const I18N = {
 en:{
+ "shots.k":"Screenshots","shots.t":"See it in action","shots.d":"Real screens from Glasshour, filled with demo data.","lb.close":"Close","lb.prev":"Previous","lb.next":"Next",
  "title":"Glasshour — Clear Aligner Wear Timer",
  "desc":"Take your aligners out with one tap and watch today’s out time count down. When it runs out, an alarm rings—even in Silent mode—so you never forget to put them back.",
  "nav.features":"Features","nav.privacy":"Privacy","nav.support":"Support","lang.label":"Language",
@@ -851,6 +904,7 @@ en:{
  "foot.med":"Glasshour is not a medical device. Always follow your orthodontist’s instructions."
 },
 "zh-Hans":{
+ "shots.k":"截图","shots.t":"看看实际界面","shots.d":"Glasshour 的真实界面，用的是演示数据。","lb.close":"关闭","lb.prev":"上一张","lb.next":"下一张",
  "title":"Glasshour 玻璃沙漏 — 隐形牙套佩戴计时",
  "desc":"摘下牙套点一下，今天还剩多少摘套时间一目了然。时间用完就像闹钟一样响铃，手机静音也能听到，再也不会忘记戴回。",
  "nav.features":"功能","nav.privacy":"隐私","nav.support":"支持","lang.label":"语言",
@@ -895,6 +949,7 @@ en:{
  "foot.med":"Glasshour 不是医疗器械，佩戴要求请遵医嘱。"
 },
 "zh-Hant":{
+ "shots.k":"截圖","shots.t":"看看實際介面","shots.d":"Glasshour 的真實介面，使用示範資料。","lb.close":"關閉","lb.prev":"上一張","lb.next":"下一張",
  "title":"Glasshour 玻璃沙漏 — 隱形牙套配戴計時",
  "desc":"摘下牙套點一下，今天還剩多少摘下時間一目了然。時間用完就像鬧鐘一樣響鈴，手機靜音也聽得到，再也不會忘記戴回。",
  "nav.features":"功能","nav.privacy":"隱私","nav.support":"支援","lang.label":"語言",
@@ -939,6 +994,7 @@ en:{
  "foot.med":"Glasshour 不是醫療器材，配戴要求請遵照醫囑。"
 },
 ja:{
+ "shots.k":"スクリーンショット","shots.t":"実際の画面","shots.d":"Glasshourの実際の画面です（デモデータを使用）。","lb.close":"閉じる","lb.prev":"前へ","lb.next":"次へ",
  "title":"Glasshour — マウスピース矯正の装着タイマー",
  "desc":"マウスピースを外したらワンタップ。今日あと何分外せるかがひと目でわかります。時間切れになると消音モード中でもアラームが鳴るので、着け忘れません。",
  "nav.features":"機能","nav.privacy":"プライバシー","nav.support":"サポート","lang.label":"言語",
@@ -983,6 +1039,7 @@ ja:{
  "foot.med":"Glasshourは医療機器ではありません。必ず担当医の指示に従ってください。"
 },
 ko:{
+ "shots.k":"스크린샷","shots.t":"실제 화면 보기","shots.d":"데모 데이터로 채운 Glasshour의 실제 화면이에요.","lb.close":"닫기","lb.prev":"이전","lb.next":"다음",
  "title":"Glasshour — 투명 교정 장치 착용 타이머",
  "desc":"장치를 뺄 때 한 번 탭하면 오늘 남은 시간이 한눈에 보여요. 시간이 다 되면 무음 모드에서도 알람이 울려서 다시 끼우는 걸 잊지 않아요.",
  "nav.features":"기능","nav.privacy":"개인정보","nav.support":"지원","lang.label":"언어",
@@ -1027,6 +1084,7 @@ ko:{
  "foot.med":"Glasshour는 의료기기가 아니에요. 항상 담당 의사의 지시를 따르세요."
 },
 es:{
+ "shots.k":"Capturas","shots.t":"Así se ve","shots.d":"Pantallas reales de Glasshour con datos de demostración.","lb.close":"Cerrar","lb.prev":"Anterior","lb.next":"Siguiente",
  "title":"Glasshour — Temporizador para alineadores",
  "desc":"Quítate los alineadores con un toque y mira cuánto tiempo te queda hoy. Cuando se acabe, suena una alarma, incluso en silencio, para que nunca olvides ponértelos.",
  "nav.features":"Funciones","nav.privacy":"Privacidad","nav.support":"Soporte","lang.label":"Idioma",
@@ -1071,6 +1129,7 @@ es:{
  "foot.med":"Glasshour no es un dispositivo médico. Sigue siempre las indicaciones de tu ortodoncista."
 },
 fr:{
+ "shots.k":"Captures d’écran","shots.t":"Découvrez l’app","shots.d":"De vrais écrans de Glasshour, avec des données de démonstration.","lb.close":"Fermer","lb.prev":"Précédente","lb.next":"Suivante",
  "title":"Glasshour — Minuteur pour gouttières",
  "desc":"Retirez vos gouttières d’un geste et voyez le temps restant. Une fois écoulé, une alarme sonne, même en mode silencieux : vous n’oublierez plus de les remettre.",
  "nav.features":"Fonctions","nav.privacy":"Confidentialité","nav.support":"Assistance","lang.label":"Langue",
@@ -1115,6 +1174,7 @@ fr:{
  "foot.med":"Glasshour n’est pas un dispositif médical. Suivez toujours les consignes de votre orthodontiste."
 },
 de:{
+ "shots.k":"Screenshots","shots.t":"So sieht’s aus","shots.d":"Echte Bildschirme aus Glasshour, mit Demodaten.","lb.close":"Schließen","lb.prev":"Zurück","lb.next":"Weiter",
  "title":"Glasshour — Tragezeit-Timer für Aligner",
  "desc":"Aligner raus, einmal tippen – und du siehst, wie viel Pausenzeit noch bleibt. Ist sie um, klingelt ein Alarm, auch im Stummmodus. So vergisst du das Einsetzen nie.",
  "nav.features":"Funktionen","nav.privacy":"Datenschutz","nav.support":"Support","lang.label":"Sprache",
@@ -1158,6 +1218,17 @@ de:{
  "foot.tm":"Funktioniert mit Invisalign® und anderen Alignern. Glasshour ist eine unabhängige App und steht in keiner Verbindung zu Align Technology, Inc. und wird von dieser weder unterstützt noch gesponsert. Invisalign ist eine Marke von Align Technology, Inc.",
  "foot.med":"Glasshour ist kein Medizinprodukt. Befolge immer die Anweisungen deines Kieferorthopäden."
 }};
+/* 截图标题（和 tools/render.py 一致），用作图片的替代文字 */
+const SHOT_ALT = {
+ en:['Know exactly how much out time is left','Hit your 22 hours every day','Every day at a glance','Your treatment, tray by tray','Streaks and badges keep you going'],
+ "zh-Hans":['还能摘多久，一眼就知道','每天稳稳戴够 22 小时','每一天都看得清清楚楚','疗程进度，一副一副看','连续达标，收集奖牌'],
+ "zh-Hant":['還能摘多久，一眼就知道','每天穩穩戴滿 22 小時','每一天都看得清清楚楚','療程進度，一副一副看','連續達標，收集獎牌'],
+ ja:['外せる残り時間がひと目でわかる','毎日22時間をしっかり達成','毎日の記録をひと目で','治療をマウスピースごとに','連続達成でバッジを集めよう'],
+ ko:['남은 시간을 한눈에','매일 22시간 착용 달성','매일의 기록을 한눈에','장치별로 보는 치료 진행','연속 달성으로 배지를 모아요'],
+ es:['Sabes cuánto tiempo te queda','Cumple tus 22 horas cada día','Cada día de un vistazo','Tu tratamiento, alineador a alineador','Rachas e insignias para no rendirte'],
+ fr:['Le temps restant, d’un coup d’œil','Atteignez vos 22 heures chaque jour','Chaque jour en un coup d’œil','Votre traitement, gouttière par gouttière','Séries et badges pour garder le cap'],
+ de:['Restzeit auf einen Blick','Jeden Tag deine 22 Stunden','Jeder Tag auf einen Blick','Deine Behandlung, Aligner für Aligner','Serien und Abzeichen motivieren dich']
+};
 /* 隐私政策、支持页里每种语言的锚点 */
 const ANCHOR = {en:"en","zh-Hans":"zh-Hans","zh-Hant":"zh-Hant",ja:"ja",ko:"ko",es:"es",fr:"fr",de:"de"};
 
@@ -1190,8 +1261,30 @@ function applyLang(l){
   document.querySelectorAll('[data-href]').forEach(e => e.href = e.dataset.href + '.html#' + ANCHOR[l]);
   $('#lang').value = l;
   $('#trayN').textContent = t('tray.n', {n: 12});
-  buildCalendar(); buildEntries(); buildLock(); render(true);
+  buildCalendar(); buildEntries(); buildLock(); buildShots(); render(true);
 }
+function buildShots(){
+  document.querySelectorAll('.shot img').forEach((img, i) => { img.src = `assets/shots/${L}/${i + 1}.webp`; img.alt = SHOT_ALT[L][i]; });
+  if (lb.open) showShot(cur);
+}
+/* 点截图放大看，左右键 / 按钮切换 */
+const lb = document.getElementById('lb');
+let cur = 0;
+function showShot(i){
+  cur = (i + 5) % 5;
+  const img = document.getElementById('lbImg');
+  img.src = `assets/shots/${L}/${cur + 1}.webp`; img.alt = SHOT_ALT[L][cur];
+  img.style.animation = 'none'; void img.offsetWidth; img.style.animation = '';
+}
+document.querySelectorAll('.shot').forEach(b => b.addEventListener('click', () => { showShot(+b.dataset.i); lb.showModal(); }));
+document.getElementById('lbX').onclick = () => lb.close();
+document.getElementById('lbP').onclick = () => showShot(cur - 1);
+document.getElementById('lbN').onclick = () => showShot(cur + 1);
+lb.addEventListener('click', e => { if (e.target === lb) lb.close(); });
+lb.addEventListener('keydown', e => { if (e.key === 'ArrowLeft') showShot(cur - 1); if (e.key === 'ArrowRight') showShot(cur + 1); });
+let sx = null;
+lb.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, {passive: true});
+lb.addEventListener('touchend', e => { if (sx === null) return; const dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 40) showShot(cur + (dx < 0 ? 1 : -1)); sx = null; });
 
 /* ================= 手机演示：和 App 的“今天”页一样的两种状态 ================= */
 const GOAL = 22 * 3600, BUDGET = 2 * 3600;
