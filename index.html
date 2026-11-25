@@ -112,6 +112,12 @@ header.scrolled{border-bottom-color:var(--line)}
 .hero .wrap{position:relative;z-index:2;display:grid;grid-template-columns:1.08fr .92fr;gap:40px;align-items:center}
 .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--worn-text);
   background:color-mix(in srgb,var(--worn) 12%,transparent);border:1px solid color-mix(in srgb,var(--worn) 25%,transparent);padding:6px 14px;border-radius:999px}
+/* 首屏 App 名片：图标 + 名字 + 一句说明，让人一眼记住叫什么 */
+.appid{display:flex;align-items:center;gap:16px}
+.appid img{width:76px;height:76px;flex:none;filter:drop-shadow(0 12px 22px rgba(14,89,102,.28))}
+.appid b{display:block;font-size:clamp(30px,3.6vw,40px);line-height:1.05;font-weight:800;letter-spacing:-.025em}
+.appid span{display:block;margin-top:5px;font-size:15px;font-weight:650;color:var(--worn-text)}
+@media (max-width:640px){.appid img{width:64px;height:64px}.appid{gap:14px}}
 h1{font-size:clamp(40px,6.2vw,72px);line-height:1.04;letter-spacing:-.035em;margin:20px 0 20px;font-weight:800;text-wrap:balance}
 :lang(zh-Hans) h1,:lang(zh-Hant) h1,:lang(ja) h1,:lang(ko) h1{letter-spacing:-.01em;line-height:1.14}
 h1 em{font-style:normal;background:linear-gradient(100deg,var(--em1),var(--em2) 70%,var(--em1));background-size:200% 100%;
@@ -475,7 +481,11 @@ footer p{margin:6px 0;max-width:62em}
   <canvas id="sand" aria-hidden="true"></canvas>
   <div class="wrap">
     <div>
-      <span class="eyebrow"><svg class="ic"><use href="#i-hg"/></svg><span data-i18n="hero.eyebrow">Clear aligner timer for iPhone</span></span>
+      <div class="appid">
+        <img class="icon-light" src="assets/icon.png" alt="" width="76" height="76">
+        <img class="icon-dark" src="assets/icon-dark.png" alt="" width="76" height="76">
+        <div><b data-i18n="hero.name">Glasshour</b><span data-i18n="hero.eyebrow">Clear aligner timer for iPhone</span></div>
+      </div>
       <h1 data-i18n-html="hero.title">Know exactly how much <em>out time</em> is left</h1>
       <p class="lede" data-i18n="desc">Take your aligners out with one tap and watch today’s out time count down. When it runs out, an alarm rings—even in Silent mode—so you never forget to put them back.</p>
       <div class="ctas">
@@ -741,7 +751,7 @@ en:{
  "title":"Glasshour — Clear Aligner Wear Timer",
  "desc":"Take your aligners out with one tap and watch today’s out time count down. When it runs out, an alarm rings—even in Silent mode—so you never forget to put them back.",
  "nav.features":"Features","nav.privacy":"Privacy","nav.support":"Support","lang.label":"Language",
- "hero.eyebrow":"Clear aligner timer for iPhone",
+ "hero.name":"Glasshour","hero.eyebrow":"Clear aligner timer for iPhone",
  "hero.title":"Know exactly how much <em>out time</em> is left",
  "hero.dl":"Download on the App Store","hero.req":"iPhone · iOS 26 or later","hero.more":"See how it works","hero.hint":"Try it — tap the button",
  
@@ -784,7 +794,7 @@ en:{
  "title":"Glasshour 玻璃沙漏 — 隐形牙套佩戴计时",
  "desc":"摘下牙套点一下，今天还剩多少摘套时间一目了然。时间用完就像闹钟一样响铃，手机静音也能听到，再也不会忘记戴回。",
  "nav.features":"功能","nav.privacy":"隐私","nav.support":"支持","lang.label":"语言",
- "hero.eyebrow":"iPhone 上的隐形牙套计时器",
+ "hero.name":"玻璃沙漏","hero.eyebrow":"Glasshour · iPhone 上的隐形牙套计时器",
  "hero.title":"还能摘多久，<em>一眼就知道</em>",
  "hero.dl":"在 App Store 下载","hero.req":"iPhone · iOS 26 或更高版本","hero.more":"看看怎么用","hero.hint":"试试看：点一下按钮",
  
@@ -827,7 +837,7 @@ en:{
  "title":"Glasshour 玻璃沙漏 — 隱形牙套配戴計時",
  "desc":"摘下牙套點一下，今天還剩多少摘下時間一目了然。時間用完就像鬧鐘一樣響鈴，手機靜音也聽得到，再也不會忘記戴回。",
  "nav.features":"功能","nav.privacy":"隱私","nav.support":"支援","lang.label":"語言",
- "hero.eyebrow":"iPhone 上的隱形牙套計時器",
+ "hero.name":"玻璃沙漏","hero.eyebrow":"Glasshour · iPhone 上的隱形牙套計時器",
  "hero.title":"還能摘多久，<em>一眼就知道</em>",
  "hero.dl":"在 App Store 下載","hero.req":"iPhone · iOS 26 或以上版本","hero.more":"看看怎麼用","hero.hint":"試試看：點一下按鈕",
  
@@ -870,7 +880,7 @@ ja:{
  "title":"Glasshour — マウスピース矯正の装着タイマー",
  "desc":"マウスピースを外したらワンタップ。今日あと何分外せるかがひと目でわかります。時間切れになると消音モード中でもアラームが鳴るので、着け忘れません。",
  "nav.features":"機能","nav.privacy":"プライバシー","nav.support":"サポート","lang.label":"言語",
- "hero.eyebrow":"iPhone用マウスピース矯正タイマー",
+ "hero.name":"Glasshour","hero.eyebrow":"iPhone用マウスピース矯正タイマー",
  "hero.title":"外せる残り時間が<em>ひと目でわかる</em>",
  "hero.dl":"App Storeからダウンロード","hero.req":"iPhone · iOS 26以降","hero.more":"使い方を見る","hero.hint":"ボタンをタップしてみて",
  
@@ -913,7 +923,7 @@ ko:{
  "title":"Glasshour — 투명 교정 장치 착용 타이머",
  "desc":"장치를 뺄 때 한 번 탭하면 오늘 남은 시간이 한눈에 보여요. 시간이 다 되면 무음 모드에서도 알람이 울려서 다시 끼우는 걸 잊지 않아요.",
  "nav.features":"기능","nav.privacy":"개인정보","nav.support":"지원","lang.label":"언어",
- "hero.eyebrow":"iPhone용 투명 교정 타이머",
+ "hero.name":"Glasshour","hero.eyebrow":"iPhone용 투명 교정 타이머",
  "hero.title":"남은 시간을 <em>한눈에</em>",
  "hero.dl":"App Store에서 다운로드","hero.req":"iPhone · iOS 26 이상","hero.more":"사용 방법 보기","hero.hint":"버튼을 눌러 보세요",
  
@@ -956,7 +966,7 @@ es:{
  "title":"Glasshour — Temporizador para alineadores",
  "desc":"Quítate los alineadores con un toque y mira cuánto tiempo te queda hoy. Cuando se acabe, suena una alarma, incluso en silencio, para que nunca olvides ponértelos.",
  "nav.features":"Funciones","nav.privacy":"Privacidad","nav.support":"Soporte","lang.label":"Idioma",
- "hero.eyebrow":"Temporizador de alineadores para iPhone",
+ "hero.name":"Glasshour","hero.eyebrow":"Temporizador de alineadores para iPhone",
  "hero.title":"Sabes cuánto <em>tiempo te queda</em>",
  "hero.dl":"Descargar en el App Store","hero.req":"iPhone · iOS 26 o posterior","hero.more":"Mira cómo funciona","hero.hint":"Pruébalo: toca el botón",
  
@@ -999,7 +1009,7 @@ fr:{
  "title":"Glasshour — Minuteur pour gouttières",
  "desc":"Retirez vos gouttières d’un geste et voyez le temps restant. Une fois écoulé, une alarme sonne, même en mode silencieux : vous n’oublierez plus de les remettre.",
  "nav.features":"Fonctions","nav.privacy":"Confidentialité","nav.support":"Assistance","lang.label":"Langue",
- "hero.eyebrow":"Minuteur de gouttières pour iPhone",
+ "hero.name":"Glasshour","hero.eyebrow":"Minuteur de gouttières pour iPhone",
  "hero.title":"Le temps restant, <em>d’un coup d’œil</em>",
  "hero.dl":"Télécharger dans l’App Store","hero.req":"iPhone · iOS 26 ou version ultérieure","hero.more":"Voir comment ça marche","hero.hint":"Essayez : touchez le bouton",
  
@@ -1042,7 +1052,7 @@ de:{
  "title":"Glasshour — Tragezeit-Timer für Aligner",
  "desc":"Aligner raus, einmal tippen – und du siehst, wie viel Pausenzeit noch bleibt. Ist sie um, klingelt ein Alarm, auch im Stummmodus. So vergisst du das Einsetzen nie.",
  "nav.features":"Funktionen","nav.privacy":"Datenschutz","nav.support":"Support","lang.label":"Sprache",
- "hero.eyebrow":"Aligner-Timer fürs iPhone",
+ "hero.name":"Glasshour","hero.eyebrow":"Aligner-Timer fürs iPhone",
  "hero.title":"Restzeit <em>auf einen Blick</em>",
  "hero.dl":"Laden im App Store","hero.req":"iPhone · iOS 26 oder neuer","hero.more":"So funktioniert’s","hero.hint":"Probier’s aus: Tippe auf den Button",
  
