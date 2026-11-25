@@ -118,7 +118,7 @@ h1 em{font-style:normal;background:linear-gradient(100deg,var(--em1),var(--em2) 
   -webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 6s ease-in-out infinite}
 @keyframes shine{0%,100%{background-position:0 0}50%{background-position:100% 0}}
 .lede{font-size:clamp(17px,1.7vw,20px);color:var(--muted);max-width:34em;margin:0 0 32px;text-wrap:pretty}
-.ctas{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.ctas{display:flex;flex-wrap:wrap;gap:16px;align-items:center}
 .btn{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-weight:650;font-size:16px;border-radius:999px;padding:14px 22px;
   transition:transform .2s cubic-bezier(.3,1.6,.5,1),box-shadow .2s;border:0;cursor:pointer;font-family:inherit}
 .btn:hover{transform:translateY(-2px)}
@@ -126,14 +126,11 @@ h1 em{font-style:normal;background:linear-gradient(100deg,var(--em1),var(--em2) 
 .btn.primary{background:var(--fg);color:var(--bg);box-shadow:0 10px 30px -10px color-mix(in srgb,var(--fg) 60%,transparent)}
 .btn.ghost{background:var(--card);color:var(--fg);border:1px solid var(--line);box-shadow:var(--shadow)}
 .btn .ic{font-size:20px}
-.soon{display:inline-flex;align-items:center;gap:12px;border-radius:16px;padding:10px 18px 10px 14px;background:var(--fg);color:var(--bg);text-decoration:none;
-  box-shadow:0 10px 30px -10px color-mix(in srgb,var(--fg) 60%,transparent)}
-.soon .ic{font-size:26px}
-.soon small{display:block;font-size:12px;opacity:.7;line-height:1.2}
-.soon b{display:block;font-size:17px;line-height:1.25;font-weight:650}
-a.soon{transition:transform .2s cubic-bezier(.3,1.5,.5,1),box-shadow .2s}
-a.soon:hover{transform:translateY(-2px)}
-a.soon:active{transform:scale(.97)}
+/* App Store 官方徽章（Apple Marketing Tools 提供的 SVG，按苹果规范：不改样式、不加动画；屏幕上至少 40px 高，四周留白至少为高度的 1/4）。
+   浅色模式用首选的黑色徽章，深色模式用白色徽章；按页面语言换成对应的本地化徽章 */
+.badge{display:inline-block;line-height:0;border-radius:9px;margin:0 2px}
+.badge img{display:block;height:52px;width:auto}
+.badge:focus-visible{outline:3px solid var(--worn);outline-offset:4px}
 .req{margin-top:18px;font-size:14px;color:var(--faint);display:flex;align-items:center;gap:8px}
 
 /* ---------- 手机演示：真实的“今天”页截图（摘下中 / 戴着），点截图里的按钮切换 ---------- */
@@ -482,7 +479,7 @@ footer p{margin:6px 0;max-width:62em}
       <h1 data-i18n-html="hero.title">Know exactly how much <em>out time</em> is left</h1>
       <p class="lede" data-i18n="desc">Take your aligners out with one tap and watch today’s out time count down. When it runs out, an alarm rings—even in Silent mode—so you never forget to put them back.</p>
       <div class="ctas">
-        <a class="soon" href="https://apps.apple.com/app/glasshour-aligner-timer/id6838491040" rel="noopener"><svg class="ic"><use href="#i-phone"/></svg><span><small>Glasshour</small><b data-i18n="hero.dl">Download on the App Store</b></span></a>
+        <a class="badge" href="https://apps.apple.com/app/glasshour-aligner-timer/id6838491040?itscg=30200&amp;itsct=apps_box_badge&amp;mttnsubad=6838491040" rel="noopener"><picture><source data-badge="white" srcset="https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/white/en-us?releaseDate=1795564800" media="(prefers-color-scheme: dark)"><img data-badge="black" src="https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/en-us?releaseDate=1795564800" alt="Download on the App Store" data-i18n-alt="hero.dl" width="156" height="52"></picture></a>
         <a class="btn ghost" href="#how"><span data-i18n="hero.more">See how it works</span><svg class="ic"><use href="#i-arrow"/></svg></a>
       </div>
       <div class="req"><svg class="ic"><use href="#i-phone"/></svg><span data-i18n="hero.req">iPhone · iOS 26 or later</span></div>
@@ -715,7 +712,7 @@ footer p{margin:6px 0;max-width:62em}
     <h2 data-i18n="cta.t">Your 22 hours, made easy</h2>
     <p class="lede" data-i18n="cta.d">Glasshour is on the App Store now. Ideas or bugs? We’d love to hear them on GitHub.</p>
     <div class="ctas">
-      <a class="soon" href="https://apps.apple.com/app/glasshour-aligner-timer/id6838491040" rel="noopener"><svg class="ic"><use href="#i-phone"/></svg><span><small>Glasshour</small><b data-i18n="hero.dl">Download on the App Store</b></span></a>
+      <a class="badge" href="https://apps.apple.com/app/glasshour-aligner-timer/id6838491040?itscg=30200&amp;itsct=apps_box_badge&amp;mttnsubad=6838491040" rel="noopener"><picture><source data-badge="white" srcset="https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/white/en-us?releaseDate=1795564800" media="(prefers-color-scheme: dark)"><img data-badge="black" src="https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/en-us?releaseDate=1795564800" alt="Download on the App Store" data-i18n-alt="hero.dl" width="156" height="52"></picture></a>
       <a class="btn ghost" href="https://github.com/franklioxygen/glasshour-app/issues"><svg class="ic"><use href="#i-msg"/></svg><span data-i18n="cta.btn">Send feedback</span></a>
     </div>
   </div>
@@ -731,6 +728,7 @@ footer p{margin:6px 0;max-width:62em}
     </div>
     <p data-i18n="foot.tm">Works with Invisalign® and other clear aligners. Glasshour is an independent app and is not affiliated with, endorsed or sponsored by Align Technology, Inc. Invisalign is a trademark of Align Technology, Inc.</p>
     <p data-i18n="foot.med">Glasshour is not a medical device. Always follow your orthodontist’s instructions.</p>
+    <p>Apple and the Apple logo are trademarks of Apple Inc., registered in the U.S. and other countries. App Store is a service mark of Apple Inc.</p>
     <p>© 2026 Glasshour</p>
   </div>
 </footer>
@@ -1114,7 +1112,19 @@ function applyLang(l){
   document.querySelectorAll('[data-href]').forEach(e => e.href = e.dataset.href + '.html#' + ANCHOR[l]);
   $('#lang').value = l;
   $('#trayN').textContent = t('tray.n', {n: 12});
-  buildCalendar(); buildPro(); buildShots(); buildDemo();
+  buildCalendar(); buildPro(); buildShots(); buildDemo(); buildBadges();
+}
+/* App Store 徽章：用苹果提供的本地化版本（“App Store”几个字不翻译，是苹果的规定） */
+const BADGE_LANG = {en:'en-us', 'zh-Hans':'zh-cn', 'zh-Hant':'zh-tw', ja:'ja-jp', ko:'ko-kr', es:'es-es', fr:'fr-fr', de:'de-de'};
+function buildBadges(){
+  const base = 'https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store', bl = BADGE_LANG[L] || 'en-us';
+  document.querySelectorAll('.badge').forEach(a => {
+    a.querySelector('source').srcset = `${base}/white/${bl}?releaseDate=1795564800`;
+    const img = a.querySelector('img');
+    const url = `${base}/black/${bl}?releaseDate=1795564800`;
+    if (img.getAttribute('src') !== url) img.src = url;
+    img.alt = t('hero.dl');
+  });
 }
 /* 换图：先在后台下载解码好再换上，切换语言时不会闪出空白；下载失败自动重试一次 */
 function swapImg(img, url, alt){
