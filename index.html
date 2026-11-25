@@ -131,6 +131,9 @@ h1 em{font-style:normal;background:linear-gradient(100deg,var(--em1),var(--em2) 
 .soon .ic{font-size:26px}
 .soon small{display:block;font-size:12px;opacity:.7;line-height:1.2}
 .soon b{display:block;font-size:17px;line-height:1.25;font-weight:650}
+a.soon{transition:transform .2s cubic-bezier(.3,1.5,.5,1),box-shadow .2s}
+a.soon:hover{transform:translateY(-2px)}
+a.soon:active{transform:scale(.97)}
 .req{margin-top:18px;font-size:14px;color:var(--faint);display:flex;align-items:center;gap:8px}
 
 /* ---------- 手机演示：真实的“今天”页截图（摘下中 / 戴着），点截图里的按钮切换 ---------- */
@@ -479,7 +482,7 @@ footer p{margin:6px 0;max-width:62em}
       <h1 data-i18n-html="hero.title">Know exactly how much <em>out time</em> is left</h1>
       <p class="lede" data-i18n="desc">Take your aligners out with one tap and watch today’s out time count down. When it runs out, an alarm rings—even in Silent mode—so you never forget to put them back.</p>
       <div class="ctas">
-        <span class="soon" role="note"><svg class="ic"><use href="#i-phone"/></svg><span><small>Glasshour</small><b data-i18n="hero.soon">Coming soon to the App Store</b></span></span>
+        <a class="soon" href="https://apps.apple.com/app/glasshour-aligner-timer/id6838491040" rel="noopener"><svg class="ic"><use href="#i-phone"/></svg><span><small>Glasshour</small><b data-i18n="hero.dl">Download on the App Store</b></span></a>
         <a class="btn ghost" href="#how"><span data-i18n="hero.more">See how it works</span><svg class="ic"><use href="#i-arrow"/></svg></a>
       </div>
       <div class="req"><svg class="ic"><use href="#i-phone"/></svg><span data-i18n="hero.req">iPhone · iOS 26 or later</span></div>
@@ -710,9 +713,9 @@ footer p{margin:6px 0;max-width:62em}
       <img class="appicon" src="assets/icon.png" alt="Glasshour" width="132" height="132">
     </picture>
     <h2 data-i18n="cta.t">Your 22 hours, made easy</h2>
-    <p class="lede" data-i18n="cta.d">Glasshour is coming soon to the App Store. Ideas or bugs? We’d love to hear them on GitHub.</p>
+    <p class="lede" data-i18n="cta.d">Glasshour is on the App Store now. Ideas or bugs? We’d love to hear them on GitHub.</p>
     <div class="ctas">
-      <span class="soon" role="note"><svg class="ic"><use href="#i-phone"/></svg><span><small>Glasshour</small><b data-i18n="hero.soon">Coming soon to the App Store</b></span></span>
+      <a class="soon" href="https://apps.apple.com/app/glasshour-aligner-timer/id6838491040" rel="noopener"><svg class="ic"><use href="#i-phone"/></svg><span><small>Glasshour</small><b data-i18n="hero.dl">Download on the App Store</b></span></a>
       <a class="btn ghost" href="https://github.com/franklioxygen/glasshour-app/issues"><svg class="ic"><use href="#i-msg"/></svg><span data-i18n="cta.btn">Send feedback</span></a>
     </div>
   </div>
@@ -742,7 +745,7 @@ en:{
  "nav.features":"Features","nav.privacy":"Privacy","nav.support":"Support","lang.label":"Language",
  "hero.eyebrow":"Clear aligner timer for iPhone",
  "hero.title":"Know exactly how much <em>out time</em> is left",
- "hero.soon":"Coming soon to the App Store","hero.req":"iPhone · iOS 26 or later","hero.more":"See how it works","hero.hint":"Try it — tap the button",
+ "hero.dl":"Download on the App Store","hero.req":"iPhone · iOS 26 or later","hero.more":"See how it works","hero.hint":"Try it — tap the button",
  
  "ph.take":"Take Out","ph.put":"Put Back",
  "how.kicker":"How it works","how.title":"One tap out. One tap back.",
@@ -773,7 +776,7 @@ en:{
  "free.t":"Everyday tracking","free.i1":"One-tap timing","free.i2":"Editing and undo","free.i3":"Calendar and 7-day stats","free.i4":"Basic reminders","free.i5":"Awards","free.i6":"Home Screen progress widget",
  "pro.i1":"Dynamic Island and Lock Screen countdown","pro.i2":"Overtime alarm that rings on Silent","pro.i3":"Tap-to-log widgets, Lock Screen widgets and controls","pro.i4":"Custom sounds","pro.i5":"30-day and per-tray stats","pro.i6":"Apple Watch app","pro.t":"Advanced","pro.badge":"FREE",
  "pro.note":"All of this is included at no cost during launch. There’s nothing to buy.",
- "cta.t":"Your 22 hours, made easy","cta.d":"Glasshour is coming soon to the App Store. Ideas or bugs? We’d love to hear them on GitHub.","cta.btn":"Send feedback",
+ "cta.t":"Your 22 hours, made easy","cta.d":"Glasshour is on the App Store now. Ideas or bugs? We’d love to hear them on GitHub.","cta.btn":"Send feedback",
  "foot.privacy":"Privacy Policy","foot.support":"Support","foot.feedback":"Feedback",
  "foot.tm":"Works with Invisalign® and other clear aligners. Glasshour is an independent app and is not affiliated with, endorsed or sponsored by Align Technology, Inc. Invisalign is a trademark of Align Technology, Inc.",
  "foot.med":"Glasshour is not a medical device. Always follow your orthodontist’s instructions."
@@ -785,7 +788,7 @@ en:{
  "nav.features":"功能","nav.privacy":"隐私","nav.support":"支持","lang.label":"语言",
  "hero.eyebrow":"iPhone 上的隐形牙套计时器",
  "hero.title":"还能摘多久，<em>一眼就知道</em>",
- "hero.soon":"即将登陆 App Store","hero.req":"iPhone · iOS 26 或更高版本","hero.more":"看看怎么用","hero.hint":"试试看：点一下按钮",
+ "hero.dl":"在 App Store 下载","hero.req":"iPhone · iOS 26 或更高版本","hero.more":"看看怎么用","hero.hint":"试试看：点一下按钮",
  
  "ph.take":"摘下","ph.put":"戴回",
  "how.kicker":"怎么用","how.title":"摘下点一下，戴回点一下",
@@ -816,7 +819,7 @@ en:{
  "free.t":"日常记录","free.i1":"一键计时","free.i2":"编辑和撤销","free.i3":"日历和近 7 天统计","free.i4":"基础提醒","free.i5":"成就","free.i6":"主屏进度小组件",
  "pro.i1":"灵动岛和锁屏倒计时","pro.i2":"穿透静音的超时警报","pro.i3":"一键摘戴的小组件、锁屏小组件和控制中心按钮","pro.i4":"自定义提示音","pro.i5":"30 天和按副统计","pro.i6":"Apple Watch 手表 App","pro.t":"进阶功能","pro.badge":"限免",
  "pro.note":"限免期间全部可用，不需要购买任何东西。",
- "cta.t":"每天 22 小时，轻松戴够","cta.d":"Glasshour 即将登陆 App Store。有想法或发现问题？欢迎到 GitHub 告诉我们。","cta.btn":"提建议",
+ "cta.t":"每天 22 小时，轻松戴够","cta.d":"Glasshour 已上架 App Store。有想法或发现问题？欢迎到 GitHub 告诉我们。","cta.btn":"提建议",
  "foot.privacy":"隐私政策","foot.support":"支持","foot.feedback":"反馈",
  "foot.tm":"适用于 Invisalign® 等隐形牙套。Glasshour 是独立 App，与 Align Technology, Inc. 无关联，也未获其认可或赞助；Invisalign 是 Align Technology, Inc. 的商标。",
  "foot.med":"Glasshour 不是医疗器械，佩戴要求请遵医嘱。"
@@ -828,7 +831,7 @@ en:{
  "nav.features":"功能","nav.privacy":"隱私","nav.support":"支援","lang.label":"語言",
  "hero.eyebrow":"iPhone 上的隱形牙套計時器",
  "hero.title":"還能摘多久，<em>一眼就知道</em>",
- "hero.soon":"即將登上 App Store","hero.req":"iPhone · iOS 26 或以上版本","hero.more":"看看怎麼用","hero.hint":"試試看：點一下按鈕",
+ "hero.dl":"在 App Store 下載","hero.req":"iPhone · iOS 26 或以上版本","hero.more":"看看怎麼用","hero.hint":"試試看：點一下按鈕",
  
  "ph.take":"摘下","ph.put":"戴回",
  "how.kicker":"怎麼用","how.title":"摘下點一下，戴回點一下",
@@ -859,7 +862,7 @@ en:{
  "free.t":"日常記錄","free.i1":"一鍵計時","free.i2":"編輯和復原","free.i3":"日曆和近 7 天統計","free.i4":"基本提醒","free.i5":"成就","free.i6":"主畫面進度小工具",
  "pro.i1":"動態島和鎖定畫面倒數","pro.i2":"穿透靜音的超時警報","pro.i3":"一鍵摘戴的小工具、鎖定畫面小工具和控制項","pro.i4":"自訂提示音","pro.i5":"30 天和按副統計","pro.i6":"Apple Watch 手錶 App","pro.t":"進階功能","pro.badge":"限免",
  "pro.note":"限免期間全部可用，不需要購買任何東西。",
- "cta.t":"每天 22 小時，輕鬆戴滿","cta.d":"Glasshour 即將登上 App Store。有想法或發現問題？歡迎到 GitHub 告訴我們。","cta.btn":"提建議",
+ "cta.t":"每天 22 小時，輕鬆戴滿","cta.d":"Glasshour 已在 App Store 上架。有想法或發現問題？歡迎到 GitHub 告訴我們。","cta.btn":"提建議",
  "foot.privacy":"隱私權政策","foot.support":"支援","foot.feedback":"意見回饋",
  "foot.tm":"適用於 Invisalign® 等隱形牙套。Glasshour 為獨立 App，與 Align Technology, Inc. 無關聯，亦未獲其認可或贊助；Invisalign 為 Align Technology, Inc. 的商標。",
  "foot.med":"Glasshour 不是醫療器材，配戴要求請遵照醫囑。"
@@ -871,7 +874,7 @@ ja:{
  "nav.features":"機能","nav.privacy":"プライバシー","nav.support":"サポート","lang.label":"言語",
  "hero.eyebrow":"iPhone用マウスピース矯正タイマー",
  "hero.title":"外せる残り時間が<em>ひと目でわかる</em>",
- "hero.soon":"App Storeで近日公開","hero.req":"iPhone · iOS 26以降","hero.more":"使い方を見る","hero.hint":"ボタンをタップしてみて",
+ "hero.dl":"App Storeからダウンロード","hero.req":"iPhone · iOS 26以降","hero.more":"使い方を見る","hero.hint":"ボタンをタップしてみて",
  
  "ph.take":"外す","ph.put":"着ける",
  "how.kicker":"使い方","how.title":"外すときにタップ、着けるときにタップ",
@@ -902,7 +905,7 @@ ja:{
  "free.t":"毎日の記録","free.i1":"ワンタップ計測","free.i2":"編集と取り消し","free.i3":"カレンダーと直近7日間の統計","free.i4":"基本の通知","free.i5":"実績","free.i6":"ホーム画面の進捗ウィジェット",
  "pro.i1":"ダイナミックアイランドとロック画面のカウントダウン","pro.i2":"消音中でも鳴る超過アラーム","pro.i3":"ワンタップで記録できるウィジェット、ロック画面ウィジェット、コントロール","pro.i4":"カスタムサウンド","pro.i5":"30日間とマウスピースごとの統計","pro.i6":"Apple Watchアプリ","pro.t":"便利な機能","pro.badge":"無料",
  "pro.note":"リリース期間中はすべて使えます。購入は必要ありません。",
- "cta.t":"毎日の22時間を、もっとかんたんに","cta.d":"GlasshourはApp Storeで近日公開予定です。アイデアや不具合はGitHubで教えてください。","cta.btn":"フィードバックを送る",
+ "cta.t":"毎日の22時間を、もっとかんたんに","cta.d":"GlasshourはApp Storeで配信中です。アイデアや不具合はGitHubで教えてください。","cta.btn":"フィードバックを送る",
  "foot.privacy":"プライバシーポリシー","foot.support":"サポート","foot.feedback":"フィードバック",
  "foot.tm":"Invisalign®などのマウスピース矯正に対応。GlasshourはAlign Technology, Inc.とは関係のない独立したアプリであり、同社による承認・後援を受けていません。InvisalignはAlign Technology, Inc.の商標です。",
  "foot.med":"Glasshourは医療機器ではありません。必ず担当医の指示に従ってください。"
@@ -914,7 +917,7 @@ ko:{
  "nav.features":"기능","nav.privacy":"개인정보","nav.support":"지원","lang.label":"언어",
  "hero.eyebrow":"iPhone용 투명 교정 타이머",
  "hero.title":"남은 시간을 <em>한눈에</em>",
- "hero.soon":"App Store 출시 예정","hero.req":"iPhone · iOS 26 이상","hero.more":"사용 방법 보기","hero.hint":"버튼을 눌러 보세요",
+ "hero.dl":"App Store에서 다운로드","hero.req":"iPhone · iOS 26 이상","hero.more":"사용 방법 보기","hero.hint":"버튼을 눌러 보세요",
  
  "ph.take":"빼기","ph.put":"끼우기",
  "how.kicker":"사용 방법","how.title":"뺄 때 한 번, 끼울 때 한 번",
@@ -945,7 +948,7 @@ ko:{
  "free.t":"매일의 기록","free.i1":"원탭 측정","free.i2":"편집과 취소","free.i3":"캘린더와 최근 7일 통계","free.i4":"기본 알림","free.i5":"업적","free.i6":"홈 화면 진행 위젯",
  "pro.i1":"Dynamic Island와 잠금 화면 카운트다운","pro.i2":"무음에서도 울리는 초과 알람","pro.i3":"한 번에 기록하는 위젯, 잠금 화면 위젯과 제어 항목","pro.i4":"사용자 지정 사운드","pro.i5":"30일·장치별 통계","pro.i6":"Apple Watch 앱","pro.t":"고급 기능","pro.badge":"무료",
  "pro.note":"출시 기간에는 모두 쓸 수 있어요. 구매할 것이 없어요.",
- "cta.t":"하루 22시간, 더 쉽게","cta.d":"Glasshour가 곧 App Store에 출시돼요. 아이디어나 버그는 GitHub에서 알려 주세요.","cta.btn":"의견 보내기",
+ "cta.t":"하루 22시간, 더 쉽게","cta.d":"Glasshour를 App Store에서 받을 수 있어요. 아이디어나 버그는 GitHub에서 알려 주세요.","cta.btn":"의견 보내기",
  "foot.privacy":"개인정보 처리방침","foot.support":"지원","foot.feedback":"의견 보내기",
  "foot.tm":"Invisalign® 등 투명 교정 장치와 함께 사용할 수 있어요. Glasshour는 독립 앱으로 Align Technology, Inc.와 관련이 없으며 승인이나 후원을 받지 않았어요. Invisalign은 Align Technology, Inc.의 상표예요.",
  "foot.med":"Glasshour는 의료기기가 아니에요. 항상 담당 의사의 지시를 따르세요."
@@ -957,7 +960,7 @@ es:{
  "nav.features":"Funciones","nav.privacy":"Privacidad","nav.support":"Soporte","lang.label":"Idioma",
  "hero.eyebrow":"Temporizador de alineadores para iPhone",
  "hero.title":"Sabes cuánto <em>tiempo te queda</em>",
- "hero.soon":"Próximamente en el App Store","hero.req":"iPhone · iOS 26 o posterior","hero.more":"Mira cómo funciona","hero.hint":"Pruébalo: toca el botón",
+ "hero.dl":"Descargar en el App Store","hero.req":"iPhone · iOS 26 o posterior","hero.more":"Mira cómo funciona","hero.hint":"Pruébalo: toca el botón",
  
  "ph.take":"Quitar","ph.put":"Poner",
  "how.kicker":"Cómo funciona","how.title":"Un toque al quitar. Otro al poner.",
@@ -988,7 +991,7 @@ es:{
  "free.t":"Seguimiento diario","free.i1":"Cronometraje con un toque","free.i2":"Edición y deshacer","free.i3":"Calendario y estadísticas de 7 días","free.i4":"Recordatorios básicos","free.i5":"Logros","free.i6":"Widget de progreso en la pantalla de inicio",
  "pro.i1":"Cuenta atrás en la Dynamic Island y la pantalla bloqueada","pro.i2":"Alarma de exceso que suena en silencio","pro.i3":"Widgets para registrar con un toque, widgets de pantalla bloqueada y controles","pro.i4":"Sonidos personalizados","pro.i5":"Estadísticas de 30 días y por alineador","pro.i6":"App para Apple Watch","pro.t":"Funciones avanzadas","pro.badge":"GRATIS",
  "pro.note":"Todo esto está incluido sin coste durante el lanzamiento. No hay nada que comprar.",
- "cta.t":"Tus 22 horas, más fáciles","cta.d":"Glasshour llegará pronto al App Store. ¿Ideas o errores? Cuéntanoslo en GitHub.","cta.btn":"Enviar comentarios",
+ "cta.t":"Tus 22 horas, más fáciles","cta.d":"Glasshour ya está en el App Store. ¿Ideas o errores? Cuéntanoslo en GitHub.","cta.btn":"Enviar comentarios",
  "foot.privacy":"Política de privacidad","foot.support":"Soporte","foot.feedback":"Comentarios",
  "foot.tm":"Compatible con Invisalign® y otros alineadores transparentes. Glasshour es una app independiente y no está afiliada, respaldada ni patrocinada por Align Technology, Inc. Invisalign es una marca de Align Technology, Inc.",
  "foot.med":"Glasshour no es un dispositivo médico. Sigue siempre las indicaciones de tu ortodoncista."
@@ -1000,7 +1003,7 @@ fr:{
  "nav.features":"Fonctions","nav.privacy":"Confidentialité","nav.support":"Assistance","lang.label":"Langue",
  "hero.eyebrow":"Minuteur de gouttières pour iPhone",
  "hero.title":"Le temps restant, <em>d’un coup d’œil</em>",
- "hero.soon":"Bientôt sur l’App Store","hero.req":"iPhone · iOS 26 ou version ultérieure","hero.more":"Voir comment ça marche","hero.hint":"Essayez : touchez le bouton",
+ "hero.dl":"Télécharger dans l’App Store","hero.req":"iPhone · iOS 26 ou version ultérieure","hero.more":"Voir comment ça marche","hero.hint":"Essayez : touchez le bouton",
  
  "ph.take":"Retirer","ph.put":"Remettre",
  "how.kicker":"Comment ça marche","how.title":"Un geste pour retirer. Un geste pour remettre.",
@@ -1031,7 +1034,7 @@ fr:{
  "free.t":"Suivi au quotidien","free.i1":"Chronométrage d’un geste","free.i2":"Modification et annulation","free.i3":"Calendrier et stats sur 7 jours","free.i4":"Rappels de base","free.i5":"Succès","free.i6":"Widget de progression sur l’écran d’accueil",
  "pro.i1":"Compte à rebours dans la Dynamic Island et sur l’écran verrouillé","pro.i2":"Alarme de dépassement qui sonne en silencieux","pro.i3":"Widgets pour noter d’un geste, widgets de l’écran verrouillé et commandes","pro.i4":"Sons personnalisés","pro.i5":"Stats sur 30 jours et par gouttière","pro.i6":"App Apple Watch","pro.t":"Fonctions avancées","pro.badge":"GRATUIT",
  "pro.note":"Tout est inclus gratuitement pendant le lancement. Rien à acheter.",
- "cta.t":"Vos 22 heures, en toute simplicité","cta.d":"Glasshour arrive bientôt sur l’App Store. Des idées ou des bugs ? Dites-le-nous sur GitHub.","cta.btn":"Donner votre avis",
+ "cta.t":"Vos 22 heures, en toute simplicité","cta.d":"Glasshour est disponible sur l’App Store. Des idées ou des bugs ? Dites-le-nous sur GitHub.","cta.btn":"Donner votre avis",
  "foot.privacy":"Politique de confidentialité","foot.support":"Assistance","foot.feedback":"Avis",
  "foot.tm":"Compatible avec Invisalign® et d’autres gouttières transparentes. Glasshour est une app indépendante, non affiliée, approuvée ni sponsorisée par Align Technology, Inc. Invisalign est une marque d’Align Technology, Inc.",
  "foot.med":"Glasshour n’est pas un dispositif médical. Suivez toujours les consignes de votre orthodontiste."
@@ -1043,7 +1046,7 @@ de:{
  "nav.features":"Funktionen","nav.privacy":"Datenschutz","nav.support":"Support","lang.label":"Sprache",
  "hero.eyebrow":"Aligner-Timer fürs iPhone",
  "hero.title":"Restzeit <em>auf einen Blick</em>",
- "hero.soon":"Bald im App Store","hero.req":"iPhone · iOS 26 oder neuer","hero.more":"So funktioniert’s","hero.hint":"Probier’s aus: Tippe auf den Button",
+ "hero.dl":"Laden im App Store","hero.req":"iPhone · iOS 26 oder neuer","hero.more":"So funktioniert’s","hero.hint":"Probier’s aus: Tippe auf den Button",
  
  "ph.take":"Herausnehmen","ph.put":"Einsetzen",
  "how.kicker":"So funktioniert’s","how.title":"Ein Tipp raus. Ein Tipp rein.",
@@ -1074,7 +1077,7 @@ de:{
  "free.t":"Täglich erfassen","free.i1":"Zeitmessung mit einem Tipp","free.i2":"Bearbeiten und Rückgängig","free.i3":"Kalender und 7-Tage-Statistik","free.i4":"Einfache Erinnerungen","free.i5":"Erfolge","free.i6":"Fortschritts-Widget für den Home-Bildschirm",
  "pro.i1":"Countdown in der Dynamic Island und auf dem Sperrbildschirm","pro.i2":"Überzieh-Alarm, der auch stumm klingelt","pro.i3":"Widgets zum Eintragen per Tipp, Sperrbildschirm-Widgets und Steuerelemente","pro.i4":"Eigene Töne","pro.i5":"30-Tage- und Aligner-Statistik","pro.i6":"Apple Watch-App","pro.t":"Erweiterte Funktionen","pro.badge":"GRATIS",
  "pro.note":"Zum Start ist alles kostenlos enthalten. Du musst nichts kaufen.",
- "cta.t":"Deine 22 Stunden, ganz einfach","cta.d":"Glasshour kommt bald in den App Store. Ideen oder Fehler? Erzähl uns davon auf GitHub.","cta.btn":"Feedback senden",
+ "cta.t":"Deine 22 Stunden, ganz einfach","cta.d":"Glasshour ist jetzt im App Store. Ideen oder Fehler? Erzähl uns davon auf GitHub.","cta.btn":"Feedback senden",
  "foot.privacy":"Datenschutzerklärung","foot.support":"Support","foot.feedback":"Feedback",
  "foot.tm":"Funktioniert mit Invisalign® und anderen Alignern. Glasshour ist eine unabhängige App und steht in keiner Verbindung zu Align Technology, Inc. und wird von dieser weder unterstützt noch gesponsert. Invisalign ist eine Marke von Align Technology, Inc.",
  "foot.med":"Glasshour ist kein Medizinprodukt. Befolge immer die Anweisungen deines Kieferorthopäden."
